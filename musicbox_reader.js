@@ -1,11 +1,8 @@
-// https://inspirit.github.io/jsfeat/sample_oflow_lk.html
-
-var cnv;
 var capture;
-var curpyr, prevpyr, pointCount, pointStatus, prevxy, curxy;
+var buffer;
+var result;
 var w = 640,
     h = 480;
-var maxPoints = 1000;
 
 function setup() {
     capture = createCapture({
@@ -18,93 +15,52 @@ function setup() {
         console.log('capture ready.')
     });
     capture.elt.setAttribute('playsinline', '');
-    cnv = createCanvas(w, h);
+    createCanvas(w, h);
     capture.size(w, h);
     capture.hide();
-
-    curpyr = new jsfeat.pyramid_t(3);
-    prevpyr = new jsfeat.pyramid_t(3);
-    curpyr.allocate(w, h, jsfeat.U8C1_t);
-    prevpyr.allocate(w, h, jsfeat.U8C1_t);
-
-    pointCount = 0;
-    pointStatus = new Uint8Array(maxPoints);
-    prevxy = new Float32Array(maxPoints * 2);
-    curxy = new Float32Array(maxPoints * 2);
+    buffer = new jsfeat.matrix_t(w, h, jsfeat.U8C1_t);
 }
 
-function keyPressed(key) {
-    for (var i = 0; i < 100; i++) {
-        addPoint(random(width), random(height));
+function jsfeatToP5(src, dst) {
+    if (!dst || dst.width != src.cols || dst.height != src.rows) {
+        dst = createImage(src.cols, src.rows);
     }
-}
-
-function mousePressed() {
-    console.log("mouse pressed at ("+mouseX+", "+mouseY+")");
-    addPoint(mouseX, mouseY);
-}
-
-function addPoint(x, y) {
-    if (pointCount < maxPoints) {
-        var pointIndex = pointCount * 2;
-        curxy[pointIndex] = x;
-        curxy[pointIndex + 1] = y;
-        pointCount++;
+    var n = src.data.length;
+    dst.loadPixels();
+    var srcData = src.data;
+    var dstData = dst.pixels;
+    for (var i = 0, j = 0; i < n; i++) {
+        var cur = srcData[i];
+        dstData[j++] = cur;
+        dstData[j++] = cur;
+        dstData[j++] = cur;
+        dstData[j++] = 255;
     }
-}
-
-function prunePoints() {
-    var outputPoint = 0;
-    for (var inputPoint = 0; inputPoint < pointCount; inputPoint++) {
-        if (pointStatus[inputPoint] == 1) {
-            if (outputPoint < inputPoint) {
-                var inputIndex = inputPoint * 2;
-                var outputIndex = outputPoint * 2;
-                curxy[outputIndex] = curxy[inputIndex];
-                curxy[outputIndex + 1] = curxy[inputIndex + 1];
-            }
-            outputPoint++;
-        }
-    }
-    pointCount = outputPoint;
+    dst.updatePixels();
+    return dst;
 }
 
 function draw() {
-
-    image(capture, 0, 0, w, h);
+    image(capture, 0, 0, 640, 480);
     capture.loadPixels();
-    //capture=capture.get(0, 0, w, h);
-    //capture.loadPixels();
-    console.log(capture.pixels.length);
     if (capture.pixels.length > 0) { // don't forget this!
-        //console.log("draw called");
-        var xyswap = prevxy;
-        prevxy = curxy;
-        curxy = xyswap;
-        var pyrswap = prevpyr;
-        prevpyr = curpyr;
-        curpyr = pyrswap;
+        var blurSize = select('#blurSize').elt.value;
+        var lowThreshold = select('#lowThreshold').elt.value;
+        var highThreshold = select('#highThreshold').elt.value;
 
-        // these are options worth breaking out and exploring
-        var winSize = 20;
-        var maxIterations = 30;
-        var epsilon = 0.01;
-        var minEigen = 0.001;
+        blurSize = map(blurSize, 0, 100, 1, 12);
+        lowThreshold = map(lowThreshold, 0, 100, 0, 255);
+        highThreshold = map(highThreshold, 0, 100, 0, 255);
 
-        jsfeat.imgproc.grayscale(capture.pixels, w, h, curpyr.data[0]);
-        curpyr.build(curpyr.data[0], true);
-        jsfeat.optical_flow_lk.track(
-            prevpyr, curpyr,
-            prevxy, curxy,
-            pointCount,
-            winSize, maxIterations,
-            pointStatus,
-            epsilon, minEigen);
-        prunePoints();
-        console.log(pointCount.length);
-        for (var i = 0; i < pointCount; i++) {
-            var pointOffset = i * 2;
-            ellipse(curxy[pointOffset], curxy[pointOffset + 1], 8, 8);
-        }
+        jsfeat.imgproc.grayscale(capture.pixels, w, h, buffer);
+        jsfeat.imgproc.gaussian_blur(buffer, buffer, blurSize, 0);
+        jsfeat.imgproc.canny(buffer, buffer, lowThreshold, highThreshold);
+        var n = buffer.rows * buffer.cols;
+        // uncomment the following lines to invert the image
+//        for (var i = 0; i < n; i++) {
+//            buffer.data[i] = 255 - buffer.data[i];
+//        }
+        result = jsfeatToP5(buffer, result);
+        image(result, 0, 0, 640, 480);
     }
 }
