@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsfeat/0.0.8/jsfeat-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/webmidi"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, mimimum-scale=1, width=device-width">
   </head>
   <body>
-    <h1>Indeed Musicbox Reader</h1>
-     <p>Find edges using a <a href="https://en.wikipedia.org/wiki/Canny_edge_detector">Canny edge detector</a>.</p>
-     <p>Blur Size: <input type="range" id="blurSize" value="50"></p>
-     <p>Low Threshold: <input type="range" id="lowThreshold" value="15"></p>
-     <p>High Threshold: <input type="range" id="highThreshold" value="25"></p>
-     
-     <script src="musicbox_reader.js"></script>
+    <script src="server.js"></script>
   </body>
 </html>
