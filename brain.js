@@ -3,12 +3,28 @@ let channels = [];
 let globalMax = 0;
 let channelSize = 4;
 
+let IP_address = 'http://192.168.9.142:5000/';
+//http://localhost:5000/
+//http://192.168.9.142:5000/
+
 function setup(){
 
 	createChannels();
 	//socket = io.connect('http://localhost:5000/');
-	socket = io.connect('http://192.168.9.142:5000/');
+	socket = io.connect(IP_address);
   	socket.on('brain_signal', readSignal);
+
+  	/*
+  	createCanvas(710, 400);
+  	canvas.parent('IP_address');
+  	var inputText  = createInput(IP_address);
+  	inputText.input(myInputEvent);
+  	*/
+
+}
+
+function myInputEvent(){
+	console.log('you are typing', this.value());
 }
 
 function createChannels(){
@@ -59,6 +75,31 @@ function readSignal(data){
 	}
 }
 
+function changeIPAddress(){
+	console.log("change IP");
+
+	var IP_value = document.getElementById("ip_addr");
+	IP_address = IP_value.value;
+	reconnect(IP_address);
+}
+
+function reconnect(addr){
+	socket = io.connect(addr);
+  	socket.on('brain_signal', readSignal);
+}
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  //document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+  document.body.style.backgroundColor = "rgba(0,0,0,255)";
+}
+
 
 function draw(){
 
@@ -73,7 +114,7 @@ function draw(){
 		//console.log(channels[i].points);
 		//var targetValue = 0;
 		var min, max;
-		if(i == 1){
+		if(i == 3){
 			//attention : id = 1
 			/*
 			min = 20;
@@ -85,11 +126,11 @@ function draw(){
 			uniforms.amplitude.value = max - round(map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max));
 			//sphereRad = max - round(map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max));
 			
-		}else if(i == 2){
+		}else if(i == 4){
 			//concentration
 			min = 1;
 			max = 2;
-			//uniforms.amplitude.value = max - map(targetPoint.value, channels[i].minValue , channels[i].maxValue, min, max);
+			uniforms.amplitude.value = max - map(targetPoint.value, channels[i].minValue , channels[i].maxValue, min, max);
 			//radius_sp = max - map(targetPoint.value, channels[i].minValue , channels[i].maxValue, min, max);
 		}
 		//console.log("uniform_amplitude: "+uniforms.amplitude.value);

@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
     <title>Indeed Logo</title>
     <!-- Need to uncomment P5.js as it clashes with render inside P5.js-->
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
   
@@ -78,24 +79,26 @@
     <script src="three_dimensional.js"></script>
     
 
+    
+    <!--
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"  type="text/css"> 
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"  type="text/css">
+-->
+    
   </head>
   <body>
-    <div style="text-align:center">
-      <div id="container"></div>
-      <!--
-      <canvas id="canvasOne" width="900" height="520" ></canvas>
-      -->
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <label>IP Address</label>
+      <input type = "text" id = "ip_addr" />
+      <input type = "button" value = "OK" onclick = "changeIPAddress()"/>
+  </div>
+    <div id = "main" style="text-align:center">
+      <span onclick="openNav()">&#9776; </span>
+      <span onclick="resetRoutine()">&#8635;</span>
       <p>THE MORE YOU CONCENTRATE, THE CLEARER IT BECOMES &nbsp; &nbsp;</p>
-      <a>http://indeed-innovation.com</a>
-
-      <!--
-      <a href="http://indeed-innovation.com">INDEED</a>
-      -->
+      <a>http://indeed-innovation.com</a><br>
+      <div id="container"></div>
     </div>
-    <!--
-     <script src="stl_loader.js"></script>
-   -->
   </body>
 </html>

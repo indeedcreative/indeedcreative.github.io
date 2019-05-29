@@ -21,7 +21,9 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 				fontName = "optimer", // helvetiker, optimer, gentilis, droid sans, droid serif
 				fontWeight = "bold"; // normal bold
 
-		var prev = 0;
+		var init_time = Date.now() * 0.001;
+		var prev_duration = 0;
+		var rotation_variable = 4;
 		var loader = new THREE.FontLoader();
 		loader.load( 'fonts/helvetiker_bold.typeface.json', function ( response ) {
 			font = response;
@@ -129,33 +131,34 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 				group.remove(object);
 				createText();
 		}
+
+		function resetRoutine() {
+		  console.log("reset routine");
+		  init_time = Date.now() * 0.001;
+		  refreshText("INDEED");
+		  rotation_variable = 4;
+
+		}
+
 		function render() {
 			
 			var time = Date.now() * 0.001;
 
-			//console.log(time);
+			var cur_duration = Math.round(time - init_time);
 
-			/*
-			if(Math.sin( 0.1 * time )>0){
-				//console.log("sine positive");
-				if(prev < 0){
-					console.log("change positive");
-					refreshText("INDEED"); //just once 
-					//count = 0;
-				}
-				
-			}
-			else if(Math.sin( 0.1 * time )<0){
-				//console.log("sine negative");
-				if(prev > 0){
-					console.log("change negative");
-					refreshText("Ruth");
-					//count = 0;
-				}
-			}*/
+            //console.log("duration: "+ duration);
 
-			prev = Math.sin( 0.5 * time );
-			object.rotation.y = 0.25 * time;
+            if(prev_duration == 4 && cur_duration == 5 )//2 seconds
+            {
+                refreshText("MUSIC");
+                rotation_variable = 0.25;
+                //cam.updateProjectionMatrix();
+                 
+            }
+
+			prev_duration = cur_duration;
+			//prev = Math.sin( 0.5 * time );
+			object.rotation.y = rotation_variable * time;
 			//uniforms.amplitude.value = Math.sin( 0.5 * time ); //comment this part 
 			uniforms.color.value.offsetHSL( 0.0005, 0, 0 );
 			var attributes = object.geometry.attributes;
@@ -168,4 +171,5 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 			attributes.displacement.needsUpdate = true;
 			renderer.render( scene, cam );
 		}
+
 		
