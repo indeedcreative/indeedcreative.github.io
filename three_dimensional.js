@@ -11,7 +11,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 		var shaderMaterial;
 		//var radius = 60; 
 		var sigmoid_time = -10;
-		var zoomValue = 100;
+		var zoomValue = 80;
 		var controls;
 		var mouseX = 0, mouseY = 0;
 		var text = "INDEED",
@@ -159,7 +159,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 		  init_time = Date.now() * 0.001;
 		  refreshText("INDEED");
 		  rotation_variable = 4;
-		  word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
+		  //word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
 		  //radius = 50; 
 		  sigmoid_time = -10;
 
@@ -181,24 +181,38 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 
 
             //console.log("duration: "+ duration);
-            if(cur_duration < 5 ){
+            if(cur_duration < 4 ){
             	
-            	//word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
+            	
             	var word = keywords[word_index];
-				cam.position.z = (800 * sigmoid(sigmoid_time) + 80); // * Math.cos( THREE.Math.degToRad( theta ) );
+            	cam.position.z = 500;
+            	/*
+				cam.position.z = (700 * sigmoid(sigmoid_time) +80); // * Math.cos( THREE.Math.degToRad( theta ) );
 				//end value : 100-500
 				cam.lookAt( scene.position );
-				
+				*/
 
             }
-            if(prev_duration == 5 && cur_duration == 6 )//2 seconds
+            if(prev_duration == 4 && cur_duration == 5 )//2 seconds
             {
             	//word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
-
+            	word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
                 refreshText(keywords[word_index]);
                 rotation_variable = 0.25;
+                zoomValue = 80;
                 //cam.updateProjectionMatrix();
                  
+            }
+
+            
+            if( 5<= cur_duration && cur_duration <= 30){
+            	//cam.position.z = (700 * sigmoid(sigmoid_time) +80); // * Math.cos( THREE.Math.degToRad( theta ) );
+            	if(zoomValue < 500)
+            		zoomValue = zoomValue + 1;
+
+            	cam.position.z = zoomValue;
+				//end value : 100-500
+				cam.lookAt( scene.position );
             }
 
             if(cur_duration > 30)// change this time
