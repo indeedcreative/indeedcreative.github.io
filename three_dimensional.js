@@ -1,5 +1,5 @@
 var uniforms;
-
+var keywords = ["MUSIC", "MACHINE", "CREATION", "BRAIN", "WAVE", "PUNCH"];
 if ( WEBGL.isWebGLAvailable() === false ) {
 			document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 		}
@@ -9,6 +9,11 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 		var geometry;
 		var group;
 		var shaderMaterial;
+		//var radius = 60; 
+		var sigmoid_time = -10;
+		var zoomValue = 100;
+		var controls;
+		var mouseX = 0, mouseY = 0;
 		var text = "INDEED",
 				height = 20,
 				size = 70,
@@ -23,7 +28,9 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 
 		var init_time = Date.now() * 0.001;
 		var prev_duration = 0;
+		var theta = 0;
 		var rotation_variable = 4;
+		var word_index = 0;
 		var loader = new THREE.FontLoader();
 		loader.load( 'fonts/helvetiker_bold.typeface.json', function ( response ) {
 			font = response;
@@ -34,7 +41,9 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 		
 		function init( font ) {
 			
-			cam = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+			cam = new THREE.PerspectiveCamera( 20, window.innerWidth / window.innerHeight, 1, 10000 );
+			//cam.position.x = 400;
+			//cam.position.y = 400;
 			cam.position.z = 400;
 			
 			/*
@@ -62,6 +71,8 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 			group = new THREE.Group();
 			scene.add(group);
 
+			word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
+
 			createText();
 
 
@@ -73,6 +84,17 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			var container = document.getElementById( 'container' );
 			container.appendChild( renderer.domElement );
+
+			
+			controls = new THREE.OrbitControls( cam, renderer.domElement );
+			controls.screenSpacePanning = true;
+			
+			controls.minDistance = 50;
+			controls.maxDistance = 400;
+			controls.target.set( 0, 1, 0 );
+			controls.update();
+
+			
 			stats = new Stats();
 			//container.appendChild( stats.dom ); //To remove frame speed 
 			//
@@ -137,23 +159,57 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 		  init_time = Date.now() * 0.001;
 		  refreshText("INDEED");
 		  rotation_variable = 4;
+		  word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
+		  //radius = 50; 
+		  sigmoid_time = -10;
 
+
+		}
+
+		function sigmoid(t) {
+		    return 1/(1+Math.pow(Math.E, -t));
 		}
 
 		function render() {
 			
 			var time = Date.now() * 0.001;
+			theta += 0.1;
+			sigmoid_time += 0.1;
+			//radius += 2;
 
 			var cur_duration = Math.round(time - init_time);
 
-            //console.log("duration: "+ duration);
 
-            if(prev_duration == 4 && cur_duration == 5 )//2 seconds
+            //console.log("duration: "+ duration);
+            if(cur_duration < 5 ){
+            	
+            	//word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
+            	var word = keywords[word_index];
+				cam.position.z = (800 * sigmoid(sigmoid_time) + 80); // * Math.cos( THREE.Math.degToRad( theta ) );
+				//end value : 100-500
+				cam.lookAt( scene.position );
+				
+
+            }
+            if(prev_duration == 5 && cur_duration == 6 )//2 seconds
             {
-                refreshText("MUSIC");
+            	//word_index = Math.floor(Math.random() * keywords.length-2);     // returns a random integer from 0 to 9
+
+                refreshText(keywords[word_index]);
                 rotation_variable = 0.25;
                 //cam.updateProjectionMatrix();
                  
+            }
+
+            if(cur_duration > 30)// change this time
+            {
+            	refreshText("Now move to the \n next station to see the result");
+            	cam.position.z = (800 * sigmoid(sigmoid_time) + zoomValue); 
+            	cam.position.z = 3000;
+            	cam.lookAt( scene.position );
+            	rotation_variable = 0;
+            	cam.lookAt(0,1,0);
+
             }
 
 			prev_duration = cur_duration;
