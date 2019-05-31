@@ -3,7 +3,7 @@ let channels = [];
 let globalMax = 0;
 let channelSize = 4;
 
-let IP_address = 'http://192.168.9.142:5000/';
+let IP_address = 'http://192.168.0.100:5000/';
 //http://localhost:5000/
 //http://192.168.9.142:5000/
 
