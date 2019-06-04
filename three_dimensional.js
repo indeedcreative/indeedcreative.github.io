@@ -1,5 +1,5 @@
 var uniforms;
-var keywords = ["MUSIC", "MACHINE", "CREATION", "BRAIN", "WAVE", "PUNCH"];
+var keywords = ["MUSIC", "IDEA", "BRAIN", "WAVE", "PUNCH"];
 if ( WEBGL.isWebGLAvailable() === false ) {
 			document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 		}
@@ -215,7 +215,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 				cam.lookAt( scene.position );
             }
 
-            if(cur_duration > 30)// change this time
+            if(cur_duration > 45)// change this time
             {
             	refreshText("Now move to the \n next station to see the result");
             	cam.position.z = (800 * sigmoid(sigmoid_time) + zoomValue); 

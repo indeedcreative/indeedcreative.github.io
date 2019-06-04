@@ -115,26 +115,33 @@ function draw(){
 		//console.log(channels[i].points);
 		//var targetValue = 0;
 		var min, max;
-		if(i == 3){
+		if(i == 3){ 
 			//attention : id = 1
 			/*
 			min = 20;
 			max = 500;
 			*/
+
+			// get the average value
+
 			min = 0.0;
 			max = 2.0;
 			//open to read values
 			uniforms.amplitude.value = max - round(map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max));
+			//can I get the average value for this? 
+
+			
 			//sphereRad = max - round(map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max));
 			
-		}else if(i == 4){
+		}
+		/*
+		else if(i == 4){
 			//concentration
 			min = 1;
 			max = 2;
 			uniforms.amplitude.value = max - map(targetPoint.value, channels[i].minValue , channels[i].maxValue, min, max);
 			//radius_sp = max - map(targetPoint.value, channels[i].minValue , channels[i].maxValue, min, max);
-		}
+		}*/
 		//console.log("uniform_amplitude: "+uniforms.amplitude.value);
-		//console.log("shereRad: "+sphereRad+", radius_sp: "+radius_sp);
 	}
 }
