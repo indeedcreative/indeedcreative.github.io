@@ -102,10 +102,11 @@ function closeNav() {
 }
 
 
+
 function draw(){
 
-	
-	for(let i = 0; i < channelSize; i++){
+	var total = 0;
+	for(let i = 3; i < channelSize; i++){
 		if(channels[i].points.length == 0)
 			break;
 	
@@ -114,34 +115,14 @@ function draw(){
 		//console.log("length : "+ channels[i].points.length);
 		//console.log(channels[i].points);
 		//var targetValue = 0;
-		var min, max;
-		if(i == 3){ 
-			//attention : id = 1
-			/*
-			min = 20;
-			max = 500;
-			*/
+		var min = 0.0;
+		var max = 5.0;
+		//console.log("val : "+ map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max));
+		total = total + map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max);
+		var avr = total / (channelSize-3);
+		console.log("avr : "+ avr );
+		uniforms.amplitude.value = max - avr;
 
-			// get the average value
-
-			min = 0.0;
-			max = 2.0;
-			//open to read values
-			uniforms.amplitude.value = max - round(map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max));
-			//can I get the average value for this? 
-
-			
-			//sphereRad = max - round(map(targetPoint.value, channels[i].minValue , channels[i].maxValue , min, max));
-			
-		}
-		/*
-		else if(i == 4){
-			//concentration
-			min = 1;
-			max = 2;
-			uniforms.amplitude.value = max - map(targetPoint.value, channels[i].minValue , channels[i].maxValue, min, max);
-			//radius_sp = max - map(targetPoint.value, channels[i].minValue , channels[i].maxValue, min, max);
-		}*/
-		//console.log("uniform_amplitude: "+uniforms.amplitude.value);
 	}
+
 }

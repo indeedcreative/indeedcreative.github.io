@@ -205,7 +205,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
             }
 
             
-            if( 5<= cur_duration && cur_duration <= 30){
+            if( 5<= cur_duration && cur_duration <= 35){
             	//cam.position.z = (700 * sigmoid(sigmoid_time) +80); // * Math.cos( THREE.Math.degToRad( theta ) );
             	if(zoomValue < 500)
             		zoomValue = zoomValue + 1;
@@ -215,7 +215,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 				cam.lookAt( scene.position );
             }
 
-            if(cur_duration > 45)// change this time
+            if(cur_duration > 35)// change this time
             {
             	refreshText("Now move to the \n next station to see the result");
             	cam.position.z = (800 * sigmoid(sigmoid_time) + zoomValue); 
