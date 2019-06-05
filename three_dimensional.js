@@ -32,6 +32,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 		var rotation_variable = 4;
 		var word_index = 0;
 		var loader = new THREE.FontLoader();
+
 		loader.load( 'fonts/helvetiker_bold.typeface.json', function ( response ) {
 			font = response;
 			init( font );
@@ -217,7 +218,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 
             if(cur_duration > 35)// change this time
             {
-            	refreshText("Now move to the \n next station to see the result");
+            	refreshText("ID: "+ clientID+"\n\nNow move to the \n next station to see the result");
             	cam.position.z = (800 * sigmoid(sigmoid_time) + zoomValue); 
             	cam.position.z = 3000;
             	cam.lookAt( scene.position );

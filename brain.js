@@ -2,6 +2,7 @@ let incomingValues = [];
 let channels = [];
 let globalMax = 0;
 let channelSize = 4;
+let clientID = ""
 
 //let IP_address = 'http://192.168.9.142:5000/';
 let IP_address = 'http://192.168.0.100:5000/';
@@ -14,6 +15,7 @@ function setup(){
 	//socket = io.connect('http://localhost:5000/');
 	socket = io.connect(IP_address);
   	socket.on('brain_signal', readSignal);
+  	socket.on('userID', ID_Display);
 
   	/*
   	createCanvas(710, 400);
@@ -56,6 +58,12 @@ function createChannels(){
   channels[2].allowGlobal = false;
 }
 
+function ID_Display(data){
+	clientID = data;
+
+	console.log("client ID: "+ clientID);
+}
+
 function readSignal(data){
 	incomingValues = split(data, ",");
  	var m = match(incomingValues[0], "ERROR");
@@ -71,7 +79,7 @@ function readSignal(data){
 	    if ((parseInt(incomingValues[0], 10)== 200) && (i > 2)){
 	      newValue = 0;
 	    }
-	    console.log("incomingValues["+i+"] ="+newValue);
+	    //console.log("incomingValues["+i+"] ="+newValue);
 	    channels[i].addDataPoint(newValue);
 	}
 }
