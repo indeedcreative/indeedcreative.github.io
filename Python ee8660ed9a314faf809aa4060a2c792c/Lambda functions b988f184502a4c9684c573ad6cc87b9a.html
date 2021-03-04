@@ -1,0 +1,665 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lambda functions</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b988f184-502a-4c96-84c5-73ad6cc87b9a" class="page sans"><header><h1 class="page-title">Lambda functions</h1></header><div class="page-body"><h1 id="131addeb-4693-45cd-a92c-054fe8f7c285" class=""><strong>Syntax and Examples</strong></h1><p id="0bb36a83-7c3a-4a8c-ac1e-2b73fb9c96c1" class="">The formal syntax to write a lambda function is as given below:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1ab319bb-f886-43d7-b537-fce72fe8a52a" class="code"><code><span class="token keyword">lambda</span> p1<span class="token punctuation">,</span> p2<span class="token punctuation">:</span> expression </code></pre><p id="e8798434-5b87-441e-a79a-af0712a38879" class=""><mark class="highlight-yellow_background">Here, p1 and p2 are the parameters which are passed to the lambda function.</mark> You can add as many or few parameters as you need.</p><p id="76ac4c04-0b93-4d0e-9438-eac17d303dfe" class="">However, notice that we do not use brackets around the parameters as we do with regular functions. The last part (expression) is any valid python expression that operates on the parameters you provide to the function.</p><h3 id="75b26ca9-b4c2-4beb-afbe-7b8f66f7670c" class=""><strong>Example 1</strong></h3><p id="aa935e8d-c25f-4970-b696-b2cb656d13cc" class="">Now that you know about lambdas let&#x27;s try it with an example. So, open your IDLE and type in the following:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3270e2fb-b752-4a88-b0a0-0adad694744a" class="code"><code>adder <span class="token operator">=</span> <span class="token keyword">lambda</span> x<span class="token punctuation">,</span> y<span class="token punctuation">:</span> x <span class="token operator">+</span> y
+<span class="token keyword">print</span> <span class="token punctuation">(</span>adder <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p id="45e58521-6673-4f35-9ba4-505aafd8a311" class=""><strong>Here is the output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a6c422d6-02d2-42a7-825b-022b34f62049" class="code"><code>3</code></pre><h3 id="a74a7d65-27b0-4a4e-8968-51eadb0bca06" class=""><strong>Code Explanation</strong></h3><p id="4aa1f957-7625-4ef8-93a8-91493a79f96e" class="">Here, we define a variable that will hold the result returned by the lambda function.</p><p id="a62ab845-8bbf-47c0-85a8-b48555f465fe" class=""><strong>1.</strong> The lambda keyword used to define an anonymous function.</p><p id="d85f2fd2-b2fa-4371-9d2a-41877a12910e" class=""><strong>2.</strong> x and y are the parameters that we pass to the lambda function.</p><p id="0c0fe040-3104-4cd8-9672-4aeb10222ddf" class=""><strong>3.</strong> This is the body of the function, which adds the 2 parameters we passed. Notice that it is a single expression. You cannot write multiple statements in the body of a lambda function.</p><p id="2cdd6718-fa13-41ea-bf7c-654bf43c4bbd" class=""><strong>4.</strong> We call the function and print the returned value.</p><h3 id="a2c36938-d35e-4830-b813-f153d142512c" class=""><strong>Example 2</strong></h3><p id="97fdb2c2-9f70-4f79-8781-5e0a86bcd221" class="">That was a basic example to understand the fundamentals and syntax of lambda. Let&#x27;s now try to print out a lambda and see the result. Again, open your IDLE and type in the following:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="25bd779a-56ac-4256-9f6e-031c33d301e4" class="code"><code><span class="token comment">#What a lambda returns</span>
+string<span class="token operator">=</span><span class="token string">'some kind of a useless lambda'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> string <span class="token punctuation">:</span> <span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p id="a40d28e4-81d3-45de-b954-1c0660f1689a" class="">Now save your file and hit F5 to run the program. This is the output you should get.</p><p id="3bd56d56-fe79-463d-82ec-26002372b3d1" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="fdff3f10-668b-4947-be15-f5ef7217b4bf" class="code"><code><span class="token operator">&lt;</span>function <span class="token operator">&lt;</span><span class="token keyword">lambda</span><span class="token operator">></span> at <span class="token number">0x00000185C3BF81E0</span><span class="token operator">></span>
+</code></pre><p id="02c7ee0b-2608-413d-aba6-6cb3479bfd8b" class="">What&#x27;s happening here? Let&#x27;s look at the code to understand further.</p><p id="8d1ef4f5-b4b0-492e-8c8c-515a35773c24" class="">Code Explanation</p><ol id="6a274db3-4049-4dd9-be46-b6df6dac8d82" class="numbered-list" start="1"><li>Here, we define a string that you&#x27;ll pass as a parameter to the lambda.</li></ol><ol id="1272a65e-8cff-4005-a461-86d99a3a2e72" class="numbered-list" start="2"><li>We declare a lambda that calls a print statement and prints the result.</li></ol><p id="6d692dd3-0f85-4d3b-984f-b12506e10398" class="">But why doesn&#x27;t the program print the string we pass? This is because the lambda itself returns a function object. In this example, the lambda is not being <strong>called</strong> by the print function but simply <strong>returning</strong> the function object and the memory location where it is stored. That&#x27;s what gets printed at the console.</p><h3 id="a182f7a7-9b5a-4af5-b3c1-146b86c1ce02" class=""><strong>Example 3</strong></h3><p id="2aee6d9a-6450-4a93-ad0c-27b90b9ddd22" class="">However, if you write a program like this:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="ea9d13d4-a0e8-470b-9f4b-2b58a4c5e34c" class="code"><code><span class="token comment">#What a lambda returns #2</span>
+x<span class="token operator">=</span><span class="token string">"some kind of a useless lambda"</span>
+<span class="token punctuation">(</span><span class="token keyword">lambda</span> x <span class="token punctuation">:</span> <span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+</code></pre><p id="654f9a3a-834b-483d-b875-6f4b7493fbdf" class="">And run it by hitting F5, you&#x27;ll see an output like this.</p><p id="ac737891-3fc8-47f9-83f4-1588210e1b95" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="6b26b327-22d7-4304-a5ea-fb1f8cc6ea5a" class="code"><code>some kind of a useless <span class="token keyword">lambda</span></code></pre><p id="2d1a1518-e763-41c5-8b3a-825f31faf558" class="">Now, the lambda is being called, and the string we pass gets printed at the console. But what is that weird syntax, and why is the lambda definition covered in brackets? Let&#x27;s understand that now.</p><p id="bd9f8bbd-a7da-46b9-b34f-5fc7141cc19b" class="">Code Explanation</p><ol id="ec0a2a0b-cffb-4698-8291-d3825d4979aa" class="numbered-list" start="1"><li>Here is the same string we defined in the previous example.</li></ol><ol id="3a6f24df-b8ef-4b73-97b5-2ced3acaea83" class="numbered-list" start="2"><li>In this part, we are defining a lambda and calling it immediately by passing the string as an argument. This is something called an IIFE, and you&#x27;ll learn more about it in the upcoming sections of this tutorial.</li></ol><h3 id="2ff2bb8d-239c-490f-955d-a6f015756df1" class=""><strong>Example 4</strong></h3><p id="242ba1f6-aeb0-45b7-b68d-d2606f470f2d" class="">Let&#x27;s look at a final example to understand how lambdas and regular functions are executed. So, open your IDLE and in a new file, type in the following:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="765b55ab-0133-483b-b671-5a6cc30fa84d" class="code"><code><span class="token comment">#A REGULAR FUNCTION</span>
+<span class="token keyword">def</span> <span class="token function">guru</span><span class="token punctuation">(</span> funct<span class="token punctuation">,</span> <span class="token operator">*</span>args <span class="token punctuation">)</span><span class="token punctuation">:</span>
+funct<span class="token punctuation">(</span> <span class="token operator">*</span>args <span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">printer_one</span><span class="token punctuation">(</span> arg <span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">return</span> <span class="token keyword">print</span> <span class="token punctuation">(</span>arg<span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">printer_two</span><span class="token punctuation">(</span> arg <span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span>
+
+<span class="token comment">#CALL A REGULAR FUNCTION </span>
+guru<span class="token punctuation">(</span> printer_one<span class="token punctuation">,</span> <span class="token string">'printer 1 REGULAR CALL'</span> <span class="token punctuation">)</span>
+guru<span class="token punctuation">(</span> printer_two<span class="token punctuation">,</span> <span class="token string">'printer 2 REGULAR CALL \n'</span> <span class="token punctuation">)</span>
+<span class="token comment">#CALL A REGULAR FUNCTION THRU A LAMBDA</span>
+guru<span class="token punctuation">(</span><span class="token keyword">lambda</span><span class="token punctuation">:</span> printer_one<span class="token punctuation">(</span><span class="token string">'printer 1 LAMBDA CALL'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+guru<span class="token punctuation">(</span><span class="token keyword">lambda</span><span class="token punctuation">:</span> printer_two<span class="token punctuation">(</span><span class="token string">'printer 2 LAMBDA CALL'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p id="47439cc2-e539-49c4-b396-3f57aaabe187" class="">Now, save the file and hit F5 to run the program. If you didn&#x27;t make any mistakes, the output should be something like this.</p><p id="fa0add93-ec2d-4d97-9c7e-37417bd1f29b" class=""><strong>Output:</strong></p><p id="328702c9-1c4b-4f46-8988-3dbdec15cc3c" class="">printer 1 REGULAR CALL</p><p id="3f1fc980-0302-4db2-8e46-54825d970d0e" class="">printer 2 REGULAR CALL</p><p id="67b3bf03-3abf-4c00-8112-548c359632e0" class="">printer 1 LAMBDA CALL</p><p id="ec03b6d5-aa3e-4a3e-9e40-152f1b6f4120" class="">printer 2 LAMBDA CALL</p><p id="5acb1e26-e38d-4c82-9640-d899a0973761" class="">Code Explanation</p><ol id="287e836d-a8bd-4ed3-b03e-6d6a4c8323c0" class="numbered-list" start="1"><li>A function called guru that takes another function as the first parameter and any other arguments following it.</li></ol><ol id="19476cca-b3e2-467f-a410-7931e6003b47" class="numbered-list" start="2"><li>printer_one is a simple function which prints the parameter passed to it and returns it.</li></ol><ol id="a61b06aa-9536-465b-9d0e-9ec5f3768b6d" class="numbered-list" start="3"><li>printer_two is similar to printer_one but without the return statement.</li></ol><ol id="ffdfcb73-7ccb-4594-9dc8-43589bbc00ee" class="numbered-list" start="4"><li>In this part, we are calling the guru function and passing the printer functions and a string as parameters.</li></ol><ol id="ebb1d7f3-401c-44ba-ac48-0136260b8b34" class="numbered-list" start="5"><li>This is the syntax to achieve the fourth step (i.e., calling the guru function) but using lambdas.</li></ol><p id="79f7c892-691d-49c7-8e45-75f7ad88b430" class="">In the next section, you will learn how to use lambda functions with <strong>map(),</strong> <strong>reduce(),</strong> and <strong>filter()</strong> in Python.</p><h1 id="b728c3a3-e2d3-4b07-9f1d-30771e937711" class=""><strong>Using lambdas with Python built-ins</strong></h1><p id="9953c3a2-29ff-4e0c-8b8c-ee1b58b15a06" class="">Lambda functions provide an elegant and powerful way to perform operations using built-in methods in Python. It is possible because lambdas can be invoked immediately and passed as an argument to these functions.</p><h3 id="1bdf7326-4163-4b97-926d-c0cf4d232158" class=""><strong>IIFE in Python Lambda</strong></h3><p id="b8c7c4a9-59c2-45b8-861f-c5662e4c93f5" class=""><strong>IIFE</strong> stands for <strong>immediately invoked function execution. </strong>It means that a lambda function is callable as soon as it is defined. Let&#x27;s understand this with an example; fire up your IDLE and type in the following:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="861665c7-1373-4836-94f8-796c1c8cd93f" class="code"><code> (lambda x: x + x)(2) </code></pre><p id="24143c82-d9d0-4462-bcef-f820fd7167f9" class=""><strong>Here is the output and code explanation:</strong></p><p id="e9c7a87a-5335-44e5-a83a-b3f4010ca62f" class="">This ability of lambdas to be invoked immediately allows you to use them inside functions like map() and reduce(). It is useful because you may not want to use these functions again.</p><h1 id="3497b490-dd73-4752-b2c4-41c6ad382e7a" class=""><strong>lambdas in filter()</strong></h1><p id="098b2a2a-b8ee-42eb-a86b-6d4e3dcb8e56" class="">The filter function is used to select some particular elements from a sequence of elements. The sequence can be any iterator like lists, sets, tuples, etc.</p><p id="b93b295a-57bf-424c-898d-e1aa415da4e4" class="">The elements which will be selected is based on some pre-defined constraint. It takes 2 parameters:</p><ul id="60499d8c-85fc-4f4c-8dbf-d64e0e442c1a" class="bulleted-list"><li>A function that defines the filtering constraint</li></ul><ul id="15a4dd9c-f569-483a-8438-2ad0006014bb" class="bulleted-list"><li>A sequence (any iterator like lists, tuples, etc.)</li></ul><p id="1e95aa5a-7808-4029-b730-86842fabafce" class="">For example,</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="227ed14f-b729-4a38-96bf-deecee35c30c" class="code"><code>sequences <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+filtered_result <span class="token operator">=</span> <span class="token builtin">filter</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x <span class="token operator">></span> <span class="token number">4</span><span class="token punctuation">,</span> sequences<span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">(</span>filtered_result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p id="4955448a-a208-417d-9762-b149f90f3c81" class=""><strong>Here&#x27;s the output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="17d31937-31ba-4516-9226-43e3e47283f0" class="code"><code>[10, 8, 7, 5, 11]</code></pre><p id="ebd57b95-b83e-4b74-a29e-ae96dfcb4714" class=""><strong>Code Explanation:</strong></p><p id="54ec4efe-2cb4-4fdb-ba27-245480484a16" class=""><strong>1.</strong> In the first statement, we define a list called sequences which contains some numbers.</p><p id="b3684061-a96f-4a76-b251-5dbc7028ebaa" class=""><strong>2.</strong> Here, we declare a variable called filtered_result, which will store the filtered values returned by the filter() function.</p><p id="07383abd-01cb-4fcc-b348-ef1acae1bdf2" class=""><strong>3.</strong> A lambda function which runs on each element of the list and returns true if it is greater than 4.</p><p id="4d7c6752-3e94-4181-9088-ea67c46c28a6" class=""><strong>4. </strong>Print the result returned by the filter function.</p><h1 id="522bb521-b27d-4f55-8a36-c5149fd07f76" class=""><strong>lambdas in map()</strong></h1><p id="d02b59fa-e9d3-4a65-88e1-93ad778ab0ab" class="">the map function is used to apply a particular operation to every element in a sequence. Like filter(), it also takes 2 parameters:</p><ol id="ed339d49-8376-4042-b112-c804f9749652" class="numbered-list" start="1"><li>A function that defines the op to perform on the elements</li></ol><ol id="46d6c480-4956-45d8-9181-471a19ad49ce" class="numbered-list" start="2"><li>One or more sequences</li></ol><p id="09eef531-e240-46a3-8274-f6bddb9cd39a" class="">For example, here is a program that prints the squares of numbers in a given list:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c6b333f6-586f-4504-80dd-504fac4ae037" class="code"><code>sequences <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+filtered_result <span class="token operator">=</span> <span class="token builtin">map</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x<span class="token operator">*</span>x<span class="token punctuation">,</span> sequences<span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">(</span>filtered_result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p id="4f0b7053-5781-46d6-a3f3-d2260bc4fde4" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="79e09077-172f-4131-ac07-4f7c4b0e24ad" class="code"><code> [100, 4, 64, 49, 25, 16, 121, 0, 1]</code></pre><p id="f34d43dc-1ef1-46ce-83a5-115338f64678" class="">[KR1]</p><p id="438694e1-4669-4404-a43f-6d935cd22766" class="">Code Explanation:</p><ol id="e2ff9063-6be8-4862-9a6d-b918099a1077" class="numbered-list" start="1"><li>Here, we define a list called sequences which contains some numbers.</li></ol><ol id="eee9dccd-2216-4513-a756-d016247560c8" class="numbered-list" start="2"><li>We declare a variable called filtered_result which will store the mapped values</li></ol><ol id="4b40813a-a449-4c1a-a575-ae599b8e8a2d" class="numbered-list" start="3"><li>A lambda function which runs on each element of the list and returns the square of that number.</li></ol><ol id="66d2fc7f-3aae-431d-8a36-4bada709f608" class="numbered-list" start="4"><li>Print the result returned by the map function.</li></ol><h1 id="90113794-7048-4637-9cb6-20a5b368d0cf" class=""><strong>lambdas in reduce()</strong></h1><p id="45dc7624-b8b1-4d83-a013-3667319de063" class="">The reduce function, like map(), is used to apply an operation to every element in a sequence. However, it differs from the map in its working. These are the steps followed by the reduce() function to compute an output:</p><p id="d31666f7-61b4-4ea9-9712-1e920b01ed3e" class=""><strong>Step 1) </strong>Perform the defined operation on the first 2 elements of the sequence.</p><p id="3b98e7e9-24f7-45d4-9fdd-30737b26e2a5" class=""><strong>Step 2) </strong>Save this result</p><p id="bb72b680-c7ea-4031-accc-fd5df8b30675" class=""><strong>Step 3) </strong>Perform the operation with the saved result and the next element in the sequence.</p><p id="e4ddd0fa-f9bf-4160-ad46-f620d3a83b0d" class=""><strong>Step 4) </strong>Repeat until no more elements are left.</p><p id="25a7c467-1c72-4a1b-bce9-9a0487eab93d" class="">It also takes two parameters:</p><ol id="4b6ce381-2979-4c53-8723-69f9ff0dec38" class="numbered-list" start="1"><li>A function that defines the operation to be performed</li></ol><ol id="da85ae44-441f-4421-b427-ace7f017f147" class="numbered-list" start="2"><li>A sequence (any iterator like lists, tuples, etc.)</li></ol><p id="a5c1b62d-0d21-44b9-b4b7-bb9c665f184e" class="">For example, here is a program that returns the product of all elements in a list:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c65d9eaa-2d70-4c2b-b151-58071f773d1a" class="code"><code><span class="token keyword">from</span> functools <span class="token keyword">import</span> <span class="token builtin">reduce</span>
+sequences <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
+product <span class="token operator">=</span> <span class="token builtin">reduce</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">,</span> y<span class="token punctuation">:</span> x<span class="token operator">*</span>y<span class="token punctuation">,</span> sequences<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>product<span class="token punctuation">)</span>
+</code></pre><p id="08660e26-52bd-4c55-845a-9ce30674d1cb" class=""><strong>Here is the output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="0486f9f2-4b48-4cca-89f5-baa916236514" class="code"><code>120</code></pre><p id="fcb845d2-bd20-45c3-8bfc-f70674c40570" class="">Code Explanation:</p><ol id="56a8e162-23eb-4842-b84a-59a64a89af54" class="numbered-list" start="1"><li>Import reduce from the functools module</li></ol><ol id="0690fbd8-17b6-4954-a558-7aa18ee4f600" class="numbered-list" start="2"><li>Here, we define a list called sequences which contains some numbers.</li></ol><ol id="6471874d-4a9b-44ff-8e53-68c2a3df17d6" class="numbered-list" start="3"><li>We declare a variable called product which will store the reduced value</li></ol><ol id="90537268-c467-429b-ad81-ffee85bf6aba" class="numbered-list" start="4"><li>A lambda function that runs on each element of the list. It will return the product of that number as per the previous result.</li></ol><ol id="40005480-0e30-4e39-a8a9-7dabdbbb3b9b" class="numbered-list" start="5"><li>Print the result returned by the reduce function.</li></ol><h1 id="217c9400-8614-43e8-a5f2-e743b0c4c848" class=""><strong>Why (and why not) use lambda functions?</strong></h1><p id="dd0121d1-1a00-48dc-9993-e41b7e74fd3a" class="">As you will see in the next section, lambdas are treated the same as regular functions at the interpreter level. In a way, you could say that lambdas provide compact syntax for writing functions which return a single expression.</p><p id="0811eb75-b236-4dce-90ec-146458f35559" class="">However, you should know when it is a good idea to use lambdas and when to avoid them. In this section, you will learn some of the design principles used by python developers when writing lambdas.</p><p id="ed81fe88-9bf1-4e3c-aca0-310614815d06" class="">One of the most common use cases for lambdas is in functional programming as Python supports a paradigm (or style) of programming known as functional programming.</p><p id="4976bfbe-2aeb-4dc5-8720-a192be467890" class="">It allows you to provide a function as a parameter to another function (for example, in map, filter, etc.). In such cases, using lambdas offer an elegant way to create a one-time function and pass it as the parameter.</p><h3 id="a2d18d23-ca89-41f4-8f39-3e3c6bc00bf3" class=""><strong>When should you not use Lambda?</strong></h3><p id="2060374c-ab88-4a8c-be64-7c8e2d6d2673" class="">You should never write complicated lambda functions in a production environment. It will be very difficult for coders who maintain your code to decrypt it. If you find yourself making complex one-liner expressions, it would be a much superior practice to define a proper function. As a best practice, you need to remember that simple code is always better than complex code.</p><h1 id="f4b2c374-8029-499e-9340-6c3919381c7d" class=""><strong>Lambdas vs. Regular functions</strong></h1><p id="5686518c-fa09-4a6a-ac51-8b78bc14b23d" class="">As previously stated, lambdas are[vV4][J5] just functions which do not have an identifier bound to them. In simpler words, they are functions with no names (hence, anonymous). Here is a table to illustrate the difference between lambdas and regular functions in python.</p><p id="718f7e22-3224-481d-8709-ae7e23ff2d47" class=""><strong>Lambdas</strong></p><p id="e578d192-31f6-4536-997e-f04a5889957a" class=""><strong>Regular Functions</strong></p><p id="d84dd9d8-6c84-4110-9ca0-892090df2f93" class="">Syntax:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="9c12983a-3f74-4dec-a7eb-348115204d2d" class="code"><code>lambda x : x + x </code></pre><p id="6dcea58c-9dc8-404e-8ce0-4be01ea76fea" class="">Syntax:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="2614a6d1-e2c6-459d-a675-e4f7a27c1156" class="code"><code>def (x) :
+return x + x 
+</code></pre><p id="9ca7e31a-3dc4-49a1-8303-8952e8c7e6a1" class="">Lambda functions can only have one expression in their body.</p><p id="68b718dd-fc19-4b70-bb52-3a183a4b1efd" class="">Regular functions can have multiple expressions and statements in their body.</p><p id="5f74c215-6be8-445c-8c3b-4cd51fcd9962" class="">Lambdas do not have a name associated with them. That&#x27;s why they are also known as anonymous functions.</p><p id="30fc34d3-4f7a-4169-9ffb-8877b7a20c9b" class="">Regular functions must have a name and signature.</p><p id="7277ed5e-731c-4b0f-919d-7e7b794ec9fa" class="">Lambdas do not contain a return statement because the body is automatically returned.</p><p id="b9a0b0a5-8fc9-40e4-a9cc-00192868a845" class="">Functions which need to return value should include a return statement.</p><h3 id="ca4856c2-3993-428f-a6fd-b815de14f5c4" class=""><strong>Explanation of the differences?</strong></h3><p id="2bf9db93-b5d3-4827-baa1-867a42a0f776" class="">The primary difference between a lambda and a regular function is that the lambda function evaluates only a single expression and yields a function object. Consequently, we can name the result of the lambda function and use it in our program as we did in the previous example.</p><p id="fce82c73-0d3c-469f-abde-138d0165723e" class="">A regular function for the above example would look like this:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c1c576e3-de23-4d7f-b90d-623512a1d6e6" class="code"><code>def adder (x, y):
+return x + y 
+print (adder (1, 2))
+</code></pre><p id="aa84b4d2-ade1-4038-b84e-8207c01a6c85" class="">Here, we have to define a <strong>name</strong> for the function which <strong>returns </strong>the result when we <strong>call</strong> it. A lambda function doesn&#x27;t contain a return statement because it will have only a single expression which is always returned by default. You don&#x27;t even have to assign a lambda either as it can be immediately invoked (see the next section). As you will see in the following example, lambdas become particularly powerful when we use them with Python&#x27;s built-in functions.</p><p id="a394dd97-90db-4901-9b55-fb5f5674e2ea" class="">However, you may still be wondering how lambdas are any different from a function that returns a single expression (like the one above). At the interpreter level, there is not much difference. It may sound surprising, but any lambda function that you define in Python is treated as a normal function by the interpreter.</p><p id="7c03c52f-4a9e-430e-8e2c-5504107f3137" class="">As you can see in the diagram, the two definitions are handled in the same way by the python interpreter when converted to bytecode. Now, you cannot name a function <strong>lambda</strong> because it is reserved by Python, but any other function name will yield the same bytecode[KR6].</p></div></article></body></html>

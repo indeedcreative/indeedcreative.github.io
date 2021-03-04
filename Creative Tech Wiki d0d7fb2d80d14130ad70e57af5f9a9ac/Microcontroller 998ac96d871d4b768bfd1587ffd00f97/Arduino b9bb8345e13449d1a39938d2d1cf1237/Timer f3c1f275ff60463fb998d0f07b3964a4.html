@@ -1,0 +1,914 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Timer</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f3c1f275-ff60-463f-b998-d0f07b3964a4" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">⏰</span></div><h1 class="page-title">Timer</h1></header><div class="page-body"><p id="95a11409-a070-4383-a951-3b0569a115a2" class=""><a href="https://www.robotshop.com/community/forum/t/arduino-101-timers-and-interrupts/13072">https://www.robotshop.com/community/forum/t/arduino-101-timers-and-interrupts/13072</a></p><p id="0ac7786e-d985-4bda-b214-d2c218d887f5" class="">This tutorial shows the use of timers and interrupts for Arduino boards. As Arduino programmer you will have used timers and interrupts without knowledge, bcause all the low level hardware stuff is hidden by the Arduino API. Many Arduino functions uses timers, for example the time functions: delay(), millis()and micros() and delayMicroseconds(). The PWM functions analogWrite()uses timers, as the tone()and the noTone() function does. Even the Servo library uses timers and interrupts.</p><h3 id="92ea4061-1969-4f98-a29d-e8b93ca862a1" class="">What is a timer?</h3><p id="dbf53954-c1b6-4b81-88f3-00f491be145e" class="">A timer or to be more precise a timer / counter is a piece of hardware builtin the Arduino controller  (other controllers have timer hardware, too). It is like a clock, and can be used to measure time events.</p><p id="cca0f18f-2bb2-4dbc-af59-e18bc2781bcf" class="">The timer can be programmed by some special registers. You can configure the prescaler for the timer, or the mode of operation and many other things.</p><p id="abda05ef-fe85-4ca5-9395-358b890d1958" class="">The controller of the Arduino is the Atmel AVR ATmega168 or the ATmega328. These chips are pin compatible and only differ in the size of internal memory. Both have 3 timers, called timer0, timer1 and timer2. Timer0 and timer2 are 8bit timer, where timer1 is a 16bit timer. The most important difference  between 8bit and 16bit timer is the timer resolution. 8bits means 256 values where 16bit means 65536 values for higher resolution.</p><p id="4aa3d7c2-e900-4e59-baf2-3b31acdb003a" class="">The controller for the Arduino Mega series is the Atmel AVR ATmega1280 or the ATmega2560.  Also identical only differs in memory size. These controllers have 6 timers. Timer 0, timer1 and timer2 are identical to the ATmega168/328. The timer3, timer4 and timer5 are all 16bit timers, similar to timer1.</p><p id="b1abb197-0917-4f74-a066-24c675fd172a" class="">All timers depends on the system clock of your Arduino system. Normally the system clock is 16MHz, but for the Arduino Pro 3,3V it is 8Mhz. So be careful when writing your own timer functions.</p><p id="1d3bac40-0cd6-4205-88ac-534946db42a2" class="">The timer hardware can be configured with some special timer registers. In the Arduino firmware all timers were configured to a 1kHz frequency and interrupts are gerally enabled.</p><p id="2f50ea2f-aa68-47be-af96-2f5ad8c0e084" class="">
+</p><h3 id="4e2ac04f-210d-48e7-979d-d20eec902b74" class="">Timer0:</h3><p id="407459fb-54e9-4b86-a4aa-399e3af85152" class="">Timer0 is a 8bit timer.In the Arduino world timer0 is been used for the timer functions, like <a href="http://arduino.cc/en/Reference/Delay">delay() 766</a>,<a href="http://arduino.cc/en/Reference/Millis"> millis() 1.7k</a> and<a href="http://arduino.cc/en/Reference/Micros"> micros() 766</a>. If you change timer0 registers, this may influence the Arduino timer function. So you should know what you are doing.</p><p id="8bbcdd0a-c316-4e94-bada-01673117facb" class="">
+</p><h3 id="4c561f31-4acf-44cb-8f6c-e9ed2d449471" class="">Timer1:</h3><p id="9464671d-3597-4b54-8fdf-ec64d4406b79" class="">Timer1 is a 16bit timer.In the Arduino world the <a href="http://arduino.cc/en/Reference/Servo">Servo library 1.2k</a> uses timer1 on Arduino Uno (timer5 on Arduino Mega).</p><p id="cc04d4c4-7c7e-49be-a689-6f2ea209d7ff" class="">
+</p><h3 id="29fd83e3-c778-4200-9d72-b7638d931a3e" class="">Timer2:</h3><p id="21a792a1-6cb0-4afd-a82b-32270cffed98" class="">Timer2 is a 8bit timer like timer0.In the Arduino work the <a href="http://arduino.cc/en/Reference/Tone">tone() 1.1k</a> function uses timer2.Timer3, Timer4, Timer5:Timer 3,4,5 are only available on Arduino Mega boards. These timers are all 16bit timers.Timer RegisterYou can change the Timer behaviour through the timer register.  The most important timer registers are:TCCRx - Timer/Counter Control Register. The prescaler can be configured here.</p><p id="478a6ea2-438c-42bf-9b63-ff5510854607" class="">
+</p><figure id="67be85cb-83c4-470c-ac81-3ae1831bd9eb" class="image"><a href="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled.png"><img style="width:500px" src="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled.png"/></a></figure><p id="f4eae70f-5545-470a-b64d-bc3cc0ce03e3" class="">
+</p><figure id="e14a6ba6-661a-42c4-8b44-8eaac7e479ae" class="image"><a href="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%201.png"><img style="width:500px" src="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%201.png"/></a></figure><p id="8627d324-fecc-44f2-8865-e12ecb9f8277" class="">TCNTx - Timer/Counter Register. The actual timer value is stored here.</p><p id="fe1a68c1-ff5b-4fbf-b7c9-8d5fba63710b" class="">OCRx - Output Compare Register</p><p id="caf7fc3c-87d5-4ba9-a412-2b678bea7e8e" class="">ICRx - Input Capture Register (only for 16bit timer)</p><p id="63abe66f-b466-4bb4-a3c5-4e54baaa7ecc" class="">TIMSKx - Timer/Counter Interrupt Mask Register. To enable/disable timer interrupts.</p><p id="27f3c2db-ba7f-4907-9d82-0fe02046b81e" class="">TIFRx - Timer/Counter Interrupt Flag Register. Indicates a pending timer interrupt.</p><h3 id="81874875-7e0d-4d25-a73d-5e4765d40885" class=""><strong>Clock select and timer frequency</strong></h3><p id="5003fca0-d1dc-4be4-aca4-73056e8413b4" class="">Different clock sources can be selected for each timer independently. To calculate the timer frequency (for example 2Hz using timer1) you will need:</p><ol id="7b868628-e447-4452-8ec0-5431c7895b1e" class="numbered-list" start="1"><li>CPU frequency 16Mhz for Arduino</li></ol><ol id="0f222e54-6d8f-456d-a97f-0979c71ee79c" class="numbered-list" start="2"><li>maximum timer counter value (256 for 8bit, 65536 for 16bit timer)</li></ol><ol id="df062796-c2fa-4907-9692-4d3cb7448b30" class="numbered-list" start="3"><li>Divide CPU frequency through the choosen prescaler (16000000 / 256 = 62500)</li></ol><ol id="ce08a545-d1cd-4df7-b850-0a09fcfb03ef" class="numbered-list" start="4"><li>Divide result through the desired frequency (62500 / 2Hz = 31250)</li></ol><ol id="9dee647f-a8c2-4a50-95b9-30aef7670aca" class="numbered-list" start="5"><li>Verify the result against the maximum timer counter value (31250 &lt; 65536 success) if fail, choose bigger prescaler.</li></ol><p id="645c86e8-5db5-4e8a-85f0-26f5c1b351b9" class="">
+</p><figure id="dc0c1667-ec96-4e4d-b935-441e9fb34c23" class="image"><a href="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%202.png"><img style="width:500px" src="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%202.png"/></a></figure><h3 id="6775c817-8a41-464a-a971-567753f6f0a9" class=""><strong>Timer modes</strong></h3><p id="3079cbe1-35c7-4274-8b4a-6efeae8d08c5" class="">Timers can be configured in different modes.</p><p id="88e72c51-198e-430f-aa1c-4d31434f783a" class="">PWM mode. Pulth width modulation mode. the OCxy outputs are used to generate PWM signals</p><p id="e6f1d8c8-6e94-44c9-89a5-9d2044ece590" class="">CTC mode. Clear timer on compare match. When the timer counter reaches the compare match register, the timer will be cleared</p><p id="8ebbbcf5-9190-4be6-bbd0-7a5933809ab8" class="">
+</p><figure id="95f7cb5f-7547-443d-ac81-330e3d7003ce" class="image"><a href="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%203.png"><img style="width:500px" src="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%203.png"/></a></figure><h3 id="968c590c-6b7f-4b6a-bfaf-16abcdc8b5ad" class="">What is an interrupt?</h3><p id="eb98d34f-9440-4dd4-8b8f-14fb08fc2624" class="">The program running on a controller is normally running sequentially instruction by instruction. An interrupt is an external event that interrupts the running program and runs a special interrupt service routine (ISR). After the ISR has been finished, the running program is continued with the next instruction. Instruction means a single machine instruction, not a line of C or C++ code.Before an pending interrupt will be able to call a ISR the following conditions must be true:</p><ul id="b8781e3c-a608-423c-b008-9cde13925106" class="bulleted-list"><li>Interrupts must be generally enabled</li></ul><ul id="b6eb2918-2f8b-43a6-94d9-205aa6b9e996" class="bulleted-list"><li>the according Interrupt mask must be enabled</li></ul><p id="faf1149f-dfb9-462f-95f9-9b1117c4e702" class="">Interrupts can generally enabled / disabled with the function <a href="http://arduino.cc/en/Reference/Interrupts">interrupts() 311</a> / <a href="http://arduino.cc/en/Reference/NoInterrupts">noInterrupts() 79</a>. By default in the Arduino firmware interrupts are enabled. Interrupt masks are enabled / disabled by setting / clearing bits in the Interrupt mask register (TIMSKx).When an interrupt occurs, a flag in the interrupt flag register (TIFRx) is been set. This interrupt will be automatically cleared when entering the ISR or by manually clearing the bit in the interrupt flag register.</p><p id="518a16b9-6a42-420b-9645-5b792af6bc09" class="">
+</p><p id="38eedb20-7ded-4225-91ce-6c8e2fa6ae93" class="">The Arduino functions<a href="http://arduino.cc/en/Reference/AttachInterrupt"> attachInterrupt() 378</a> and<a href="http://arduino.cc/en/Reference/DetachInterrupt"> detachInterrupt() 66</a> can only be used for external interrupt pins. These are different interrupt sources, not discussed here.</p><h3 id="2e43076b-daad-4bf4-b9c7-d30f34578f09" class="">Timer interrupts</h3><p id="c0ce5dc3-c72f-4f33-9078-4489a1cc30bd" class="">A timer can generate different types of interrupts. The register and bit definitions can be found in the processor data sheet (<a href="http://www.atmel.com/dyn/resources/prod_documents/doc8271.pdf">Atmega328 375</a> or <a href="http://www.atmel.com/dyn/resources/prod_documents/doc2549.pdf">Atmega2560 348</a>) and in the I/O definition header file (iomx8.h for Arduino, iomxx0_1.h for Arduino Mega in the hardware/tools/avr/include/avr folder). The suffix x stands for the timer number (0..5), the suffix y stands for the output number (A,B,C), for example TIMSK1 (timer1 interrupt mask register) or OCR2A (timer2 output compare register A).</p><h3 id="404033eb-286a-44e4-bacb-43c3a03f9ccf" class="">Timer Overflow</h3><p id="6cd3a7bf-5b33-48ab-a651-f9a9ad94545e" class="">Timer overflow means the timer has reached is limit value. When a timer overflow interrupt occurs, the timer overflow bit TOVx will be set in the interrupt flag register TIFRx. When the timer overflow interrupt enable bit TOIEx in the interrupt mask register TIMSKx is set, the timer overflow interrupt service routine ISR(TIMERx_OVF_vect)  will be called.</p><h3 id="953a5400-8603-4981-82c3-808fea3ab19a" class="">Output Compare Match</h3><p id="a862312c-e709-422f-871e-855780850bc2" class="">When a output compare match interrupt occurs, the OCFxy flag will be set in the interrupt flag register TIFRx . When the output compare interrupt enable bit OCIExy in the interrupt mask register TIMSKx is set, the output compare match interrupt service ISR(TIMERx_COMPy_vect) routine will be called.Timer Input Capture:When a timer input capture interrupt occurs, the input capture flag bit ICFx will be set in the interrupt flag register TIFRx. When the input capture interrupt enable bit  ICIEx in the interrupt mask register TIMSKx is set, the timer input capture interrupt service routine ISR(TIMERx_CAPT_vect) will be called.</p><h3 id="5988816d-786c-4f8e-9a96-5789401dae18" class="">PWM and timer</h3><p id="be16c7b2-8c3f-426a-b83e-5f916b06b32f" class="">There is fixed relation between the timers and the PWM capable outputs. When you look in the data sheet or the pinout of the processor these PWM capable pins have names like OCRxA, OCRxB or OCRxC (where x means the timer number 0..5). The PWM functionality is often shared with other pin functionality.The Arduino has 3Timers and 6 PWM output pins. The relation between timers and PWM outputs is:Pins 5 and 6: controlled by timer0Pins 9 and 10: controlled by timer1Pins 11 and 3: controlled by timer2On the Arduino Mega we have 6 timers and 15 PWM outputs:Pins 4 and 13: controlled by timer0Pins 11 and 12: controlled by timer1Pins 9 and10: controlled by timer2Pin 2, 3 and 5: controlled by timer 3Pin 6, 7 and 8: controlled by timer 4Pin 46, 45 and 44:: controlled by timer 5</p><h3 id="82bf44dc-6251-4692-ab96-e9162b88c5e8" class="">Usefull 3rd party libraries </h3><p id="ed4c5385-4130-4742-bc8c-4077e102a294" class="">Some 3rd party libraries exists, that uses timers:</p><ul id="27a484d6-7193-49db-831b-18437ab2f058" class="bulleted-list"><li><a href="http://www.arcfn.com/2009/08/multi-protocol-infrared-remote-library.html">Ken Shirrifs IR library 282</a>. Using timer2. Send and receive any kind of IR remote signals like RC5, RC6, Sony</li></ul><ul id="cc4a99e9-0464-4416-a7fa-77c4ca9d4bcd" class="bulleted-list"><li><a href="http://arduino.cc/playground/Code/Timer1">Timer1 and Timer3 library 2.2k</a>. Using timer1 or tiner3. The easy way to write your own timer interupt service routines.</li></ul><p id="3efb312a-5042-4e38-8863-2471d11a46e3" class="">I have ported these libraries to different timers for Arduino Mega. All ported libraries can be found in the attached file.</p><h3 id="e6110823-620f-4e7c-aea8-4e084caebdc4" class="">Pitfalls</h3><p id="929b87c9-1650-42ff-809b-b9f88a2a734f" class="">There exists some pitfalls you may encounter, when programming your Arduino and make use of functions or libraries that uses timers.</p><ul id="7e076546-40c1-4e4f-8f68-5ec32f0ad052" class="bulleted-list"><li>Servo Library uses Timer1. You can’t use PWM on Pin 9, 10 when you use the Servo Library on an Arduino. For Arduino Mega it is a bit more difficult. The timer needed depends on the number of servos. Each timer can handle 12 servos. For the first 12 servos timer 5 will be used (loosing PWM on Pin 44,45,46). For 24 Servos timer 5 and 1 will be used (loosing PWM on Pin 11,12,44,45,46).. For 36 servos timer 5, 1 and 3 will be used (loosing PWM on Pin 2,3,5,11,12,44,45,46).. For 48 servos all 16bit timers 5,1,3 and 4 will be used (loosing all PWM pins).</li></ul><ul id="febf5262-2b37-42e7-97d9-00ba39158403" class="bulleted-list"><li>Pin 11 has shared functionality PWM and MOSI. MOSI is needed for the SPI interface, You can’t use PWM on Pin 11 and the SPI interface at the same time on Arduino. On the Arduino Mega the SPI pins are on different pins.</li></ul><ul id="ce01b0ad-e9c7-46c5-ae21-9f56eb8c8351" class="bulleted-list"><li>tone() function uses at least timer2. You can’t use PWM on Pin 3,11 when you use the tone() function an Arduino and Pin 9,10 on Arduino Mega.</li></ul><h3 id="83c8bef6-c8d4-4137-983b-cc4296e7d6f5" class="">Examples</h3><p id="69a3cfc0-9a2e-4933-8ab4-0cd8cee6f6bf" class="">Time for some examples.Blinking LED with compare match interrupt</p><p id="bc8b5bcb-bf88-4782-919c-96c106301177" class="">The first example uses the timer1 in CTC mode and the compare match interrupt to toggle a LED. The timer is configured for a frequency of 2Hz. The LED is toggled in the interrupt service routine.</p><p id="94ffbcf7-00c5-44ae-86cf-3e09644dc7d1" class="">
+</p><figure id="6efd3ac6-536a-4145-8c29-fb4bf6b9a7cd" class="image"><a href="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%204.png"><img style="width:500px" src="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%204.png"/></a></figure><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="7e7c1897-c299-44d5-a82c-91526ad44548" class="code"><code><span class="token comment">/* Arduino 101: timer and interrupts
+   1: Timer1 compare match interrupt example 
+   more infos: http://www.letmakerobots.com/node/28278
+   created by RobotFreak 
+*/</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ledPin 13</span>
+
+
+<span class="token keyword">void</span> <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">{</span>
+
+  <span class="token function">pinMode</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">,</span> OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  
+
+  <span class="token comment">// initialize timer1 </span>
+
+  <span class="token function">noInterrupts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// disable all interrupts</span>
+
+  TCCR1A <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  TCCR1B <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  TCNT1  <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+
+  OCR1A <span class="token operator">=</span> <span class="token number">31250</span><span class="token punctuation">;</span>            <span class="token comment">// compare match register 16MHz/256/2Hz</span>
+
+  TCCR1B <span class="token operator">|=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> WGM12<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// CTC mode</span>
+
+  TCCR1B <span class="token operator">|=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> CS12<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 256 prescaler </span>
+
+  TIMSK1 <span class="token operator">|=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> OCIE1A<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// enable timer compare interrupt</span>
+
+  <span class="token function">interrupts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">// enable all interrupts</span>
+
+<span class="token punctuation">}</span>
+
+
+<span class="token function">ISR</span><span class="token punctuation">(</span>TIMER1_COMPA_vect<span class="token punctuation">)</span>          <span class="token comment">// timer compare interrupt service routine</span>
+
+<span class="token punctuation">{</span>
+
+  <span class="token function">digitalWrite</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">,</span> <span class="token function">digitalRead</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// toggle LED pin</span>
+
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">void</span> <span class="token function">loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">{</span>
+
+  <span class="token comment">// your program here…</span>
+
+<span class="token punctuation">}</span>
+
+
+ Blinking LED with timer overflow interrupt
+
+same example like before but now we use the timer overflow interrupt<span class="token punctuation">.</span> In this <span class="token keyword">case</span> timer1 is running in normal mode<span class="token punctuation">.</span> 
+
+The timer must be preloaded every time in the interrupt service routine<span class="token punctuation">.</span>
+
+
+
+<span class="token comment">/* 
+ * Arduino 101: timer and interrupts
+ * 2: Timer1 overflow interrupt example 
+ * more infos: http://www.letmakerobots.com/node/28278
+ * created by RobotFreak 
+ */</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> ledPin 13</span>
+
+<span class="token keyword">void</span> <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token function">pinMode</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">,</span> OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// initialize timer1 </span>
+  <span class="token function">noInterrupts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// disable all interrupts</span>
+  TCCR1A <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  TCCR1B <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  TCNT1 <span class="token operator">=</span> <span class="token number">34286</span><span class="token punctuation">;</span>            <span class="token comment">// preload timer 65536-16MHz/256/2Hz</span>
+  TCCR1B <span class="token operator">|=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> CS12<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 256 prescaler </span>
+  TIMSK1 <span class="token operator">|=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> TOIE1<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// enable timer overflow interrupt</span>
+  <span class="token function">interrupts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">// enable all interrupts</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">ISR</span><span class="token punctuation">(</span>TIMER1_OVF_vect<span class="token punctuation">)</span>        <span class="token comment">// interrupt service routine that wraps a user defined function supplied by attachInterrupt</span>
+<span class="token punctuation">{</span>
+  TCNT1 <span class="token operator">=</span> <span class="token number">34286</span><span class="token punctuation">;</span>            <span class="token comment">// preload timer</span>
+  <span class="token function">digitalWrite</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">,</span> <span class="token function">digitalRead</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token comment">// your program here...</span>
+<span class="token punctuation">}</span></code></pre><p id="9a08a4ca-f4ba-4683-beeb-cdba49c18b85" class="">
+</p><h3 id="71b51401-207d-4f13-ab3a-569629319830" class="">Reading quadrature encoders with a timer</h3><p id="b5117fe8-4c70-4129-b322-08326076d98c" class="">The next example is part of my <a href="https://www.robotshop.com/letsmakerobots/node/11987">Ardubot project 82</a>. It uses timer2 and the compare match interrupt to read the encoder inputs. Timer2 is initialized by default to a frequency of 1kHz (1ms period). In the interrupt service routine the state of all encoder pins is read and a state machine is used to eliminate false readings. Using the timer interrupt is much easier to handle than using 4 input change interrupts.</p><p id="5f3368a2-1b00-4ea4-bb8d-347490013030" class="">The signals of a quadrature encoder is a  2bit <a href="http://en.wikipedia.org/wiki/Gray_code">Gray code 60</a>. Only 1 bit is changing from state to state. A state machine is perfect to check the signal and count the encoder ticks. The timer must be fast enough, to recognize each state change. For the <a href="http://www.pololu.com/catalog/product/1217">Pololu wheel encoders 110</a> used here, the 1ms timer is fast enough.</p><p id="ef4fe01c-4ffd-40f1-8973-ce2e5571f4bc" class="">
+</p><figure id="78417a5f-b572-4ea8-9e72-e906247aaa17" class="image"><a href="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%205.png"><img style="width:439px" src="Timer%20f3c1f275ff60463fb998d0f07b3964a4/Untitled%205.png"/></a></figure><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="becb42db-50d3-44f8-9fe2-89aa2709cd9f" class="code"><code><span class="token comment">/*
+/* 
+ * Arduino 101: timer and interrupts
+ * 3: Timer2 compare interrupt example. Quadrature Encoder
+ * more infos: http://www.letmakerobots.com/node/28278
+ * created by RobotFreak 
+ *
+ * Credits:
+ * based on code from Peter Dannegger
+ * http://www.mikrocontroller.net/articles/Drehgeber
+ */</span>
+<span class="token macro property">#<span class="token directive keyword">if</span> ARDUINO >= 100</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> “Arduino.h”</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> “WConstants.h”</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span><span class="token comment">// Encoder Pins</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> encLtA 2</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> encLtB 3</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> encRtA 11 </span>
+<span class="token macro property">#<span class="token directive keyword">define</span> encRtB 12</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ledPin 13#<span class="token directive keyword">define</span> LT_PHASE_A		digitalRead(encLtA)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> LT_PHASE_B		digitalRead(encLtB)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> RT_PHASE_A		digitalRead(encRtA)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> RT_PHASE_B		digitalRead(encRtB)static volatile int8_t encDeltaLt, encDeltaRt;</span>
+<span class="token keyword">static</span> int8_t lastLt<span class="token punctuation">,</span> lastRt<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> encLt<span class="token punctuation">,</span> encRt<span class="token punctuation">;</span><span class="token function">ISR</span><span class="token punctuation">(</span> TIMER2_COMPA_vect <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+
+  int8_t val<span class="token punctuation">,</span> diff<span class="token punctuation">;</span>  <span class="token function">digitalWrite</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">,</span> HIGH<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// toggle LED pin</span>
+
+  val <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span> LT_PHASE_A <span class="token punctuation">)</span>
+
+    val <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span> LT_PHASE_B <span class="token punctuation">)</span>
+
+    val <span class="token operator">^=</span> <span class="token number">1</span><span class="token punctuation">;</span>					<span class="token comment">// convert gray to binary</span>
+
+  diff <span class="token operator">=</span> lastLt <span class="token operator">-</span> val<span class="token punctuation">;</span>				<span class="token comment">// difference last - new</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span> diff <span class="token operator">&amp;</span> <span class="token number">1</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>				<span class="token comment">// bit 0 = value (1)</span>
+
+    lastLt <span class="token operator">=</span> val<span class="token punctuation">;</span>				<span class="token comment">// store new as next last</span>
+
+    encDeltaLt <span class="token operator">+=</span> <span class="token punctuation">(</span>diff <span class="token operator">&amp;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">// bit 1 = direction (+/-)</span>
+
+  <span class="token punctuation">}</span>  val <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span> RT_PHASE_A <span class="token punctuation">)</span>
+
+    val <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span> RT_PHASE_B <span class="token punctuation">)</span>
+
+    val <span class="token operator">^=</span> <span class="token number">1</span><span class="token punctuation">;</span>					<span class="token comment">// convert gray to binary</span>
+
+  diff <span class="token operator">=</span> lastRt <span class="token operator">-</span> val<span class="token punctuation">;</span>				<span class="token comment">// difference last - new</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span> diff <span class="token operator">&amp;</span> <span class="token number">1</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>				<span class="token comment">// bit 0 = value (1)</span>
+
+    lastRt <span class="token operator">=</span> val<span class="token punctuation">;</span>				<span class="token comment">// store new as next last</span>
+
+    encDeltaRt <span class="token operator">+=</span> <span class="token punctuation">(</span>diff <span class="token operator">&amp;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">// bit 1 = direction (+/-)</span>
+
+  <span class="token punctuation">}</span>
+
+  <span class="token function">digitalWrite</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">,</span> LOW<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// toggle LED pin</span>
+
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">QuadratureEncoderInit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">{</span>
+
+  int8_t val<span class="token punctuation">;</span>  <span class="token function">cli</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  TIMSK2 <span class="token operator">|=</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span>OCIE2A<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">sei</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">pinMode</span><span class="token punctuation">(</span>encLtA<span class="token punctuation">,</span> INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">pinMode</span><span class="token punctuation">(</span>encRtA<span class="token punctuation">,</span> INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">pinMode</span><span class="token punctuation">(</span>encLtB<span class="token punctuation">,</span> INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">pinMode</span><span class="token punctuation">(</span>encRtB<span class="token punctuation">,</span> INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  val<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>LT_PHASE_A<span class="token punctuation">)</span>
+
+    val <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>LT_PHASE_B<span class="token punctuation">)</span>
+
+    val <span class="token operator">^=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+  lastLt <span class="token operator">=</span> val<span class="token punctuation">;</span>
+
+  encDeltaLt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  val<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>RT_PHASE_A<span class="token punctuation">)</span>
+
+    val <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>RT_PHASE_B<span class="token punctuation">)</span>
+
+    val <span class="token operator">^=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+  lastRt <span class="token operator">=</span> val<span class="token punctuation">;</span>
+
+  encDeltaRt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  encLt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  encRt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+int8_t <span class="token function">QuadratureEncoderReadLt</span><span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token punctuation">)</span>			<span class="token comment">// read single step encoders</span>
+
+<span class="token punctuation">{</span>
+
+  int8_t val<span class="token punctuation">;</span>  <span class="token function">cli</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  val <span class="token operator">=</span> encDeltaLt<span class="token punctuation">;</span>
+
+  encDeltaLt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token function">sei</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> val<span class="token punctuation">;</span>					<span class="token comment">// counts since last call</span>
+
+<span class="token punctuation">}</span>
+int8_t <span class="token function">QuadratureEncoderReadRt</span><span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token punctuation">)</span>			<span class="token comment">// read single step encoders</span>
+
+<span class="token punctuation">{</span>
+
+  int8_t val<span class="token punctuation">;</span>  <span class="token function">cli</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  val <span class="token operator">=</span> encDeltaRt<span class="token punctuation">;</span>
+
+  encDeltaRt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token function">sei</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> val<span class="token punctuation">;</span>					<span class="token comment">// counts since last call</span>
+
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">{</span>
+
+  Serial<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token number">38400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">pinMode</span><span class="token punctuation">(</span>ledPin<span class="token punctuation">,</span> OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">QuadratureEncoderInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">{</span>
+
+  encLt <span class="token operator">+=</span> <span class="token function">QuadratureEncoderReadLt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  encRt <span class="token operator">+=</span> <span class="token function">QuadratureEncoderReadRt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  Serial<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>"Lt<span class="token operator">:</span> “<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  Serial<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>encLt<span class="token punctuation">,</span> DEC<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  Serial<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>” Rt<span class="token operator">:</span> "<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  Serial<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>encRt<span class="token punctuation">,</span> DEC<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span></code></pre></div></article></body></html>

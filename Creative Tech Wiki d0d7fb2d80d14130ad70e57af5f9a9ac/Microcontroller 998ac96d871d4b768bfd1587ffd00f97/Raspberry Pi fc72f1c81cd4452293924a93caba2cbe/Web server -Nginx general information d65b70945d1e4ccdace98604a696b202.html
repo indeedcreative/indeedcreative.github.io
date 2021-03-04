@@ -1,0 +1,644 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Web server -Nginx general information</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d65b7094-5d1e-4ccd-ace9-8604a696b202" class="page sans"><header><h1 class="page-title">Web server -Nginx general information</h1></header><div class="page-body"><p id="ee989828-c2e7-4684-a0cc-5e35f781d96c" class="">NGINX (pronounced <em>engine x</em>) is a popular lightweight web server application you can install on the Raspberry Pi to allow it to serve web pages.</p><p id="a422bad4-dedd-4da8-89a1-0293b42cdc60" class="">Like Apache, NGINX can serve HTML files over HTTP, and with additional modules can serve dynamic web pages using scripting languages such as PHP.</p><h1 id="95df3888-6c7f-4f5a-a4af-4039ec516aca" class="">Refresh database of available packages</h1><p id="c596fe30-6c6e-4eba-9e4b-3b60de5eb528" class="">Ensure that the package manager has up-to-date information about which packages are available:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c98cdf71-c8e5-40ae-9807-b71bd42dc0c3" class="code"><code>sudo apt update</code></pre><p id="28371e31-87f9-4ac9-9c88-c95785dffefc" class="">You only need to do this occasionally, but it&#x27;s the most likely solution if subsequent steps fail with messages like:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d05c4bdd-7cd7-4c6a-bfc7-2ec11d9f5e11" class="code"><code>  404  Not Found [IP: 93.93.128.193 80]</code></pre><h1 id="f867284e-5543-4427-99b4-0a7dd326a0f6" class="">Install NGINX</h1><p id="9205710d-50c1-49fc-a457-5535c3ca0e04" class="">First install the <code>nginx</code> package by typing the following command in to the Terminal:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="aaa327ef-11f8-4e52-9425-b9d543d403ac" class="code"><code>sudo apt install nginx</code></pre><p id="0421e90e-9e71-478f-a08a-c00bb9488ea6" class="">and start the server with:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="190b1208-ab95-4e8f-aef7-f059b94336d9" class="code"><code>sudo /etc/init.d/nginx start</code></pre><h1 id="9e865891-0811-44e8-8d70-01949d1409bb" class="">Test the web server</h1><p id="f8c27e26-36c2-4a59-943e-16f51b87dc21" class="">By default, NGINX puts a test HTML file in the web folder. This default web page is served when you browse to <code>http://localhost/</code> on the Pi itself, or <code>http://192.168.1.10</code> (whatever the Pi&#x27;s IP address is) from another computer on the network. To find the Pi&#x27;s IP address, type <code>hostname -I</code> at the command line (or read more about finding your <a href="https://www.raspberrypi.org/documentation/remote-access/ip-address.md">IP address</a>).</p><p id="2ef80310-4945-42e4-a25c-1398daee2d3f" class="">Browse to the default web page either on the Pi or from another computer on the network and you should see the following:</p><figure id="5e18c520-37bf-4b64-84be-dd57e5cab305" class="image"><a href="https://www.raspberrypi.org/documentation/remote-access/web-server/images/nginx-welcome.png"><img src="https://www.raspberrypi.org/documentation/remote-access/web-server/images/nginx-welcome.png"/></a></figure><h3 id="9d958c1a-d607-4f1d-b944-53a8d6705f03" class=""><strong>Changing the default web page</strong></h3><p id="92773568-e27f-45c6-b552-03736f80d46b" class="">NGINX defaults its web page location to <code>/var/www/html</code> on Raspberry Pi OS. Navigate to this folder and edit or replace index.nginx-debian.html as you like. You can confirm the default page location at <code>/etc/nginx/sites-available</code> on the line which starts with &#x27;root&#x27;, should you need to.</p><h1 id="869544ba-2a5b-42a2-bd3a-67a9f6c79abc" class="">Additional - Install PHP</h1><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="49af57b8-df5c-4522-beff-0955c9c690ed" class="code"><code>sudo apt install php-fpm</code></pre><h3 id="e10bce6a-f4ea-412e-b793-f67cb8278d1b" class=""><strong>Enable PHP in NGINX</strong></h3><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8a746180-ef7c-47de-bdaa-5a9565a1636c" class="code"><code>cd /etc/nginx
+sudo nano sites-enabled/default</code></pre><p id="e72d8826-7696-4c38-a038-5cedc9fb5fbb" class="">find the line</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="6f229262-c668-44db-a973-21860901c82e" class="code"><code>index index.html index.htm;</code></pre><p id="5722bca2-465c-4346-b449-9d4c71227622" class="">roughly around line 25 (Press <code>CTRL + C</code> in nano to see the current line number)</p><p id="88c47db1-bc8a-483e-a28f-14c27756bb1e" class="">Add <code>index.php</code> after <code>index</code> to look like this:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a7c08c71-a01e-4607-a18b-437493733b3c" class="code"><code>index index.php index.html index.htm;</code></pre><p id="daf0e5db-0745-4df4-aab4-be3bf2a15937" class="">Scroll down until you find a section with the following content:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="52b4704f-c954-43aa-b2e4-be4abb765530" class="code"><code># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+#
+# location ~ \.php$ {</code></pre><p id="de1ff284-9e7a-49b1-9bd5-3d06c58be03e" class="">Edit by removing the <code>#</code> characters on the following lines:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="6cf26a57-aa72-4482-8949-44fc6000018b" class="code"><code>location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+}</code></pre><p id="178ac5ac-a018-4305-9a3e-b1ff32d4ce26" class="">It should look like this:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1d46f7ff-0ea6-4bf9-9ace-daab653582a6" class="code"><code>        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+        # With php-fpm (or other unix sockets):
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        # With php-cgi (or other tcp sockets):
+    #    fastcgi_pass 127.0.0.1:9000;
+        }</code></pre><p id="df7ee436-dbf7-44de-97cd-6bbbda4b21b4" class="">Reload the configuration file</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="ad013163-0ce6-4c73-b891-786f2da26094" class="code"><code>sudo /etc/init.d/nginx reload</code></pre><h3 id="e299580f-dfe5-4475-bc7a-a5df86efc67a" class=""><strong>Test PHP</strong></h3><p id="46ca4121-c994-491e-9528-c08f2a6dbe21" class="">Rename <code>index.nginx-debian.html</code> to <code>index.php</code>:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="79cee5ee-c251-4b55-aa37-96edcc57284d" class="code"><code>cd /var/www/html/
+sudo mv index.nginx-debian.html index.php</code></pre><p id="80286b13-3d23-4abb-9456-8c1b8cea3838" class="">Open <code>index.php</code> with a text editor:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="bbe827e2-0185-4ca7-b5de-664921240d54" class="code"><code>sudo nano index.php</code></pre><p id="a779ed8f-8eb0-4b33-bc85-7ad74c7b9033" class="">Add some dynamic PHP content by replacing the current content:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="75a8a9b5-6f32-49f3-a5bf-0d9ce51b249e" class="code"><code><?php echo phpinfo(); ?></code></pre><p id="4b7fcb3b-5482-4617-ba21-d302a2103c9f" class="">Save and refresh your browser. You should see a page with the PHP version, logo and current configuration settings.</p><p id="a956612b-d582-4378-bf92-5c512d5e4c37" class="">
+</p><h2 id="bd523565-e39e-4f16-bab0-907f7c23b479" class=""><strong>Start, Stop and Restart Nginx using </strong><code><strong>systemctl</strong></code></h2><p id="dd57cce2-9ba2-4a58-91d9-bc7a43a210ac" class="">SystemD is a system and service manager for the latest Ubuntu <a href="https://linuxize.com/post/how-to-install-nginx-on-ubuntu-18-04/">18.04</a> /<a href="https://linuxize.com/post/how-to-install-nginx-on-ubuntu-16-04/">16.04</a> , CentOS <a href="https://linuxize.com/post/how-to-install-nginx-on-centos-7/">7</a> /<a href="https://linuxize.com/post/how-to-install-nginx-on-centos-8/">8</a> , and Debian <a href="https://linuxize.com/post/how-to-install-nginx-on-debian-10/">10</a> /<a href="https://linuxize.com/post/how-to-install-nginx-on-debian-9/">9</a> releases.</p><p id="42935a5f-b090-44a0-94cf-5d6da175331b" class="">Whenever you make changes to the Nginx configuration, you need to restart or reload the webserver processes. Execute the following command to restart the Nginx service:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="458e4824-63f0-4058-9e40-92d5a19ad418" class="code"><code>sudo systemctl restart nginx</code></pre><p id="5976bec9-cad2-4723-87eb-1adc2efb97b4" class="">When adding or editing server blocks, prefer reloading over restarting. Restart the service only when making significant modifications like changing ports or interfaces. On reload, Nginx loads the new configuration, starts new worker processes with the new configuration, and gracefully shuts down old worker processes.</p><p id="d48c34a8-f008-4b29-86c7-f54328b7bd39" class="">Run the command below to reload the Nginx service:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="da113d87-0140-4a75-a3ca-04f9e1cc3fd7" class="code"><code>sudo systemctl restart nginx</code></pre><p id="764088bc-55b1-4aa0-a43a-f5c398ca8cd2" class="">Nginx can also be directly controlled with <a href="https://linuxize.com/post/kill-command-in-linux/">signals</a> . For example, to reload the service, you can use the following command:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="fd6171a7-c953-4d84-8106-94029de5b387" class="code"><code>sudo /usr/sbin/nginx -s reload</code></pre><p id="4bbbc236-ce0b-4a1b-b3da-4fd6b85e2342" class="">To start the Nginx service, execute:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8334352d-8c27-4d0f-87aa-3af493a96fde" class="code"><code>sudo systemctl start nginx</code></pre><p id="c9ee5df5-75f9-48c2-a82f-1d037c8ae857" class="">Execute the following command to stop the Nginx service:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="0e6600a1-9372-4557-bb45-69f44710e4af" class="code"><code>sudo systemctl stop nginx</code></pre></div></article></body></html>

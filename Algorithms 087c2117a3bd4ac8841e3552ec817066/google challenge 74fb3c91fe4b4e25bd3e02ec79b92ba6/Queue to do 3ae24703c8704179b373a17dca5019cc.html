@@ -1,0 +1,655 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Queue to do </title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3ae24703-c870-4179-b373-a17dca5019cc" class="page sans"><header><h1 class="page-title">Queue to do </h1></header><div class="page-body"><p id="ff7dd71e-139c-425a-a69b-b83e8002af44" class="">You&#x27;re almost ready to make your move to destroy the LAMBCHOP doomsday device, but the security checkpoints that guard the underlying systems of the LAMBCHOP are going to be a problem. You were able to take one down without tripping any alarms, which is great! Except that as Commander Lambda&#x27;s assistant, you&#x27;ve learned that the checkpoints are about to come under automated review, which means that your sabotage will be discovered and your cover blown -- unless you can trick the automated review system.</p><p id="c0811dff-6a5f-4097-9f93-106c058520aa" class="">To trick the system, you&#x27;ll need to write a program to return the same security checksum that the bunny trainers would have after they would have checked all the workers through. Fortunately, Commander Lambda&#x27;s desire for efficiency won&#x27;t allow for hours-long lines, so the trainers at the checkpoint have found ways to quicken the pass-through rate. Instead of checking each and every worker coming through, the bunny trainers instead go over everyone in line while noting their worker IDs, then allow the line to fill back up. Once they&#x27;ve done that they go over the line again, this time leaving off the last worker. They continue doing this, leaving off one more worker from the line each time but recording the worker IDs of those they do check, until they skip the entire line, at which point they XOR the IDs of all the workers they noted into a checksum and then take off for lunch. Fortunately, the workers&#x27; orderly nature causes them to always line up in numerical order without any gaps.</p><p id="9bac4eda-76ac-478c-93f3-47896f503a18" class="">For example, if the first worker in line has ID 0 and the security checkpoint line holds three workers, the process would look like this:</p><p id="1c24cfc6-fa84-4b3d-ba5d-850fa442732d" class="">0 1 2 /</p><p id="90d8bad3-5fe1-430b-a863-f01e8488fcf1" class="">3 4 / 5</p><p id="1244390f-71ae-475f-b43c-45718e548d7b" class="">6 / 7 8</p><p id="4d2ccdda-bae6-4edb-aeb5-89676f8e73c9" class="">where the trainers&#x27; XOR (^) checksum is 0^1^2^3^4^6 == 2.</p><p id="ba52e303-3c70-4ffc-a36e-2dbf227f35b2" class="">Likewise, if the first worker has ID 17 and the checkpoint holds four workers, the process would look like:</p><p id="5734e8f6-dd05-4011-9afb-c9319e157fe3" class="">17 18 19 20 /</p><p id="68bdd1bd-e5b4-455f-9c7b-975fd14eb483" class="">21 22 23 / 24</p><p id="99ea1b6f-8c68-4366-b5d8-5e3719cc57c7" class="">25 26 / 27 28</p><p id="2a967f22-1ffa-4ef4-8db1-55123445ac1c" class="">29 / 30 31 32</p><p id="02467a72-cfd5-4064-b251-8a6bd946c61a" class="">which produces the checksum 17^18^19^20^21^22^23^25^26^29 == 14.</p><p id="1a825abe-794e-432b-9bb6-91996de5a935" class="">All worker IDs (including the first worker) are between 0 and 2000000000 inclusive, and the checkpoint line will always be at least 1 worker long.</p><p id="43f91ba2-9dea-4a76-8def-54a899f96ca0" class="">With this information, write a function solution(start, length) that will cover for the missing security checkpoint by outputting the same checksum the trainers would normally submit before lunch. You have just enough time to find out the ID of the first worker to be checked (start) and the length of the line (length) before the automatic review occurs, so your program must generate the proper checksum with just those two values.</p><p id="98035ef4-f766-4f17-8b78-4f8f32049392" class="">Languages</p><p id="fc7ed361-0736-43f3-8fb1-4c7e335ddfba" class="">=========</p><p id="08d21a5c-7e3e-4d18-8089-e9c442bbf5dc" class="">To provide a Java solution, edit Solution.java</p><p id="b1f1a6b9-07af-4ff5-b545-c3c6d3d2b242" class="">To provide a Python solution, edit solution.py</p><p id="483d284c-4d99-401c-9146-8e5cb2ac0cea" class="">Test cases</p><p id="a10d4307-4d2e-491a-a84b-f0e006ebf171" class="">==========</p><p id="e1d73343-571b-422e-bcee-662500354368" class="">Your code should pass the following test cases.</p><p id="d3cf42c2-05b5-4321-a4ea-fb06df9cf907" class="">Note that it may also be run against hidden test cases not shown here.</p><ul id="ff901958-2032-4fcd-8c38-05f996f5c35c" class="bulleted-list"><li>- Java cases --</li></ul><p id="2e7709cd-4690-4c91-8c90-eb3a43fcfa20" class="">Input:</p><p id="959f15ea-1db7-45b8-b6a4-7c15937373b6" class="">Solution.solution(0, 3)</p><p id="4c4b462c-7d20-431b-bd60-17fe8caba964" class="">Output:</p><p id="432f1196-6a9b-47c6-ba8b-b76ee2b5c102" class="">2</p><p id="95ac538b-e0b1-4e22-bcb8-973f865ff1b5" class="">Input:</p><p id="a820c73d-b7cf-4efd-9151-2e6de8bcd4a6" class="">Solution.solution(17, 4)</p><p id="972014f0-f016-4f54-bfe0-a7bda1f97916" class="">Output:</p><p id="098d3aec-ddbd-4626-8fa5-95934eac042a" class="">14</p><ul id="23d3c55c-7a2e-42e5-9cfd-bc6d4eebbb5e" class="bulleted-list"><li>- Python cases --</li></ul><p id="7275012c-1a70-414b-b6d7-c3c21838e289" class="">Input:</p><p id="25d2f706-45cf-493b-af3b-a979d6be9357" class="">solution.solution(0, 3)</p><p id="b7be93ca-3dda-4c8e-b0f0-75dc303c6812" class="">Output:</p><p id="2afeb047-540e-4557-9be1-aea2166e0bb2" class="">2</p><p id="60852215-95a1-4c23-93a0-144d56c04091" class="">Input:</p><p id="287d204e-ebe8-42ef-9f1d-b083c4595267" class="">solution.solution(17, 4)</p><p id="8b51c382-e224-4627-8e32-70f36af93390" class="">Output:</p><p id="fddec456-c149-4c70-b6fb-6f0d46e36a28" class="">14</p><h1 id="dc497eb5-42b0-4993-88b7-a453edcc94f2" class="">XOR properties</h1><p id="6e9f20b3-28ae-415c-a8cc-709912deb55e" class="">it&#x27;s because XOR has these wonderful properties:</p><ul id="b6cc85f6-2994-417c-be73-41ebb593a428" class="bulleted-list"><li>It&#x27;s <strong>associative</strong> - Place brackets wherever you want</li></ul><ul id="48ca5d11-5f5d-48e3-bbfc-d88a24de3564" class="bulleted-list"><li>It&#x27;s <strong>commutative</strong> - that means you can move the operators around (they can &quot;commute&quot;)</li></ul><p id="e2c7bda4-d6ad-4b32-8fa9-28ab4b34202a" class="">Here&#x27;s both in action:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="2e504b51-e288-4d2a-8a23-1f8ee2c8691b" class="code code-wrap"><code>(a ^ b ^ c) ^ (d ^ e ^ f) = (f ^ e) ^ (d ^ a ^ b) ^ c
+</code></pre><ul id="f8a456dc-102c-42c2-b241-40307e86ecee" class="bulleted-list"><li>It <strong>reverses itself</strong></li></ul><p id="6c18e70a-b4ac-41fe-a02b-ddf5357c7e09" class="">Like this:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3f1fdcca-6efd-446b-92c4-36bd1fc084b6" class="code code-wrap"><code>a ^ b = c
+c ^ a = b
+</code></pre><p id="508d2517-b606-4a02-a94b-cd3c144a0a25" class="">Add and multiply are two examples of other associative/ commutative operators, but they don&#x27;t reverse themselves. Ok, so, why are these properties important? Well, a simple route is to expand it out into what it really is, and then you can see these properties at work.</p><p id="7a0f8dcf-ecec-405f-8cee-85809d44f644" class="">First, let&#x27;s define what we want and call it n:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="ea8893cf-8d6e-488a-8cdd-d6c3c7086a11" class="code code-wrap"><code>n      = (a ^ a+1 ^ a+2 .. ^ b)
+</code></pre><p id="9c8066dc-92de-444b-a88f-d86940c2447f" class=""><em>If it helps, think of XOR (^) as if it was an add.</em></p><p id="b0adcd42-fdc9-42ea-9de0-4af5a8853e3b" class="">Let&#x27;s also define the function:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b6f4f7b0-56a2-4cf4-9bfb-65aff3f7c261" class="code code-wrap"><code>f(b)   = 0 ^ 1 ^ 2 ^ 3 ^ 4 .. ^ b
+</code></pre><p id="0bdb01b2-c0fe-441d-83b9-a1debb3e0620" class=""><code>b</code> is greater than <code>a</code>, so just by safely dropping in a few extra brackets (which we can because it&#x27;s associative), we can also say this:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3f1b34ab-3bac-40e9-8337-1285c9f750d5" class="code code-wrap"><code>f(b)   = ( 0 ^ 1 ^ 2 ^ 3 ^ 4 .. ^ (a-1) ) ^ (a ^ a+1 ^ a+2 .. ^ b)
+</code></pre><p id="64a42a56-788b-4689-b9f0-9d663ae425f2" class="">Which simplifies to:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="9d2f1846-1574-4380-9f1e-b5f519756b3c" class="code code-wrap"><code>f(b)   = f(a-1) ^ (a ^ a+1 ^ a+2 .. ^ b)
+
+f(b)   = f(a-1) ^ n
+</code></pre><p id="e8d4940a-2ab1-45f1-acd6-2becc4d09329" class="">Next, we use that reversal property and commutivity to give us the magic line:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="51ead18f-1200-44ec-a2df-94fe7a4647b6" class="code code-wrap"><code>n      = f(b) ^ f(a-1)
+</code></pre><p id="c6c9be20-c9cc-4095-97d3-a0d3d133807c" class=""><em>If you&#x27;ve been thinking of XOR like an add, you would&#x27;ve dropped in a subtract there. XOR is to XOR what add is to subtract!</em></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="16beba90-12a9-43db-a6ef-48d9fac8fe89" class="code"><code><span class="token keyword">def</span> <span class="token function">solution</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># create n by n matrix</span>
+    output <span class="token operator">=</span> <span class="token number">0</span>
+    
+    <span class="token keyword">for</span> col <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        result_row <span class="token operator">=</span> xorInterval<span class="token punctuation">(</span>start <span class="token operator">+</span> length <span class="token operator">*</span> col<span class="token punctuation">,</span> start <span class="token operator">+</span> length <span class="token operator">*</span> col <span class="token operator">+</span> length <span class="token operator">-</span> col<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        output <span class="token operator">^</span><span class="token operator">=</span> result_row
+    <span class="token keyword">return</span> output
+
+<span class="token keyword">def</span> <span class="token function">xorRange</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    values <span class="token operator">=</span> <span class="token punctuation">[</span>a<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> a<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> values<span class="token punctuation">[</span>a <span class="token operator">%</span> <span class="token number">4</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">xorInterval</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> end<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> xorRange<span class="token punctuation">(</span>start<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">^</span> xorRange<span class="token punctuation">(</span>end<span class="token punctuation">)</span>
+
+ 
+<span class="token comment">#print(solution(0, 3))</span>
+<span class="token comment">#print(solution(17, 4))</span></code></pre></div></article></body></html>

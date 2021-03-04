@@ -1,0 +1,681 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Bit manipulation</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ea6c1e66-c1a9-4757-9efd-4ff612157305" class="page sans"><header><h1 class="page-title">Bit manipulation</h1></header><div class="page-body"><p id="dab367a4-d76b-4289-bf92-bc1af2b39855" class=""><a href="https://www.hackerearth.com/practice/notes/bit-manipulation/">https://www.hackerearth.com/practice/notes/bit-manipulation/</a></p><p id="03c5839e-ac6c-41fb-b47d-433664abd74d" class="">Working on bytes, or data types comprising of bytes like ints, floats, doubles or even data structures which stores large amount of bytes is normal for a programmer. In some cases, a programmer needs to go beyond this - that is to say that in a deeper level where the importance of bits is realized.</p><p id="a3a38122-c8a1-416f-bb49-c0a5ff4587df" class="">Operations with bits are used in <strong>Data compression</strong> (data is compressed by converting it from one representation to another, to reduce the space) ,<strong>Exclusive-Or Encryption</strong> (an algorithm to encrypt the data for safety issues). In order to encode, decode or compress files we have to extract the data at bit level. Bitwise Operations are faster and closer to the system and sometimes optimize the program to a good level.</p><p id="5992f2bf-3162-4e07-83ae-aa11a466f1c5" class="">We all know that 1 byte comprises of 8 bits and any integer or character can be represented using bits in computers, which we call its binary form(contains only 1 or 0) or in its base 2 form.</p><p id="7738ab6e-2523-40c2-a97b-f8c3d8d06c55" class="">For characters, we use ASCII representation, which are in the form of integers which again can be represented using bits as explained above.</p><h1 id="6f6a985c-8a48-4f8d-9dc9-30b177081722" class=""><strong>Bitwise Operators</strong></h1><p id="79a55647-f031-4eb4-87af-78208b5fcb9b" class="">There are different bitwise operations used in the bit manipulation. These bit operations operate on the individual bits of the bit patterns. Bit operations are fast and can be used in optimizing time complexity. Some common bit operators are:</p><h3 id="18a48bd1-80ec-45ed-ad10-eca6040824fd" class=""><strong>NOT ( ~ ):</strong> </h3><p id="4a8178e7-fad5-4125-a46d-bea49cb85365" class="">Bitwise NOT is an unary operator that flips the bits of the number i.e., if the ith bit is 0, it will change it to 1 and vice versa. Bitwise NOT is nothing but simply the one’s complement of a number. Lets take an example.</p><p id="169c622a-8628-49ae-8ab8-28263dcc640d" class="">N = 5 = (101)2</p><p id="3f4b8466-db9c-46d7-a3a4-92372ac7cb6b" class="">~N = ~5 = ~(101)2 = (010)2 = 2</p><h3 id="a4aa78a3-56ca-41b7-9e5e-5b3abc8d703b" class=""><strong>AND ( &amp; ):</strong> </h3><p id="b62ad2f1-3b94-4062-8200-2ae5f3e006e4" class="">Bitwise AND is a binary operator that operates on two equal-length bit patterns. If both bits in the compared position of the bit patterns are 1, the bit in the resulting bit pattern is 1, otherwise 0.</p><p id="d2606b4a-c8db-4289-8042-68eaf0f21744" class="">A = 5 = (101)2 , B = 3 = (011)2 </p><p id="7b18abc0-29c2-4ec7-858f-5d9c50afd513" class="">A &amp; B = (101)2 &amp; (011)2= (001)2 = 1</p><h3 id="37fa4140-437a-48d2-9be5-942f098cb269" class=""><strong>OR ( | ):</strong> </h3><p id="c90dde6a-312b-4e13-988f-88d455ce6047" class="">Bitwise OR is also a binary operator that operates on two equal-length bit patterns, similar to bitwise AND. If both bits in the compared position of the bit patterns are 0, the bit in the resulting bit pattern is 0, otherwise 1.</p><p id="79ab5203-a3c2-4257-b688-68f15a9f339e" class="">A = 5 = (101)2 , B = 3 = (011)2A | B = (101)2 | (011)2 = (111)2 = 7</p><h3 id="8a9d1af6-70f8-4011-93c6-5f32af2f8e18" class=""><strong>XOR ( ^ ):</strong> </h3><p id="d9896d8d-dc31-4ffd-8e09-d2c3eaabe07b" class="">Bitwise XOR also takes two equal-length bit patterns. If both bits in the compared position of the bit patterns are 0 or 1, the bit in the resulting bit pattern is 0, otherwise 1.</p><p id="668f7172-aa61-4911-8f7c-2d2fd73ea349" class="">A = 5 = (101)2 , B = 3 = (011)2</p><p id="60cdfd88-247b-4c0e-bb13-ba7f5b93d5e4" class="">A ^ B = (101)2 ^ (011)2 = (110)2 = 6</p><h3 id="a42499ef-4df5-4088-a8a0-40697f39c44d" class=""><strong>Left Shift ( &lt;&lt; ):</strong> </h3><p id="d1a115b2-ba99-41c6-aec6-9aca7eee689a" class="">Left shift operator is a binary operator which shift the some number of bits, in the given bit pattern, to the left and append 0 at the end. <mark class="highlight-yellow_background">Left shift is equivalent to multiplying the bit pattern with 2k ( if we are shifting k bits )</mark></p><p id="6455b72c-0297-4025-9eed-7e9b3dc18313" class="">1 &lt;&lt; 1 = 2 = 2^1</p><p id="724d5b53-365b-42d9-a3f2-8115dfb525ed" class="">1 &lt;&lt; 2 = 4 = 2^2 </p><p id="58f7b6e8-0ca2-4a93-9342-a596693a7cd4" class="">1 &lt;&lt; 3 = 8 = 2^3</p><p id="7699b589-a1bc-4ee0-a466-332bf9e72e4b" class="">1 &lt;&lt; 4 = 16 = 2^4</p><p id="cd844d62-a2d7-42b0-8419-c3b04041271d" class="">…</p><p id="e1f10333-22c3-4dc2-9d20-f5d710685b4c" class="">1 &lt;&lt; n = 2^n</p><h3 id="105b9191-487d-48bb-b3d6-f9730404779a" class=""><strong>Right Shift ( &gt;&gt; ):</strong> </h3><p id="087e54b3-f8ab-4f45-9f8b-f4ad11261157" class="">Right shift operator is a binary operator which shift the some number of bits, in the given bit pattern, to the right and append 1 at the end.<mark class="highlight-yellow_background"> Right shift is equivalent to dividing the bit pattern with 2k ( if we are shifting k bits ).</mark></p><p id="d33ae285-1a2c-4921-ad5e-a24385f84517" class="">4 &gt;&gt; 1 = 2</p><p id="44d359de-f42b-47e3-a8cf-cf4cdf1004f2" class="">6 &gt;&gt; 1 = 3</p><p id="ac511668-c8e5-401b-9aaa-69d1937e415f" class="">5 &gt;&gt; 1 = 2</p><p id="d00a4953-54a7-454d-9703-34c42edf4629" class="">16 &gt;&gt; 4 = 1</p><figure id="139f7055-8eb9-495f-a5c9-32a9e706760f" class="image"><a href="https://he-s3.s3.amazonaws.com/media/uploads/cb985c2.png"><img src="https://he-s3.s3.amazonaws.com/media/uploads/cb985c2.png"/></a></figure><p id="f7bcb96b-4dfc-40e5-8e38-163523a75044" class="">Bitwise operators are good for saving space and sometimes to cleverly remove dependencies.</p><p id="8969a443-e17a-41f9-99fe-75cc5fca881d" class="">Note: All left and right side taken in this article, are taken with reference to the reader.</p><p id="6ce6f1ff-eab2-43a0-ac4a-68cce2fae000" class="">Lets discuss some algorithms based on bitwise operations:</p><h2 id="9ba2b698-e37f-45a6-bccc-df3675fbb8a3" class="">1) <strong>How to check if a given number is a power of 2 ?</strong></h2><p id="eee13fb9-4ba1-49d3-a6ec-4caed12c574f" class="">Consider a number N and you need to find if N is a power of 2. Simple solution to this problem is to repeated divide N by 2 if N is even. If we end up with a 1 then N is power of 2, otherwise not. There are a special case also. If N = 0 then it is not a power of 2. Let’s code it.</p><p id="aea12828-5f16-4ec8-ba20-41f4676da83b" class=""><strong>Implementation:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="e1768650-0622-43ae-8ef4-a88a0abcb0a1" class="code code-wrap"><code><span class="token builtin">bool</span> isPowerOfTwo<span class="token punctuation">(</span><span class="token builtin">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> false<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">/=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre><p id="25e8ed54-d277-4aeb-aad5-44a80482f58f" class="">Above function will return true if x is a power of 2, otherwise false.Time complexity of the above code is <strong>O(logN)</strong>.</p><p id="99a2552c-804e-4dd0-9599-9d7421cba5b7" class=""><strong>The same problem can be solved using bit manipulation. </strong></p><p id="eabcf349-d343-421d-8dab-2fb76fd42f7c" class="">Consider a number x that we need to check for being a power for 2. Now think about the binary representation of (x-1). (x-1) will have all the bits same as x, except for the rightmost 1 in x and all the bits to the right of the rightmost 1.</p><p id="117a26d9-fcab-43da-9699-a658323daad8" class="">Let, x = 4 = (100)2, x - 1 = 3 = (011)2</p><p id="630b1e55-10ff-47bd-8ce8-81d9e0fb94c9" class="">Let, x = 6 = (110)2, x - 1 = 5 = (101)2</p><p id="0c1bffec-5153-40e3-9fe2-b0f64d1a2b35" class="">It might not seem obvious with these examples, but binary representation of (x-1) can be obtained by <mark class="highlight-yellow_background">simply flipping all the bits to the right of rightmost 1 in x and also including the rightmost 1.</mark></p><p id="06d36847-8995-4af2-ac23-18f5bfc4f8a4" class="">Now think about x &amp; (x-1). </p><p id="f95e8074-05e4-4393-a2b3-565d97f4db96" class=""><mark class="highlight-yellow_background">x &amp; (x-1) will have all the bits equal to the x except for the rightmost 1 in x.</mark></p><p id="a37991f1-a625-4004-9dea-4bca538cad6a" class="">Let, x = 4 = (100)2, x - 1 = 3 = (011)2, x &amp; (x-1) = 4 &amp; 3 = (100)2 &amp; (011)2 = (000)2</p><p id="0ae63b2b-73af-4876-ae60-abc294cac5f2" class="">Let, x = 6 = (110)2, x - 1 = 5 = (101)2, x &amp; (x-1) = 6 &amp; 5 = (110)2 &amp; (101)2 = (100)2</p><p id="342aaec3-5c96-4722-9f9d-3733ebf07576" class="">Properties for numbers which are powers of 2, is that they have one and only one bit set in their binary representation. <mark class="highlight-yellow_background">If the number is neither zero nor a power of two, </mark>it will have 1 in more than one place. So if <mark class="highlight-red">x is a power of 2 then x &amp; (x-1) will be 0.</mark></p><p id="a9395459-6fee-4f16-a867-cc498ec937c1" class=""><strong>Implementation:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d78abe7e-b5b7-408e-81ff-40f68daacf88" class="code code-wrap"><code>bool <span class="token function">isPowerOfTwo</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// x will check if x == 0 and !(x &amp; (x - 1)) will check if x is a power of 2 or not</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>x <span class="token operator">&amp;</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &amp;&amp; logical and ( == )</span>
+<span class="token punctuation">}</span></code></pre><h3 id="71cce540-9d46-44f6-9024-c3fb7a9106fb" class="">2) <strong>Count the number of ones in the binary representation of the given number.</strong></h3><p id="5de09340-992f-4b1f-95d3-03f0b469a0d7" class="">The basic approach to evaluate the binary form of a number is to traverse on it and count the number of ones. But this approach takes log2N of time in every case.</p><p id="f33b1275-187a-4e89-b449-7fd61165333b" class="">Why log2N ?As to get a number in its binary form,<mark class="highlight-yellow_background"> we have to divide it by 2, until it gets 0</mark>, which will take log2N of time.</p><p id="af95b51c-cffd-44a8-87a9-f3c098d2a9e6" class="">With bitwise operations, we can use an algorithm whose running time depends on the number of ones present in the binary form of the given number. This algorithm is much better, as it will reach to logN, only in its worst case.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="5c2d8998-c17b-46ee-896c-fd2683ace988" class="code code-wrap"><code><span class="token builtin">int</span> count_one <span class="token punctuation">(</span><span class="token builtin">int</span> n<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span> n <span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+        n <span class="token operator">=</span> n<span class="token operator">&amp;</span><span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           count<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre><p id="a0d946e5-38b7-41b1-b1cb-2621209894b8" class="">Why this algorithm works ?As explained in the previous algorithm, the relationship between the bits of x and x-1. So as in x-1, the rightmost 1 and bits right to it are flipped, then by performing x&amp;(x-1), and storing it in x, will reduce x to a number containing number of ones(in its binary form) less than the previous state of x, thus increasing the value of count in each iteration.</p><p id="fed52267-7905-48f4-aa63-2eafd9db4974" class="">Example:n = 23 = {10111}2 .1. Initially, count = 0.2. Now, n will change to n&amp;(n-1). As n-1 = 22 = {10110}2 , then n&amp;(n-1) will be {101112 &amp; {10110}2, which will be {10110}2 which is equal to 22. Therefore n will change to 22 and count to 1.3. As n-1 = 21 = {10101}2 , then n&amp;(n-1) will be {10110}2 &amp; {10101}2, which will be {10100}2 which is equal to 20. Therefore n will change to 20 and count to 2.4. As n-1 = 19 = {10011}2 , then n&amp;(n-1) will be {10100}2 &amp; {10011}2, which will be {10000}2 which is equal to 16. Therefore n will change to 16 and count to 3.5. As n-1 = 15 = {01111}2 , then n&amp;(n-1) will be {10000}2 &amp; {01111}2, which will be {00000}2 which is equal to 0. Therefore n will change to 0 and count to 4.6. As n = 0, the the loop will terminate and gives the result as 4.</p><p id="bcefe9a0-ca97-4cfe-92f0-cad56d53db86" class=""><strong>Complexity:</strong> O(K), where K is the number of ones present in the binary form of the given number.</p><h3 id="eb7c988c-96e7-45f5-aa88-e0a5cc27ecdf" class="">3) <strong>Check if the i</strong><strong>th</strong><strong> bit is set in the binary form of the given number.</strong></h3><p id="1bf646fa-c9a7-4f32-8bba-29d987de5716" class="">To check if the ith bit is set or not (1 or not), we can use AND operator. How?</p><p id="415790dd-2ad0-41de-ad2b-84d4aaa48f44" class="">Let’s say we have a number N, and to check whether it’s ith bit is set or not, we can AND it with the number 2i . The binary form of 2i contains only ith bit as set (or 1), else every bit is 0 there. When we will AND it with N, and if the ith bit of N is set, then it will return a non zero number (2i to be specific), else 0 will be returned.</p><p id="7f5dacf4-5945-4fec-8515-76b21f8e39e5" class="">Using Left shift operator, we can write 2i as 1 &lt;&lt; i . Therefore:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a52c87d6-6549-40d3-ac48-fd29ed8f550b" class="code code-wrap"><code>bool check (int N)
+{
+    if( N & (1 << i) )
+        return true;
+    else
+        return false;
+}</code></pre><p id="5f26af1b-8ff5-4172-bfc6-15e85ffed7e3" class="">Example:Let’s say N = 20 = {10100}2. Now let’s check if it’s 2nd bit is set or not(starting from 0). For that, we have to AND it with 22 = 1&lt;&lt;2 = {100}2 .{10100} &amp; {100} = {100} = 22 = 4(non-zero number), which means it’s 2nd bit is set.</p><h3 id="f87aa369-570f-44e9-8e33-f6e8cca81f4d" class=""><strong>4) How to generate all the possible subsets of a set ?</strong></h3><p id="75aeffc5-f365-43fe-864c-783dfcf2476e" class="">A big advantage of bit manipulation is that it can help to iterate over all the subsets of an N-element set. As we all know there are 2N possible subsets of any given set with N elements. What if we represent each element in a subset with a bit. A bit can be either 0 or 1, thus we can use this to denote whether the corresponding element belongs to this given subset or not. So each bit pattern will represent a subset.</p><p id="c39591df-87ae-4e31-bb1d-8ac2518acba9" class="">Consider a set A of 3 elements.A = {a, b, c}</p><p id="ae8bbfb6-b0c8-485f-a412-af448b88ace5" class="">Now, we need 3 bits, one bit for each element. 1 represent that the corresponding element is present in the subset, whereas 0 represent the corresponding element is not in the subset. Let’s write all the possible combination of these 3 bits.</p><p id="6d5b1d2f-f100-4dec-a10b-c05583d4c827" class="">0 = (000)2 = {}1 = (001)2 = {c}2 = (010)2 = {b}3 = (011)2 = {b, c}4 = (100)2 = {a}5 = (101)2 = {a, c}6 = (110)2 = {a, b}7 = (111)2 = {a, b, c}</p><p id="c23a7bf6-493b-486d-8516-2279ded7a3cb" class=""><strong>Pseudo Code:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d0c4e7c7-0b1f-4884-b284-98ccb821e6e4" class="code code-wrap"><code>possibleSubsets(A, N):
+    for i = 0 to 2^N:
+        for j = 0 to N:
+            if jth bit is set in i:
+                print A[j]
+        print ‘\n’</code></pre><p id="8cdde005-9e03-4ef2-b15a-eb4a34b93dca" class=""><strong>Implementation:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="bd171bf8-6166-407a-9d97-5e0448915133" class="code code-wrap"><code>void possibleSubsets(char A[], int N)
+{
+    for(int i = 0;i < (1 << N); ++i)
+    {
+        for(int j = 0;j < N;++j)
+            if(i & (1 << j))
+                cout << A[j] << ‘ ‘;
+        cout << endl;
+}
+}</code></pre><h3 id="5a24c766-19e8-4bfb-a6d0-b4139255cf5d" class="">5) <strong>Find the largest power of 2 </strong><a href="https://en.wikipedia.org/wiki/Most_significant_bit"><strong>(most significant bit</strong></a><strong> in binary form), which is less than or equal to the given number N.</strong></h3><p id="3be57fa5-ad14-4d9e-ac4c-61b1609893ca" class=""><strong>Idea:</strong> Change all the bits which are at the right side of the most significant digit, to 1.</p><p id="cb21c2f9-3e79-4361-bc7e-bfd1b515a99e" class=""><strong>Property:</strong> As we know that when all the bits of a number N are 1, then N must be equal to the 2i -1 , where i is the number of bits in N.</p><p id="c9779c9a-728d-4724-b84c-19c4935dfc02" class="">Example:Let’s say binary form of a N is {1111}2 which is equal to 15.15 = 24-1, where 4 is the number of bits in N.</p><p id="c004d824-8fcf-44cc-8635-b27af0c46530" class="">This property can be used to find the largest power of 2 less than or equal to N. How?If we somehow, change all the bits which are at right side of the most significant bit of N to 1, then the number will become x + (x-1) = 2 * x -1 , where x is the required answer.Example:Let’s say N = 21 = {10101}, here most significant bit is the 4th one. (counting from 0th digit) and so the answer should be 16.So lets change all the right side bits of the most significant bit to 1. Now the number changes to{11111} = 31 = 2 * 16 -1 = Y (let’s say).Now the required answer is (Y+1)&gt;&gt;1 or (Y+1)/2.</p><p id="7baf7df2-97ff-4225-9d10-c2252adc8e88" class="">Now the question arises here is how can we change all right side bits of most significant bit to 1?</p><p id="fec1432c-69f0-43d1-b7ac-0ead7166f6ab" class="">Let’s take the N as 16 bit integer and binary form of N is {1000000000000000}.Here we have to change all the right side bits to 1.</p><p id="ae9ff27e-a376-4c27-bbe2-2b1406e76cb9" class="">Initially we will copy that most significant bit to its adjacent right side by:</p><p id="dcbc5734-6c53-4350-af86-059327874525" class="">N = N | (N&gt;&gt;1).</p><figure id="0f0ea4aa-d908-4665-88bf-aff0b5811adc" class="image"><a href="https://he-s3.s3.amazonaws.com/media/uploads/3fb910b.jpg"><img src="https://he-s3.s3.amazonaws.com/media/uploads/3fb910b.jpg"/></a></figure><p id="f2d24e08-c438-4f12-8a24-2295c5f497fa" class="">As you can see, in above diagram, after performing the operation, rightmost bit has been copied to its adjacent place.</p><p id="960d97df-6fd1-4e68-8b91-e9bf6c2bb94f" class="">Now we will copy the 2 rightmost set bits to their adjacent right side.</p><p id="6ce14393-e92c-455e-bfb9-c68c61d208a6" class="">N = N | (N&gt;&gt;2).</p><figure id="dbb89695-e4b3-4f23-8bbc-274fb91e620d" class="image"><a href="https://he-s3.s3.amazonaws.com/media/uploads/4682f09.jpg"><img src="https://he-s3.s3.amazonaws.com/media/uploads/4682f09.jpg"/></a></figure><p id="4648eb28-e650-4d7d-8bb4-602cc3cff738" class="">Now we will copy the 4 rightmost set bit to their adjacent right side.</p><p id="b3359d8b-acc0-4f63-97e2-c4c9b58883a2" class="">N = N | (N&gt;&gt;4)</p><figure id="74887e0b-47fa-4d5f-a81c-92f18ab4834e" class="image"><a href="https://he-s3.s3.amazonaws.com/media/uploads/53261d4.jpg"><img src="https://he-s3.s3.amazonaws.com/media/uploads/53261d4.jpg"/></a></figure><p id="6f88f664-4249-4299-898f-c458f3d994dd" class="">Now we will copy these 8 rightmost set bits to their adjacent right side.</p><p id="9794382a-96ab-43cf-b0ca-0ecd3b47ab14" class="">N = N| (N&gt;&gt;8)</p><figure id="5d6fb157-e359-4cda-ae80-03ebd39ff364" class="image"><a href="https://he-s3.s3.amazonaws.com/media/uploads/5f05f51.jpg"><img src="https://he-s3.s3.amazonaws.com/media/uploads/5f05f51.jpg"/></a></figure><p id="1937b2d7-d98c-41a9-b127-bf0f637692bc" class="">Now all the right side bits of the most significant set bit has been changed to 1 .This is how we can change right side bits. This explanation is for 16 bit integer, and it can be extended for 32 or 64 bit integer too.</p><p id="971353d2-b71e-40b5-935e-a22e61ffe40d" class=""><strong>Implementation:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="6c2d3a5e-9e39-49a7-b6dc-9649e9e10c06" class="code code-wrap"><code>long largest_power(long N)
+{
+    //changing all right side bits to 1.
+    N = N| (N>>1);
+    N = N| (N>>2);
+    N = N| (N>>4);
+    N = N| (N>>8);
+
+
+//as now the number is 2 * x-1, where x is required answer, so adding 1 and dividing it by
+ 2. 
+            return (N+1)>>1;
+
+}</code></pre><p id="69d75b41-36b0-4b44-bd14-12feffed5f39" class=""><strong>Tricks with Bits:</strong></p><p id="1dcd287c-1b8c-42f6-98db-3510f574f893" class="">1) x ^ ( x &amp; (x-1)) : Returns the rightmost 1 in binary representation of x.</p><p id="beafb33c-371c-494c-9aa3-031a2b65823c" class="">As explained above, (x &amp; (x - 1)) will have all the bits equal to the x except for the rightmost 1 in x. So if we do bitwise XOR of x and (x &amp; (x-1)), it will simply return the rightmost 1. Let’s see an example.x = 10 = (1010)2x &amp; (x-1) = (1010)2 &amp; (1001)2 = (1000)2x ^ (x &amp; (x-1)) = (1010)2 ^ (1000)2 = (0010)2</p><p id="ff65f342-6ebf-4570-b568-a6daf33ed6b0" class="">2) x &amp; (-x) : Returns the rightmost 1 in binary representation of x</p><p id="64bfdfad-7b6e-410f-962e-af46850e1993" class="">(-x) is the two’s complement of x. (-x) will be equal to one’s complement of x plus 1.Therefore (-x) will have all the bits flipped that are on the left of the rightmost 1 in x. So x &amp; (-x) will return rightmost 1.</p><p id="8b4ca56a-2c0f-4373-9269-07d1a847c225" class="">x = 10 = (1010)2(-x) = -10 = (0110)2x &amp; (-x) = (1010)2 &amp; (0110)2 = (0010)2</p><p id="2c37a518-d8e1-4e67-9c72-9b51ef4b3662" class="">3) x | (1 &lt;&lt; n) : Returns the number x with the nth bit set.</p><p id="73c3f8f3-8b93-4212-8cc0-71cb22ba9926" class="">(1 &lt;&lt; n) will return a number with only nth bit set. So if we OR it with x it will set the nth bit of x.x = 10 = (1010)2 n = 21 &lt;&lt; n = (0100)2x | (1 &lt;&lt; n) = (1010)2 | (0100)2 = (1110)2</p><p id="09452b9c-9b1a-4388-abbf-23dbce8470ae" class=""><strong>Applications of bit operations:</strong></p><p id="6937fae6-3ac3-49e6-bef0-6f26c2934e2c" class="">1) They are widely used in areas of graphics ,specially XOR(Exclusive OR) operations.2) They are widely used in the embedded systems, in situations, where we need to set/clear/toggle just one single bit of a specific register without modifying the other contents. We can do OR/AND/XOR operations with the appropriate mask for the bit position.3) Data structure like n-bit map can be used to allocate n-size resource pool to represent the current status.4) Bits are used in networking, framing the packets of numerous bits which is sent to another system generally through any type of serial interface.</p><p id="c40baa11-ec21-498c-8c37-26f6a419d46f" class="">To see a creative use of Bitwise operators, you can refer <a href="http://snook.ca/archives/javascript/creative-use-bitwise-operators">this amazing article</a> , where the bit wise operations are smartly used while developing an online calendar for events.</p></div></article></body></html>

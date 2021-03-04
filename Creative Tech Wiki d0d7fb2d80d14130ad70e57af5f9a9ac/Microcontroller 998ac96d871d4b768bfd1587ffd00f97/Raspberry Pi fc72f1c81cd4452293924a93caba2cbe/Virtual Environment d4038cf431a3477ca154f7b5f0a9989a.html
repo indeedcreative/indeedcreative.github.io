@@ -1,0 +1,633 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Virtual Environment</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d4038cf4-31a3-477c-a154-f7b5f0a9989a" class="page sans"><header><h1 class="page-title">Virtual Environment</h1></header><div class="page-body"><p id="a4080e4d-0fec-403f-a91f-25af6a584824" class="">Source : <a href="https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3">https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3</a></p><h3 id="1063123e-ed45-469b-a054-d8dbc6fb8225" class="">Install Python</h3><h3 id="6468e2bb-60d7-4ad0-b4e7-ea5130c32a1d" class="">Create virtual environment </h3><p id="23e475e5-e710-47ec-a829-97970a8011c5" class="">If python3-venv is available on your Raspberry Pi, then you can create a Python 3 virtual environment. For example, if I want to create a virtual environment within the my_venv directory in the home directory of the current user, then I will run the following command:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4ad8502e-c5f2-43c2-8d6c-07cade04c2b7" class="code"><code>python3 <span class="token operator">-</span>m venv <span class="token operator">~</span><span class="token operator">/</span>my_venv 
+<span class="token comment">//make environment in the root folder</span>
+<span class="token comment">//optional)virtualenv -p python3 envname</span>
+python3 <span class="token operator">-</span>m venv <span class="token punctuation">.</span> 
+<span class="token comment">// make a environment in my present directory</span></code></pre><h3 id="9a52b2e7-a921-4d1d-8e21-d65ec4c351b6" class="">How to activate the virtual environment</h3><p id="2389ac6d-c951-45e3-9eec-45a17fad4ea0" class="">Before you can do anything with that Python 3 virtual environment, you will need to activate it first. In order to activate the Python 3 virtual environment, you need to use the source command to load <a href="http://activate.sh/">activate.sh</a> into the current shell session:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="5cdbf69c-e5a2-4860-93e6-cf16bfaaa8ed" class="code"><code>source <span class="token operator">~</span><span class="token operator">/</span>my_venv<span class="token operator">/</span>bin<span class="token operator">/</span>activate</code></pre><p id="85939dc6-7004-483d-b709-fb77129be730" class="">After you had done so, you will notice that the shell prompt got appended with the name of your Python 3 virtual environment:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="fbaff338-6f43-4fd2-b0a5-25fdd79884c8" class="code"><code><span class="token punctuation">(</span>my_venv<span class="token punctuation">)</span> pi@raspberrypi<span class="token operator">:</span><span class="token operator">~</span> $</code></pre><p id="5d499c68-bbdf-4d48-aa2c-62a9db28ed5b" class="">
+</p><h3 id="233a798d-a443-4cbf-979f-e05fa36fc3f0" class="">Optional) Create virtual environment with specific python version</h3><p id="6f994510-c387-4004-ace0-0b69ca096f39" class="">When working with virtual environments in Python, it&#x27;s common to use a custom version of Python rather than the server&#x27;s version. To create a new virtual environment using your custom installed version of Python, follow these steps:</p><p id="e14fa8f8-9e4f-4641-b856-e8a40dad89aa" class="">
+</p><p id="3f6590ea-bf67-48f3-b958-78a312fee882" class="">The following steps use Python version 3.6.2. Make sure to use the version you installed.</p><ol id="e3653145-914e-42e7-b421-1586e7f89b15" class="numbered-list" start="1"><li>Make a note of the full file path to the custom version of Python you just installed. If you&#x27;ve followed the instructions in the <a href="https://help.dreamhost.com/hc/en-us/articles/115000702772-Installing-a-custom-version-of-Python-3">installation article</a>, the full path is:<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="51769ec6-038f-460b-91b2-bdb42dba1fd2" class="code"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>$ which python3</code></pre><p id="b6ea7e5b-b2c7-4c9d-8064-eee6a114f8ea" class="">/home/username/opt/python-3.6.2/bin/python</p></li></ol><ol id="63ca41ad-c194-4031-8114-7209892faa9b" class="numbered-list" start="2"><li>Navigate to your site&#x27;s directory, where you&#x27;ll create the new virtual environment:<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="be5c0a4c-3bc8-4284-9fae-dd64d035c035" class="code"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>$ cd <span class="token operator">~</span><span class="token operator">/</span>example<span class="token punctuation">.</span>com</code></pre></li></ol><ol id="f28adb52-e311-4255-9dc0-100b4045faa0" class="numbered-list" start="3"><li>Source your .bash_profile<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="0686e737-872c-4159-af45-1e6b55c7bb7d" class="code"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>$ <span class="token punctuation">.</span> <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>bash_profile</code></pre></li></ol><ol id="13d145ed-2bfa-4235-87f2-806968179153" class="numbered-list" start="4"><li>Create the virtual environment while you specify the version of Python you wish to use. The following command creates a virtualenv named &#x27;venv&#x27; and uses the -p flag to specify the full path to the Python3 version you just installed:You can name the virtualenv anything you like.<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="30730d50-94b6-4bd8-a759-accd8862765d" class="code"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>$ virtualenv <span class="token operator">-</span>p <span class="token operator">/</span>home<span class="token operator">/</span>example_username<span class="token operator">/</span>opt<span class="token operator">/</span>python<span class="token operator">-</span><span class="token number">3.6</span><span class="token number">.2</span><span class="token operator">/</span>bin<span class="token operator">/</span>python3 venv</code></pre><p id="ff2e00f2-bd35-4536-8406-83210d68468f" class="">Running virtualenv with interpreter /home/example_username/opt/python-3.6.2/bin/python3</p><p id="28d011f4-5894-488e-a1ee-d3b3363e0771" class="">Using base prefix &#x27;/home/example_username/opt/python-3.6.2&#x27;</p><p id="f6426a02-c00e-4df5-a52a-4020b20da7a4" class="">New python executable in /home/example_username/<a href="http://example.com/env/bin/python3">example.com/env/bin/python3</a></p><p id="b0c4c655-1b77-49b0-9c99-121479448dcd" class="">Also creating executable in /home/example_username/<a href="http://example.com/env/bin/python">example.com/env/bin/python</a></p><p id="a4bccdd3-7cfa-44d0-b087-384296ace6ef" class="">Installing setuptools, pip, wheel...done.</p><ul id="3ffe0894-7032-42ba-bef4-a102057a2c75" class="bulleted-list"><li>This command creates a local copy of your environment specific to this website. While working on this website, you should activate the local environment in order to make sure you&#x27;re working with the right versions of your tools and packages.</li></ul></li></ol><ol id="a2923074-aeef-433c-8a95-b5343fd4704c" class="numbered-list" start="5"><li>To activate the new virtual environment, run the following:<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="49efd279-d4a1-4fca-ba0a-1db9fefa034f" class="code"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>$ source venv<span class="token operator">/</span>bin<span class="token operator">/</span>activate</code></pre><p id="e008b104-1234-4959-80d0-9b8100d944b5" class="">The name of the current virtual environment appears to the left of the prompt. For example:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="dcd7ad0f-3a58-4d56-a5b5-ec1181a2b0a2" class="code"><code><span class="token punctuation">(</span>venv<span class="token punctuation">)</span> <span class="token punctuation">[</span>server<span class="token punctuation">]</span>$</code></pre></li></ol><ol id="f0cddf18-2654-496b-af51-7f7a536bfd6a" class="numbered-list" start="6"><li>To verify the correct Python version, run the following:<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="f6d8be76-8600-4bff-b84c-55adc5922997" class="code"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>$ python <span class="token operator">-</span><span class="token constant">V</span></code></pre><p id="423c1d2a-cb1a-4718-b359-058fd76c1471" class="">Python 3.6.2</p></li></ol><p id="ee46b68b-2a25-43ee-99eb-1ffe75160aa4" class="">Any package that you install using pip is now placed in the virtual environments project folder, isolated from the global Python installation.</p></div></article></body></html>

@@ -1,0 +1,726 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SQLite database</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0452b58f-3b81-4a4a-9e51-a5d7eb531543" class="page sans"><header><h1 class="page-title">SQLite database</h1></header><div class="page-body"><p id="2cc5aab2-fcf8-472f-9cc6-1370fd6bec01" class="">General documentation : <a href="https://sqlite.org/index.html">https://sqlite.org/index.html</a></p><p id="831c8c27-6a9a-40f9-9e31-9ca80ccde4e4" class="">Install sqlite3</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b22443cb-430c-4aa7-b06f-5c63d20683dc" class="code"><code>root@raspberrypi<span class="token operator">:</span><span class="token operator">/</span>var<span class="token operator">/</span>www<span class="token operator">/</span>lab_app# sudo apt<span class="token operator">-</span>get install sqlite3</code></pre><p id="be964ab8-7725-4c80-a674-40cccd53b5bd" class="">Create a sql file</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="eb06a05d-b6c6-4efa-9839-fe46a42616c9" class="code"><code>root<span class="token variable">@raspberrypi</span>:<span class="token operator">/</span>var<span class="token operator">/</span>www<span class="token operator">/</span>lab_app<span class="token comment"># sqlite3 sample.sql</span>
+sqlite<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+sqlite<span class="token operator">></span> <span class="token keyword">create</span> <span class="token keyword">table</span> temperatures<span class="token punctuation">(</span>rDatetime <span class="token keyword">datetime</span><span class="token punctuation">,</span> sensorID <span class="token keyword">text</span><span class="token punctuation">,</span> <span class="token keyword">temp</span> <span class="token keyword">numeric</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#create three colums (rDatetime with dataType "datetime" etc.)</span>
+sqlite<span class="token operator">></span> <span class="token keyword">insert</span> <span class="token keyword">into</span> temperatures <span class="token keyword">values</span> <span class="token punctuation">(</span><span class="token keyword">datetime</span><span class="token punctuation">(</span><span class="token string">'now'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+sqlite<span class="token operator">></span> <span class="token keyword">commit</span><span class="token punctuation">;</span>
+sqlite<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> temperatures<span class="token punctuation">;</span>
+<span class="token number">2021</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">13</span> <span class="token number">10</span>:<span class="token number">43</span>:<span class="token number">48</span><span class="token operator">|</span><span class="token number">1</span><span class="token operator">|</span><span class="token number">25</span>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span><span class="token keyword">exit</span></code></pre><h1 id="00b7fe33-6ca8-429d-bd22-30cbecaf8347" class="">Determine the appropriate datetime range query </h1><p id="e7ffb996-bd6a-4ba3-adef-0b0fcdd5dd8d" class="">
+</p><p id="b8846f14-2005-42c0-be0b-fcb3ed993e2a" class="">Ctrl + D will get you out of the SQLite 3 database command prompt</p><p id="84e8029a-2865-4034-9ecf-06dbc8b31895" class="">
+</p><h2 id="a3ec03cd-aed7-4152-87d5-5557bd8f4d22" class="">SQLite Commands</h2><p id="d23d1bf2-8804-484c-a6e0-c8f743c10ce3" class=""><strong>Summary</strong>: in this tutorial, we will introduce you to the most commonly used SQLite commands of the sqlite3 command-line program.</p><p id="534b43fa-d2d8-42d9-9fb4-585f96b8cf40" class="">The SQLite project delivers a simple command-line tool named sqlite3 (or sqlite3.exe on Windows) that allows you to interact with the SQLite databases using SQL statements and commands.</p><h2 id="f1044169-775e-456d-82cb-b94d4e91cd35" class="">Connect to an SQLite database</h2><p id="2805a309-9729-4f72-8439-667df12379d0" class="">To start the sqlite3, you type the sqlite3 as follows:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="68884263-cf81-4f71-89e1-1c851780163b" class="code code-wrap"><code>
+<span class="token operator">></span>sqlite3
+SQLite version <span class="token number">3.29</span><span class="token number">.0</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">07</span><span class="token operator">-</span><span class="token number">10</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">32</span><span class="token punctuation">:</span><span class="token number">03</span>
+Enter <span class="token string">".help"</span> <span class="token keyword">for</span> usage hints<span class="token punctuation">.</span>
+Connected to a transient <span class="token keyword">in</span><span class="token operator">-</span>memory database<span class="token punctuation">.</span>
+Use <span class="token string">".open FILENAME"</span> to reopen on a persistent database<span class="token punctuation">.</span>
+sqlite<span class="token operator">></span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="7225ef90-3f16-4a68-8258-25d051f2e713" class="">By default, an SQLite session uses the in-memory database, therefore, all changes will be gone when the session ends.</p><p id="31373d1d-7078-48a8-98e1-3f2e1ab5f81a" class="">To open a database file, you use the <code>.open FILENAME</code> command. The following statement opens the <code>chinook.db</code> database:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="59585337-f2e2-48da-81c5-3cbd059529e8" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span><span class="token builtin">open</span> c<span class="token punctuation">:</span>\sqlite\db\chinook<span class="token punctuation">.</span>dbCode language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="3136342f-6317-42c6-ae3b-9ad22ee16740" class="">If you want to open a specific database file when you connect to the SQlite database, you use the following command:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="7fd21b75-815a-4c19-b340-893e14bc122b" class="code code-wrap"><code>
+<span class="token operator">></span>sqlite3 c<span class="token punctuation">:</span>\sqlite\db\chinook<span class="token punctuation">.</span>db
+SQLite version <span class="token number">3.13</span><span class="token number">.0</span> <span class="token number">2016</span><span class="token operator">-</span><span class="token number">05</span><span class="token operator">-</span><span class="token number">18</span> <span class="token number">10</span><span class="token punctuation">:</span><span class="token number">57</span><span class="token punctuation">:</span><span class="token number">30</span>
+Enter <span class="token string">".help"</span> <span class="token keyword">for</span> usage hints<span class="token punctuation">.</span>
+sqlite<span class="token operator">></span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="fa9e3ae5-c8bb-40e8-8d12-bf2d37d8c6a1" class="">If you start a session with a database name that does not exist, the sqlite3 tool will create the database file.</p><p id="c9b1b622-bff3-4f92-af4d-1adeea394a08" class="">For example, the following command creates a database named <code>sales</code> in the <code>C:\sqlite\db\</code> directory:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="24cf1329-076a-49eb-b249-f29b63bb41af" class="code code-wrap"><code>
+<span class="token operator">></span>sqlite3 c<span class="token punctuation">:</span>\sqlite\db\sales<span class="token punctuation">.</span>db
+SQLite version <span class="token number">3.29</span><span class="token number">.0</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">07</span><span class="token operator">-</span><span class="token number">10</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">32</span><span class="token punctuation">:</span><span class="token number">03</span>
+Enter <span class="token string">".help"</span> <span class="token keyword">for</span> usage hints<span class="token punctuation">.</span>
+sqlite<span class="token operator">></span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><h2 id="115ef73c-60e5-4d43-8153-b05300d54500" class="">Show all available commands and their purposes</h2><p id="7f951936-7ede-4867-bb2f-f9f3c79e9b28" class="">To show all available commands and their purpose, you use the <code>.help</code> command as follows:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="780d5fb6-9956-44ab-8a67-529fc4e60df5" class="code code-wrap"><code>
+<span class="token punctuation">.</span>helpCode language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><h2 id="99ac0474-9d30-4e0f-b465-481aae02bfb9" class="">Show databases in the current database connection</h2><p id="54dd02e2-413c-4635-af8d-1fa9048a9d25" class="">To show all databases in the current connection, you use the <code>.databases</code> command. The <code>.databases</code> command displays at least one database with the name: <code>main</code>.</p><p id="810664c9-bad8-4c92-9a36-07a60f67ad21" class="">For example, the following command shows all the databases of the current connection:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="898758f3-4917-43b2-ab56-4785e6464030" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>database
+seq  name             <span class="token builtin">file</span>
+<span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>  <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>  <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>
+<span class="token number">0</span>    main             c<span class="token punctuation">:</span>\sqlite\db\sales<span class="token punctuation">.</span>db
+sqlite<span class="token operator">></span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="b1c55b61-09b1-47f1-a50d-de00afa75620" class="">To add an additional database in the current connection, you use the statement <a href="https://www.sqlitetutorial.net/sqlite-attach-database/"><code>ATTACH DATABASE</code></a>. The following statement adds the <code>chinook</code> database to the current connection.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1e5ed348-744f-4c6d-8591-2010fbb96e51" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> ATTACH DATABASE <span class="token string">"c:\sqlite\db\chinook.db"</span> AS chinook<span class="token punctuation">;</span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="d6cbd3cb-53c5-4b8e-a852-7269cdc7046e" class="">Now if you run the <code>.database</code> command again, the sqlite3 returns two databases: <code>main</code> and <code>chinook</code>.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="927b15c8-7d2d-4613-a31a-0ccf82336fc2" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>databases
+seq  name             <span class="token builtin">file</span>
+<span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>  <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>  <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>
+<span class="token number">0</span>    main             c<span class="token punctuation">:</span>\sqlite\db\sales<span class="token punctuation">.</span>db
+<span class="token number">2</span>    chinook          c<span class="token punctuation">:</span>\sqlite\db\chinook<span class="token punctuation">.</span>db
+Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><h2 id="b4c271ff-fc7a-4c75-a773-f62307a9ee37" class="">Exit sqlite3 tool</h2><p id="897ef651-9a2c-430c-96b9-d99688dc57f7" class="">To exit the sqlite3 program, you use the <code>.exit</code> command.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="753e3532-8a0b-4e3a-99e0-ecfdd0572d41" class="code code-wrap"><code>
+sqlite<span class="token operator">></span><span class="token punctuation">.</span>exitCode language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><h2 id="4e4da4f8-e6d9-4e22-add9-1f63400994e9" class="">Show tables in a database</h2><p id="7f24cc26-77c6-4d15-ba05-dcdfe56a816a" class="">To display all the tables in the current database, you use the <code>.tables</code> command. The following commands open a new database connection to the <code>chinook</code> database and display the tables in the database.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="66d51815-3f2a-4b57-8cf7-6ae4da23df9d" class="code code-wrap"><code>
+<span class="token operator">></span>sqlite3 c<span class="token punctuation">:</span>\sqlite\db\chinook<span class="token punctuation">.</span>db
+SQLite version <span class="token number">3.29</span><span class="token number">.0</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">07</span><span class="token operator">-</span><span class="token number">10</span> <span class="token number">17</span><span class="token punctuation">:</span><span class="token number">32</span><span class="token punctuation">:</span><span class="token number">03</span>
+Enter <span class="token string">".help"</span> <span class="token keyword">for</span> usage hints<span class="token punctuation">.</span>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>tables
+albums          employees       invoices        playlists
+artists         genres          media_types     tracks
+customers       invoice_items   playlist_track
+sqlite<span class="token operator">></span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="13a62f62-2dfb-4c37-a4eb-ffeac0529900" class="">If you want to find tables based on a specific pattern, you use the <code>.table</code> pattern command. The sqlite3 uses the <a href="https://www.sqlitetutorial.net/sqlite-like/"><code>LIKE</code></a> operator for pattern matching.</p><p id="0ae1d15b-705e-4ea8-8780-c33ed8b6ec52" class="">For example, the following statement returns the table that ends with the string <code>es</code>.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="18c46d0c-ac0d-47bf-9ff7-7201ebfad380" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>table <span class="token string">'%es'</span>
+employees    genres       invoices     media_types
+sqlite<span class="token operator">></span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><h2 id="7c91c2f9-5573-454d-9a9c-516e6417690c" class="">Show the structure of a table</h2><p id="7c745ccd-0ff0-4f7b-b74a-a482a57ffae1" class="">To display the structure of a table, you use the <code>.schema TABLE</code> command. The <code>TABLE</code> argument could be a pattern. If you omit it, the <code>.schema</code> command will show the structures of all the tables.</p><p id="0719fe7c-8665-4346-9730-e3a1e3ef798f" class="">The following command shows the structure of the <code>albums</code> table.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="98da3740-a65c-4602-8a2f-8cab338d92a7" class="code code-wrap"><code>
+sqlite> .schema albums
+CREATE TABLE "albums"
+(
+    [AlbumId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    [Title] NVARCHAR(160)  NOT NULL,
+    [ArtistId] INTEGER  NOT NULL,
+    FOREIGN KEY ([ArtistId]) REFERENCES "artists" ([ArtistId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+CREATE INDEX [IFK_AlbumArtistId] ON "albums" ([ArtistId]);
+sqlite>Code language: Shell Session (shell)</code></pre><p id="6626bf9e-48c5-4f9c-8b68-4e172cf43f99" class="">To show the schema and the content of the <code>sqlite_stat</code> tables, you use the <code>.fullschema</code> command.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="49f8614b-7c4a-4e56-b261-ef8fc9b1f507" class="code code-wrap"><code>
+sqlite>.fullschemaCode language: CSS (css)</code></pre><h2 id="db5062cf-0d81-44c9-8fc1-d9c6b9ecdbf5" class="">Show indexes</h2><p id="4edbd216-89cb-4d55-b89b-94f48a53665d" class="">To show all indexes of the current database, you use the <code>.indexes</code> command as follows:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c3042385-34b6-45ae-9a8d-d3680af96a21" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>indexes
+IFK_AlbumArtistId
+IFK_CustomerSupportRepId
+IFK_EmployeeReportsTo
+IFK_InvoiceCustomerId
+IFK_InvoiceLineInvoiceId
+IFK_InvoiceLineTrackId
+IFK_PlaylistTrackTrackId
+IFK_TrackAlbumId
+IFK_TrackGenreId
+IFK_TrackMediaTypeIdCode language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="5a287499-66f1-4913-90e1-fc692558bf4e" class="">To show the indexes of a specific table, you use the <code>.indexes TABLE</code> command. For example, to show indexes of the <code>albums</code> table, you use the following command:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="e81dc445-b6f7-4306-9ec6-fff8469c0376" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>indexes albumsIFK_AlbumArtistIdCode language<span class="token punctuation">:</span> CSS <span class="token punctuation">(</span>css<span class="token punctuation">)</span></code></pre><p id="57fc7791-ffc1-4577-96a5-751481573871" class="">To show indexes of the tables whose names end with <code>es</code>, you use a pattern of the <a href="https://www.sqlitetutorial.net/sqlite-like/">LIKE</a> operator.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a1a1ac1a-f652-4466-97a3-120433bd2261" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>indexes <span class="token operator">%</span>es
+IFK_EmployeeReportsTo
+IFK_InvoiceCustomerIdCode language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><h2 id="dd58cd0a-8789-4c31-be83-adb409971db6" class="">Save the result of a query into a file</h2><p id="5d5b71e3-c3f5-4180-85cd-54c57464d3e0" class="">To save the result of a query into a file, you use the <code>.output FILENAME</code> command. Once you issue the <code>.output </code>command, all the results of the subsequent queries will be saved to the file that you specified in the <code>FILENAME</code> argument. If you want to save the result of the next single query only to the file, you issue the <code>.once FILENAME</code> command.</p><p id="c72e84cc-c9e9-46f0-a758-a8864885ee11" class="">To display the result of the query to the standard output again, you issue the <code>.output</code> command without arguments.</p><p id="80b7bb95-4e79-4955-848e-2d97725132f3" class="">The following commands select the <code>title</code> from the <code>albums</code> table and write the result to the <code>albums.txt</code> file.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="eb082946-4416-49a0-adc6-7ad7e6c569c2" class="code code-wrap"><code>
+sqlite<span class="token operator">></span> <span class="token punctuation">.</span>output albums<span class="token punctuation">.</span>txt
+sqlite<span class="token operator">></span> SELECT title FROM albums<span class="token punctuation">;</span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><h2 id="e217f477-db51-4547-b333-2493d7181d7d" class="">Execute SQL statements from a file</h2><p id="14ddae98-f635-4b76-8b4f-632dde26d83a" class="">Suppose we have a file named <code>commands.txt</code> in the <code>c:\sqlite\</code> folder with the following content:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="de2cff1e-2bd1-4f14-9d00-ac116ed54e17" class="code code-wrap"><code>
+SELECT albumid<span class="token punctuation">,</span> title
+FROM albums
+ORDER BY title
+LIMIT <span class="token number">10</span><span class="token punctuation">;</span>Code language<span class="token punctuation">:</span> Shell Session <span class="token punctuation">(</span>shell<span class="token punctuation">)</span></code></pre><p id="56b7c784-0a3e-4f31-9e01-146b2441bab7" class="">To execute the SQL statements in the <code>commands.txt</code> file, you use the <code>.read FILENAME</code> command as follows:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d3c9c93b-99f4-416f-8561-b8bbd4a0c9d3" class="code code-wrap"><code>
+sqlite> .mode column
+sqlite> .header on
+sqlite> .read c:/sqlite/commands.txt
+AlbumId     Title
+----------  ----------------------
+156         ...And Justice For All
+257         20th Century Masters -
+296         A Copland Celebration,
+94          A Matter of Life and D
+95          A Real Dead One
+96          A Real Live One
+285         A Soprano Inspired
+139         A TempestadeTempestade
+203         A-Sides
+160         Ace Of SpadesCode language: Shell Session (shell)</code></pre><p id="c2cbbf5d-7582-4595-a6c5-e431f61d7b7f" class="">In this tutorial, you have learned many useful commands in the sqlite3 tool to perform various tasks that deal with the SQLite database.</p><p id="c59b181f-83e2-4cb5-8fdd-182ba905c648" class="">
+</p></div></article></body></html>

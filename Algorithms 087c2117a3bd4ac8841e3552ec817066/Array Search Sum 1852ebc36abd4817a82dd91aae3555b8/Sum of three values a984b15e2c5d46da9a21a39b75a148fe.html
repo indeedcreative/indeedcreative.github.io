@@ -1,0 +1,675 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Sum of three values</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a984b15e-2c5d-46da-9a21-a39b75a148fe" class="page sans"><header><h1 class="page-title">Sum of three values</h1></header><div class="page-body"><p id="a8e3a94d-7f4e-4b08-aa25-3c5ac545ce73" class="">
+</p><p id="6b8c798a-e84c-4d93-ac17-e9bd20976907" class="">Given an array <code>nums</code> of <em>n</em> integers, are there elements <em>a</em>, <em>b</em>, <em>c</em> in <code>nums</code> such that <em>a</em> + <em>b</em> + <em>c</em> = 0? Find all unique triplets in the array which gives the sum of zero.</p><p id="8ea00f6f-2874-46b3-aec1-21b9c852dd7b" class="">Notice that the solution set must not contain duplicate triplets.</p><p id="a43a46fa-fbcd-40c2-a181-4d34f30b6b70" class=""><strong>Example 1:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="e8268ff4-8e2f-451c-a099-13b844da4181" class="code code-wrap"><code>Input<span class="token punctuation">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span>
+Output<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+</code></pre><p id="cbfbfc21-6d9b-4325-8b14-7279979e61c2" class=""><strong>Example 2:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4dcf4481-f3b6-499a-9027-9f39e98d44d7" class="code code-wrap"><code>Input<span class="token punctuation">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Output<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</code></pre><p id="66caf6a0-5050-4aa9-95ea-207ffb629bc6" class=""><strong>Example 3:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="083ca9d2-2e36-4772-b7e3-05e18dc909ee" class="code code-wrap"><code>Input<span class="token punctuation">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+Output<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</code></pre><p id="79e089c6-7919-4401-a75d-378e40fd703e" class=""><strong>Constraints:</strong></p><ul id="a5f0e2af-e3c5-4e71-b9a3-a8a7e506a029" class="bulleted-list"><li><code>0 &lt;= nums.length &lt;= 3000</code></li></ul><ul id="474e3a94-e00d-4dc6-b0c7-2575f05e148c" class="bulleted-list"><li><code>10</code><code>5</code><code> &lt;= nums[i] &lt;= 10</code><code>5</code></li></ul><p id="d9146c14-19e6-4d68-8c56-501032821905" class="">
+</p><h1 id="11b02a2e-7ac5-474a-8efe-bd4aea8e5d59" class=""><strong>Solution</strong></h1><p id="b61bdb59-4308-4666-a7a6-483a67522c9e" class="">This problem is a follow-up of Two Sum, and it is a good idea to first take a look at <a href="https://leetcode.com/articles/two-sum/">Two Sum</a> and <a href="https://leetcode.com/articles/two-sum-ii-input-array-is-sorted/">Two Sum II</a>. An interviewer may ask to solve Two Sum first, and then throw 3Sum at you. Pay attention to subtle differences in problem description and try to re-use existing solutions!</p><p id="13986559-6b83-4703-a5bb-a644b8601fa7" class="">Two Sum, Two Sum II and 3Sum share a similarity that the sum of elements must match the target exactly. A difference is that, instead of exactly one answer, we need to find all unique triplets that sum to zero.</p><p id="9b02eda3-eef6-4ebb-b297-1a4408bdb15e" class="">Before jumping in, let&#x27;s check the existing solutions and determine the best conceivable runtime (BCR) for 3Sum:</p><ol id="00e116e1-6300-4e2c-abdc-d724a2f7db28" class="numbered-list" start="1"><li><a href="https://leetcode.com/articles/two-sum/">Two Sum</a> uses a hashmap to find complement values, and therefore achieves O(<em>N</em>) time complexity.</li></ol><ol id="480c07b8-305a-437d-95b6-3cebb7b36497" class="numbered-list" start="2"><li><a href="https://leetcode.com/articles/two-sum-ii-input-array-is-sorted/">Two Sum II</a> uses the two pointers pattern and also has O(<em>N</em>) time complexity for a sorted array. We can use this approach for any array if we sort it first, which bumps the time complexity to O(<em>n</em>log<em>n</em>).</li></ol><p id="5e58943d-9c24-4963-ba3d-50df8867a81b" class="">Considering that there is one more dimension in 3Sum, it sounds reasonable to shoot for O(<em>n</em>2) time complexity as our BCR.</p><hr id="5e136bc2-f320-408f-bb06-71cf75d77fd4"/><h3 id="6ee9f9ec-b6d3-4e41-9c32-08b91150984b" class=""><strong>Approach 1: Two Pointers</strong></h3><p id="56cef382-8fe5-4da6-94fc-701265dc5b0a" class="">We will follow the same two pointers pattern as in <a href="https://leetcode.com/articles/two-sum-ii-input-array-is-sorted/">Two Sum II</a>. It requires the array to be sorted, so we&#x27;ll do that first. As our BCR is {O}(n^2), sorting the array would not change the overall time complexity.</p><p id="f4225652-6607-4bfb-9834-786782fb3fca" class="">To make sure the result contains unique triplets, we need to skip duplicate values. It is easy to do because repeating values are next to each other in a sorted array.</p><blockquote id="653e739b-32fc-4c9e-9adc-24455344e7df" class="">If you are wondering how to solve this problem without sorting the array, go over the &quot;No-Sort&quot; approach below. There are cases when that approach is preferable, and your interviewer may probe your knowledge there.</blockquote><p id="c18d1b88-a253-4047-b865-140615191a66" class="">After sorting the array, we move our pivot element <code>nums[i]</code> and analyze elements to its right. We find all pairs whose sum is equal <code>-nums[i]</code> using the two pointers pattern, so that the sum of the pivot element (<code>nums[i]</code>) and the pair (<code>-nums[i]</code>) is equal to zero.</p><p id="55da3a53-84b8-4f8d-9d74-6a587af87d0c" class="">As a quick refresher, the pointers are initially set to the first and the last element respectively. We compare the sum of these two elements to the target. If it is smaller, we increment the lower pointer <code>lo</code>. Otherwise, we decrement the higher pointer <code>hi</code>. Thus, the sum always moves toward the target, and we &quot;prune&quot; pairs that would move it further away. Again, this works only if the array is sorted. Head to the <a href="https://leetcode.com/articles/two-sum-ii-input-array-is-sorted/">Two Sum II</a> solution for the detailed explanation.</p><p id="7a8d9ff8-7412-4552-8de6-e6be5fd2e825" class="">
+</p><p id="5e1370ef-bf7b-44f4-9179-9d4b9fa43ab8" class=""><strong>Algorithm</strong></p><p id="4084f741-7c39-46a7-aa16-784920d30d6c" class="">The implementation is straightforward - we just need to modify <code>twoSumII</code> to produce triplets and skip repeating values.</p><ol id="51f17083-7a17-4e53-a0c5-4a259e28cdf3" class="numbered-list" start="1"><li>For the main function:<ul id="05e842a4-3e33-4ecb-a455-058d39d1dec5" class="bulleted-list"><li>Sort the input array <code>nums</code>.</li></ul><ul id="f40c7c28-63e2-4776-982f-d1457ea942fc" class="bulleted-list"><li>Iterate through the array:<ul id="61caeec7-9a0c-42cd-b752-cbd9cfa28e65" class="bulleted-list"><li>If the current value is greater than zero, break from the loop. Remaining values cannot sum to zero.</li></ul><ul id="d1b30dab-da0b-49b5-bba0-d3b5a9978dd4" class="bulleted-list"><li>If the current value is the same as the one before, skip it.</li></ul><ul id="d7388a69-25e8-4d8f-b53a-606d0e7480a8" class="bulleted-list"><li>Otherwise, call <code>twoSumII</code> for the current position <code>i</code>.</li></ul></li></ul></li></ol><ol id="a6605636-0976-4dbf-9bc5-871696c55bba" class="numbered-list" start="2"><li>For <code>twoSumII</code> function:<ul id="86061169-4878-443e-9e7b-013363a71516" class="bulleted-list"><li>Set the low pointer <code>lo</code> to <code>i + 1</code>, and high pointer <code>hi</code> to the last index.</li></ul><ul id="b738efcf-ed29-43c4-b3b7-eff167f9a2e0" class="bulleted-list"><li>While low pointer is smaller than high:<ul id="1e4c2167-8b5f-462b-931f-d0af6ebc0bdb" class="bulleted-list"><li>If <code>sum</code> of <code>nums[i] + nums[lo] + nums[hi]</code> is less than zero, increment <code>lo</code>.</li></ul><ul id="a9305a07-7dc4-4e0e-9e20-f4dfd4ae8059" class="bulleted-list"><li>If <code>sum</code> is greater than zero, decrement <code>hi</code>.</li></ul><ul id="00e53dff-1ffa-45a0-9e1f-2c6e324174d4" class="bulleted-list"><li>Otherwise, we found a triplet:<ul id="28a36871-2f21-4266-adc4-7e934591b692" class="bulleted-list"><li>Add it to the result <code>res</code>.</li></ul><ul id="2e6d38ec-73e1-4349-9e5f-fa4581215131" class="bulleted-list"><li>Decrement <code>hi</code> and increment <code>lo</code>.</li></ul><ul id="80fa12b4-5431-4fcf-ac5b-62b1ccd28d08" class="bulleted-list"><li>Increment <code>lo</code> while the next value is the same as before to avoid duplicates in the result</li></ul></li></ul></li></ul></li></ol><p id="89e9b0fe-d833-439f-9319-bd8bac1b48c3" class=""> 3. Return the result res.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="02fa1749-bfbe-47a1-a80f-37b7a25701d2" class="code"><code><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">threeSum</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        nums<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+                <span class="token keyword">break</span>
+            <span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">or</span> nums<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">!=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>twoSumII<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> i<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> res
+
+    <span class="token keyword">def</span> <span class="token function">twoSumII</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">,</span> res<span class="token punctuation">:</span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        lo<span class="token punctuation">,</span> hi <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>lo <span class="token operator">&lt;</span> hi<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token builtin">sum</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>lo<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>hi<span class="token punctuation">]</span>
+            <span class="token keyword">if</span> <span class="token builtin">sum</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                lo <span class="token operator">+=</span> <span class="token number">1</span>
+            <span class="token keyword">elif</span> <span class="token builtin">sum</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+                hi <span class="token operator">-=</span> <span class="token number">1</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                res<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>lo<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>hi<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                lo <span class="token operator">+=</span> <span class="token number">1</span>
+                hi <span class="token operator">-=</span> <span class="token number">1</span>
+                <span class="token keyword">while</span> lo <span class="token operator">&lt;</span> hi <span class="token keyword">and</span> nums<span class="token punctuation">[</span>lo<span class="token punctuation">]</span> <span class="token operator">==</span> nums<span class="token punctuation">[</span>lo <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+                    lo <span class="token operator">+=</span> <span class="token number">1</span></code></pre><p id="ffa8cb48-591f-4559-a868-b70eb591727e" class="">
+</p><p id="8424d065-7961-4678-8243-5b509c67c8b5" class=""><strong>Complexity Analysis</strong></p><ul id="7fdd7bd2-c980-4b64-9edf-fe3c01319786" class="bulleted-list"><li>Time Complexity:)O(<em>n</em>2). <code>twoSumII</code> is O(<em>n</em>), and we call it n<em>n</em> times.<p id="188eb3f6-c924-4c72-a76e-4e2ca3d35b4c" class="">Sorting the array takes O(<em>n</em>log<em>n</em>), so overall complexity is O(<em>n</em>log<em>n</em>+<em>n</em>2). This is asymptotically equivalent to O(<em>n</em>2).</p></li></ul><ul id="935f31c2-4648-47db-aec7-a916e7552a6f" class="bulleted-list"><li>Space Complexity: fromO(log<em>n</em>) to O(<em>n</em>), depending on the implementation of the sorting algorithm. For the purpose of complexity analysis, we ignore the memory required for the output.</li></ul><p id="d314881d-9cbc-41fe-8cc9-ab1acfccf96d" class="">
+</p><h3 id="c8dc2995-54cd-4eaf-8879-f5cb2a64fcd6" class=""><strong>Approach 3: &quot;No-Sort&quot;</strong></h3><p id="44668985-3a28-42a5-9d12-91f47a32a816" class="">What if you cannot modify the input array, and you want to avoid copying it due to memory constraints?</p><p id="0ba3a67b-3dad-499d-9e71-bed007a49eb8" class="">We can adapt the hashset approach above to work for an unsorted array. We can put a combination of three values into a hashset to avoid duplicates. Values in a combination should be ordered (e.g. ascending). Otherwise, we can have results with the same values in the different positions.</p><p id="c2d61796-1728-45c1-b5ea-90da2d5967db" class=""><strong>Algorithm</strong></p><p id="46c16f6b-5bee-4555-b151-6b704dfe6766" class="">The algorithm is similar to the hashset approach above. We just need to add few optimizations so that it works efficiently for repeated values:</p><ol id="cca498ce-ced0-4d75-b198-6a860f245cfe" class="numbered-list" start="1"><li>Use another hashset <code>dups</code> to skip duplicates in the outer loop.<ul id="8debbe5d-aa33-4992-a83d-63629132f747" class="bulleted-list"><li>Without this optimization, the submission will time out for the test case with 3,000 zeroes. This case is handled naturally when the array is sorted.</li></ul></li></ol><ol id="9f4d902f-320b-4e21-b5f2-3d8645bf099d" class="numbered-list" start="2"><li>Instead of re-populating a hashset every time in the inner loop, we can use a hashmap and populate it once. Values in the hashmap will indicate whether we have encountered that element in the current iteration. When we process <code>nums[j]</code> in the inner loop, we set its hashmap value to <code>i</code>. This indicates that we can now use <code>nums[j]</code> as a complement for <code>nums[i]</code>.<ul id="211a4b11-2c8f-48d1-9a57-cfd9eb221d68" class="bulleted-list"><li>This is more like a trick to compensate for container overheads. The effect varies by language, e.g. for C++ it cuts the runtime in half. Without this trick the submission may time out.</li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8cd77ddd-becc-4280-9a03-7394c1955a13" class="code"><code><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">threeSum</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        res<span class="token punctuation">,</span> dups <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        seen <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        <span class="token keyword">for</span> i<span class="token punctuation">,</span> val1 <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> val1 <span class="token keyword">not</span> <span class="token keyword">in</span> dups<span class="token punctuation">:</span>
+                dups<span class="token punctuation">.</span>add<span class="token punctuation">(</span>val1<span class="token punctuation">)</span>
+                <span class="token keyword">for</span> j<span class="token punctuation">,</span> val2 <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    complement <span class="token operator">=</span> <span class="token operator">-</span>val1 <span class="token operator">-</span> val2
+                    <span class="token keyword">if</span> complement <span class="token keyword">in</span> seen <span class="token keyword">and</span> seen<span class="token punctuation">[</span>complement<span class="token punctuation">]</span> <span class="token operator">==</span> i<span class="token punctuation">:</span>
+                        res<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token builtin">tuple</span><span class="token punctuation">(</span><span class="token builtin">sorted</span><span class="token punctuation">(</span><span class="token punctuation">(</span>val1<span class="token punctuation">,</span> val2<span class="token punctuation">,</span> complement<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    seen<span class="token punctuation">[</span>val2<span class="token punctuation">]</span> <span class="token operator">=</span> i
+        <span class="token keyword">return</span> res</code></pre><p id="0c9dbd28-0283-43ff-b111-a971950d7471" class="">
+</p><p id="87381270-d897-4ebf-8a04-4edf882b4b15" class=""><strong>Complexity Analysis</strong></p><ul id="e31108a2-125a-4906-882e-afc07c99a0cd" class="bulleted-list"><li>Time Complexity: O(<em>n</em>2). We have outer and inner loops, each going through n<em>n</em> elements.<p id="b60da1a9-24e7-4909-a637-17b0cb433a7d" class="">While the asymptotic complexity is the same, this algorithm is noticeably slower than the previous approach. Lookups in a hashset, though requiring a constant time, are expensive compared to the direct memory access.</p></li></ul><ul id="1e3029b3-20de-44de-b336-cbe2c1d3e3ec" class="bulleted-list"><li>Space Complexity: O(<em>n</em>) for the hashset/hashmap.<p id="9058fcb1-9cd4-40ea-9ed6-c7f4e62e2680" class="">For the purpose of complexity analysis, we ignore the memory required for the output. However, in this approach we also store output in the hashset for deduplication. In the worst case, there could be O(<em>n</em>2) triplets in the output, like for this example: <code>[-k, -k + 1, ..., -1, 0, 1, ... k - 1, k]</code>. Adding a new number to this sequence will produce <code>n / 3</code> new triplets.</p></li></ul></li></ol></div></article></body></html>

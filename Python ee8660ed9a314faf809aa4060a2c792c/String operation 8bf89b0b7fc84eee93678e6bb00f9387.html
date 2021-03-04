@@ -1,0 +1,676 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>String operation</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8bf89b0b-7fc8-4eee-9367-8e6bb00f9387" class="page sans"><header><h1 class="page-title">String operation</h1></header><div class="page-body"><h1 id="5c29ca44-4769-45f3-9d77-bc62de561165" class=""><strong>Python isalnum</strong></h1><p id="c451b2b0-a641-4095-9700-19750509ead7" class="">Often, you’ll want to check whether strings contain only alphanumeric characters—in other words, letters and numbers. That’s where <code>isalnum()</code> can be helpful.</p><p id="c90d4acb-dc43-4bc2-b6ff-a20025f7dd60" class=""><code>isalnum()</code> is a built-in Python function that checks whether all characters in a string are alphanumeric. In other words, <code>isalnum()</code> checks whether a string contains only letters or numbers or both. If all characters are alphanumeric, <code>isalnum()</code> returns the value <code>True</code>; otherwise, the method returns the value <code>False</code>.</p><p id="b2894c7c-1d88-424b-852d-6a98b213fa19" class="">The syntax for the <code>isalnum()</code> function is as follows:</p><p id="41c285bd-3bbd-40ea-b2e7-3289537b8a28" class="">
+</p><h1 id="1e2fc1eb-2e46-4f8c-b93a-7f4ee7a2e3d4" class="">Python String lower()</h1><p id="d6db8c9b-03fe-42ee-a918-f746604891e0" class=""><strong>The string lower() method converts all uppercase characters in a string into lowercase characters and returns it.</strong></p><p id="01fd1250-d855-42e7-8d5a-563b5e0ea993" class="">The syntax of <code>lower()</code> method is:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="e9f65947-1063-461a-bb16-6114d99818a8" class="code code-wrap"><code>string.lower()</code></pre><hr id="e5bedb01-0ead-438f-badf-62848c5ebe3b"/><h1 id="2ad922a4-ebe6-4917-9d6a-55c218214776" class="">String lower() Parameters()</h1><p id="f348594d-363a-42be-ba63-e785272856ca" class=""><code>lower()</code> method doesn&#x27;t take any parameters.</p><hr id="d32bb713-50d5-4f1f-830c-ae7b2cab18d7"/><h1 id="27ef10b2-b5cd-4902-b693-2f334e953c12" class="">Return value from String lower()</h1><p id="d80c529c-b567-42fb-8916-fcd3717899a8" class=""><code>lower()</code> method returns the lowercased string from the given string. It converts all uppercase characters to lowercase.</p><p id="be5437c9-ad7d-411a-850c-cc393d2311e1" class="">If no uppercase characters exist, it returns the original string.</p><hr id="9f316e83-ad82-4aba-b6c3-82d1ae04977e"/><h1 id="05537e54-8849-49df-9b37-e89ac4b6016e" class="">Example 1: Convert a string to lowercase</h1><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c5784dcf-a921-4f38-8280-58f1256c7ee5" class="code code-wrap"><code><span class="token comment"># example string</span>
+string <span class="token operator">=</span> <span class="token string">"THIS SHOULD BE LOWERCASE!"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># string with numbers</span>
+<span class="token comment"># all alphabets whould be lowercase</span>
+string <span class="token operator">=</span> <span class="token string">"Th!s Sh0uLd B3 L0w3rCas3!"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre><p id="3215a22e-3864-4ce8-83e5-c808a5909e52" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="97bc9405-1f36-4f79-b62f-008f7df13383" class="code code-wrap"><code>this should be lowercase!
+th!s sh0uld b3 l0w3rcas3!</code></pre><hr id="42311eb0-b5ff-442f-8db6-34198ed8c85e"/><h1 id="69285db3-a77c-4c4e-864d-fde02399eada" class="">Example 2: How lower() is used in a program?</h1><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="0454d4fd-6571-462a-a7b0-9c76e552cf38" class="code code-wrap"><code><span class="token comment"># first string</span>
+firstString <span class="token operator">=</span> <span class="token string">"PYTHON IS AWESOME!"</span>
+
+<span class="token comment"># second string</span>
+secondString <span class="token operator">=</span> <span class="token string">"PyThOn Is AwEsOmE!"</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span>firstString<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> secondString<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The strings are same."</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The strings are not same."</span><span class="token punctuation">)</span></code></pre><p id="09edeb9b-1466-4eb9-9572-2c62acea3838" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="dcf57c77-6738-4276-801b-286015cce35d" class="code code-wrap"><code>The strings are same.</code></pre><p id="5a81c8ba-88b7-4cea-bab4-c95fc47af17c" class=""><strong>Note:</strong> If you want to convert to uppercase string, use <a href="https://www.programiz.com/python-programming/methods/string/upper">upper()</a>. You can also use <a href="https://www.programiz.com/python-programming/methods/string/swapcase">swapcase()</a> to swap between lowercase to uppercase.</p><h2 id="13f1a075-7b9a-44e8-8ef3-af1c91c5f9b5" class=""><strong>Splitting Strings</strong></h2><p id="7710f247-a663-47d3-854c-3f12028e2096" class="">In Python, strings are represented as <a href="https://docs.python.org/3/library/stdtypes.html#str"><code>str</code></a> objects, which are <strong>immutable</strong>: this means that the object as represented in memory can not be directly altered. These two facts can help you learn (and then remember) how to use <code>.split()</code>.</p><p id="d8a0e1f4-9ee1-4b8e-9577-ea6400dd314d" class="">Have you guessed how those two features of strings relate to splitting functionality in Python? If you guessed that <code>.split()</code> is an <a href="https://docs.python.org/3/tutorial/classes.html#instance-objects"><strong>instance method</strong></a> because strings are a special type, you would be correct! In some other languages (like Perl), the original string serves as an input to a standalone <code>.split()</code> function rather than a method called on the string itself.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="70506d55-7f1b-4faa-9501-aaf5d6967714" class="code"><code><span class="token string">'a,b,c'</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span></code></pre><p id="53cb7915-e452-4126-a902-dd2e44527572" class="">
+</p><h3 id="c8a5d51d-d168-4bb0-a777-c4a89ebfae3a" class=""><strong>Splitting Without Parameters</strong></h3><p id="0098b013-087f-4f86-a310-46916573ac3c" class="">Before going deeper, let’s look at a simple example:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="eb9cf323-4ec2-4949-9b11-4ff8ce3d6ec7" class="code"><code><span class="token operator">>></span><span class="token operator">></span> <span class="token string">'this is my string'</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token string">'this'</span><span class="token punctuation">,</span> <span class="token string">'is'</span><span class="token punctuation">,</span> <span class="token string">'my'</span><span class="token punctuation">,</span> <span class="token string">'string'</span><span class="token punctuation">]</span></code></pre><p id="4cdb0dc8-1a63-405c-a9cb-1d11359c6327" class="">This is actually a special case of a <code>.split()</code> call, which I chose for its simplicity. Without any separator specified, <code>.split()</code> will count any whitespace as a separator.</p><p id="f5bed200-36ef-49a3-bae8-5b60a74867d7" class="">Another feature of the bare call to <code>.split()</code> is that it automatically cuts out leading and trailing whitespace, as well as consecutive whitespace. Compare calling <code>.split()</code> on the following string without a separator parameter and with having <code>&#x27; &#x27;</code> as the separator parameter:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="49e20cfe-561c-4279-848f-ab84b3187a3f" class="code"><code>
+<span class="token operator">>></span><span class="token operator">></span> s <span class="token operator">=</span> <span class="token string">' this   is  my string '</span>
+<span class="token operator">>></span><span class="token operator">></span> s<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token string">'this'</span><span class="token punctuation">,</span> <span class="token string">'is'</span><span class="token punctuation">,</span> <span class="token string">'my'</span><span class="token punctuation">,</span> <span class="token string">'string'</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> s<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token string">''</span><span class="token punctuation">,</span> <span class="token string">'this'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> <span class="token string">'is'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> <span class="token string">'my'</span><span class="token punctuation">,</span> <span class="token string">'string'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">]</span></code></pre><p id="c01b1843-208c-4def-847b-7c083c83dfa3" class="">The first thing to notice is that this showcases the immutability of strings in Python: subsequent calls to <code>.split()</code> work on the original string, not on the list result of the first call to <code>.split()</code>.</p><p id="9d411592-9180-43a9-8637-f91ecc6ab59d" class="">The second—and the main—thing you should see is that the bare <code>.split()</code> call extracts the words in the sentence and discards any whitespace.</p><h2 id="15e6635b-3948-4cdf-b922-a0b52dc88fc9" class="">Join strings</h2><p id="0551726a-ae94-47c9-8a9d-6cc85f040497" class="">
+</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="2c3e6b40-2cf3-4a9e-8310-df7dfdc22f4e" class="code code-wrap"><code><span class="token operator">>></span><span class="token operator">></span> strings <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'do'</span><span class="token punctuation">,</span> <span class="token string">'re'</span><span class="token punctuation">,</span> <span class="token string">'mi'</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token string">','</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>strings<span class="token punctuation">)</span>
+<span class="token string">'do,re,mi'</span>
+
+strings <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'do'</span><span class="token punctuation">,</span> <span class="token string">'re'</span><span class="token punctuation">,</span> <span class="token string">'mi'</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>strings<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 'doremi'</span></code></pre><h1 id="1dd57d59-f026-4d6e-ae70-d23bd3cd3f68" class="">Python String strip()</h1><p id="2d2670f4-abba-458e-8696-1daf49ebd181" class=""><strong>The strip() method returns a copy of the string by removing both the leading and the trailing characters (based on the string argument passed).</strong></p><p id="7ee2051c-95fb-4338-9edd-600b16bf3b66" class="">The <code>strip()</code> method removes characters from both left and right based on the argument (a string specifying the set of characters to be removed).</p><p id="8d653e61-6015-4e63-921f-e7db2a6d6bdf" class="">The syntax of the <code>strip()</code> method is:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="63e23412-1779-4b8c-b1ac-a7e6c0d87db0" class="code code-wrap"><code>string.strip([chars])</code></pre><hr id="9b1e0b3e-5647-4d98-b591-f6333c7bb79a"/><h1 id="237a5228-7c1e-4f30-a6d6-50fa6edaf8e1" class="">strip() Parameters</h1><ul id="dbe55717-524f-4fc7-92e3-1ec5b4ff2a6e" class="bulleted-list"><li>chars (optional) - a string specifying the set of characters to be removed from the left and right part of the string.</li></ul><p id="c531c4d4-317d-49ef-9ff8-30ef66f92ed4" class="">If the chars argument is not provided, all leading and trailing whitespaces are removed from the string.</p><hr id="d54c687a-878e-4f7c-8dc2-ed861fcf1427"/><h1 id="b16e8d53-10f3-4dcf-ac3b-720bf5b817fe" class="">Return Value from the strip() method</h1><p id="3f1805f0-5d51-4061-99bb-23f300683900" class=""><code>strip()</code> returns a copy of the string with both leading and trailing characters stripped.</p><hr id="291b6378-053e-465f-8e22-5b1a4080f080"/><h1 id="1d0fdc31-0cc5-4c2d-b15e-4c6449deab83" class="">Working of the strip() method</h1><ul id="91632a51-c33c-4f88-824e-7212f4a021d5" class="bulleted-list"><li>When the character of the string in the left mismatches with all the characters in the <code>chars</code> argument, it stops removing the leading characters.</li></ul><ul id="837301fb-e30a-42a8-9e95-abadd07a2a36" class="bulleted-list"><li>Similarly, when the character of the string in the right mismatches with all the characters in the <code>chars</code> argument, it stops removing the trailing characters.</li></ul><hr id="801d2402-361b-4938-b74f-11c88ed32bdc"/><h1 id="5a28699b-4ed8-4bfc-97bd-047e59ded36b" class="">Example: Working of the strip() method</h1><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="bbdc6e15-94a9-4506-bc0f-8d4c0d57d214" class="code code-wrap"><code>string <span class="token operator">=</span> <span class="token string">'  xoxo love xoxo   '</span>
+
+<span class="token comment"># Leading and trailing whitespaces are removed</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># All &lt;whitespace>,x,o,e characters in the left</span>
+<span class="token comment"># and right of string are removed</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token string">' xoe'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Argument doesn't contain space</span>
+<span class="token comment"># No characters are removed.</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token string">'stx'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+string <span class="token operator">=</span> <span class="token string">'android is awesome'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token string">'an'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre><p id="71247b1d-141b-42cd-ba81-044be1a14ee7" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="e90ffabd-6c35-4769-a8f3-f94cede720e6" class="code code-wrap"><code>xoxo love xoxo
+lov
+  xoxo love xoxo   
+droid is awesome</code></pre><p id="12df23bd-cc57-4ba6-b2fe-85e4e8502a52" class="">Here, we can see that the first expression <code>string.strip()</code> without any arguments removed the whitespaces from the left and right of <code>string</code>.</p><p id="822f6177-82ee-4c54-bf7a-68cdfab95e59" class=""><code>string.strip(&#x27; xoe&#x27;)</code> removed all whitespace,<code>x</code>, <code>o</code>, and <code>e</code> that lead or trailed the string.</p><p id="2250d13c-3a88-4f0d-b834-d5e242140f14" class="">Since <code>string</code> has whitespace at the beginning and end, the expression <code>string.strip(&#x27;stx&#x27;)</code> does not change the string. <code>x</code> is not removed since it is at the middle of the string (whitespaces lead and trail the string)</p><p id="703de19d-862d-4a19-8e57-407832e202fd" class=""><code>string.strip(&#x27;an&#x27;)</code> removed <code>an</code> leading the string.</p></div></article></body></html>

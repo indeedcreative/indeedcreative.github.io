@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Sets</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d9027bab-7e03-4696-abb9-a0953d53d4f3" class="page sans"><header><h1 class="page-title">Sets</h1></header><div class="page-body"><p id="bf39347a-b7f0-4a46-9fff-5d5b3b76724f" class=""><a href="https://www.geeksforgeeks.org/sets-in-python/">https://www.geeksforgeeks.org/sets-in-python/</a></p><p id="53857d42-ae47-466a-8a51-e3a552717d8f" class="">
+</p><h1 id="b3eb969f-f3a8-4360-994f-5e08cfb58060" class="">Sets in Python</h1><ul id="8654ee86-9bc8-45ea-9278-48ca6a1e0479" class="bulleted-list"><li>Difficulty Level : <a href="https://www.geeksforgeeks.org/easy"><strong>Easy</strong></a></li></ul><ul id="46cd0226-8a43-4a6d-9f33-e845472b461e" class="bulleted-list"><li>Last Updated : 06 Apr, 2020</li></ul><p id="48a51aad-4add-4495-84d1-d90ec1ac2741" class="">A Set is an unordered collection data type that is iterable, mutable and has no duplicate elements. Python’s set class represents the mathematical notion of a set. The major advantage of using a set, as opposed to a list, is that it has a highly optimized method for checking whether a specific element is contained in the set. This is based on a data structure known as a <a href="https://www.geeksforgeeks.org/hashing-set-1-introduction/"><strong>hash table</strong></a>. Since sets are unordered, we cannot access items using indexes like we do in <a href="https://www.geeksforgeeks.org/python-list/"><strong>lists</strong></a>.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="475ffd99-693e-4c60-a734-f44445691604" class="code"><code><span class="token comment"># Python program to </span>
+<span class="token comment"># demonstrate sets </span>
+
+<span class="token comment"># Same as {"a", "b", "c"} </span>
+myset <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>myset<span class="token punctuation">)</span> 
+
+<span class="token comment"># Adding element to the set </span>
+myset<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token string">"d"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>myset<span class="token punctuation">)</span></code></pre><p id="eb52a338-695f-4860-91a3-eb771bb87597" class="">
+</p><p id="e8a12d49-1f0a-4bc6-8ada-b0d3a69e5658" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1999924b-0834-4722-aee0-cd93c1ebd92b" class="code code-wrap"><code>{'c', 'b', 'a'}
+{'d', 'c', 'b', 'a'}</code></pre><p id="a50ca055-156c-49c4-bdf7-f3bcec280358" class="">
+</p><h2 id="1972986e-1bb6-4261-a6fb-808ade66e054" class="">Frozen Sets</h2><p id="8c28e6d3-1d35-4c90-9206-72b4136cc618" class=""><strong>Frozen sets</strong> in Python are immutable objects that only support methods and operators that produce a result without affecting the frozen set or sets to which they are applied. While elements of a set can be modified at any time, elements of the frozen set remain the same after creation.If no parameters are passed, it returns an empty frozenset.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="ea203d8d-896c-469b-8a6a-8906f8139e98" class="code"><code><span class="token comment"># Python program to demonstrate differences </span>
+<span class="token comment"># between normal and frozen set </span>
+
+<span class="token comment"># Same as {"a", "b","c"} </span>
+normal_set <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span><span class="token string">"c"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Normal Set"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>normal_set<span class="token punctuation">)</span> 
+
+<span class="token comment"># A frozen set </span>
+frozen_set <span class="token operator">=</span> <span class="token builtin">frozenset</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"e"</span><span class="token punctuation">,</span> <span class="token string">"f"</span><span class="token punctuation">,</span> <span class="token string">"g"</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nFrozen Set"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>frozen_set<span class="token punctuation">)</span> 
+
+<span class="token comment"># Uncommenting below line would cause error as </span>
+<span class="token comment"># we are trying to add element to a frozen set </span>
+<span class="token comment"># frozen_set.add("h")</span></code></pre><p id="e28c74f5-9832-4df8-a4d3-7f4f2dcd4610" class="">
+</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="f52b98fb-d032-4915-8682-f07b65b1ea04" class="code"><code>Output<span class="token punctuation">:</span>
+
+Normal Set
+<span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+Frozen Set
+<span class="token builtin">frozenset</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'g'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre><p id="81d75e08-0581-4537-b93f-9c20ae945618" class="">
+</p><h2 id="87cbcb66-6699-49a6-a136-934cbcc18693" class="">Methods for Sets</h2><h3 id="20862cb6-7c61-4aeb-8004-944540b21718" class="">Adding elements</h3><p id="d0c064f6-5039-445e-a46d-172c21c55d65" class="">Insertion in set is done through set.add() function, where an appropriate record value is created to store in the hash table. Same as checking for an item, i.e., O(1) on average. However, in worst case it can become O(n).</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="cd86fcfd-1f66-4e89-b66d-94d5d4c9dcae" class="code"><code><span class="token comment"># A Python program to </span>
+<span class="token comment"># demonstrate adding elements </span>
+<span class="token comment"># in a set </span>
+
+<span class="token comment"># Creating a Set </span>
+people <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Jay"</span><span class="token punctuation">,</span> <span class="token string">"Idrish"</span><span class="token punctuation">,</span> <span class="token string">"Archi"</span><span class="token punctuation">}</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"People:"</span><span class="token punctuation">,</span> end <span class="token operator">=</span> <span class="token string">" "</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>people<span class="token punctuation">)</span> 
+
+<span class="token comment"># This will add Daxit </span>
+<span class="token comment"># in the set </span>
+people<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token string">"Daxit"</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># Adding elements to the </span>
+<span class="token comment"># set using iterator </span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
+	people<span class="token punctuation">.</span>add<span class="token punctuation">(</span>i<span class="token punctuation">)</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nSet after adding element:"</span><span class="token punctuation">,</span> end <span class="token operator">=</span> <span class="token string">" "</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>people<span class="token punctuation">)</span></code></pre><p id="6f3859b6-921c-4152-b56d-4a0c70afe0a1" class="">
+</p><p id="e5436efd-9b29-4ded-bcf1-09c56ffa983f" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1006f115-a8c8-4edc-9cba-5bbbe34919d4" class="code code-wrap"><code>People<span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">'Idrish'</span><span class="token punctuation">,</span> <span class="token string">'Archi'</span><span class="token punctuation">,</span> <span class="token string">'Jay'</span><span class="token punctuation">}</span>
+
+Set after adding element<span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token string">'Idrish'</span><span class="token punctuation">,</span> <span class="token string">'Archi'</span><span class="token punctuation">,</span> <span class="token string">'Jay'</span><span class="token punctuation">,</span> <span class="token string">'Daxit'</span><span class="token punctuation">}</span></code></pre><h3 id="da25731c-4127-4f6a-9ab4-60fc0fb27d7e" class="">Union</h3><p id="f736074a-e523-4b24-8753-764de4331bf0" class="">Two sets can be merged using union() function or | operator. Both Hash Table values are accessed and traversed with merge operation perform on them to combine the elements, at the same time duplicates are removed. Time Complexity of this is O(len(s1) + len(s2)) where s1 and s2 are two sets whose union needs to be done.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="adda80ae-6eb6-4af6-a080-d3fb707240ed" class="code"><code><span class="token comment"># Python Program to </span>
+<span class="token comment"># demonstrate union of </span>
+<span class="token comment"># two sets </span>
+
+people <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Jay"</span><span class="token punctuation">,</span> <span class="token string">"Idrish"</span><span class="token punctuation">,</span> <span class="token string">"Archil"</span><span class="token punctuation">}</span> 
+vampires <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Karan"</span><span class="token punctuation">,</span> <span class="token string">"Arjun"</span><span class="token punctuation">}</span> 
+dracula <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Deepanshu"</span><span class="token punctuation">,</span> <span class="token string">"Raju"</span><span class="token punctuation">}</span> 
+
+<span class="token comment"># Union using union() </span>
+<span class="token comment"># function </span>
+population <span class="token operator">=</span> people<span class="token punctuation">.</span>union<span class="token punctuation">(</span>vampires<span class="token punctuation">)</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Union using union() function"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>population<span class="token punctuation">)</span> 
+
+<span class="token comment"># Union using "|" </span>
+<span class="token comment"># operator </span>
+population <span class="token operator">=</span> people<span class="token operator">|</span>dracula 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nUnion using '|' operator"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>population<span class="token punctuation">)</span></code></pre><p id="6fd81b96-fdde-45c8-bb04-15bd87c999ee" class="">
+</p><p id="86ad49c2-6a50-41cc-82af-8781aae329bf" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b4dbaad8-fa9e-4e1e-b650-38dd6a816eec" class="code code-wrap"><code>Union using union() function
+{'Karan', 'Idrish', 'Jay', 'Arjun', 'Archil'}
+
+Union using '|' operator
+{'Deepanshu', 'Idrish', 'Jay', 'Raju', 'Archil'}
+</code></pre><p id="57ed1cd4-72f9-4b20-bbd5-eb7b2cd30875" class="">
+</p><h3 id="2eada400-80d4-45bd-92e6-4e1e24abeb20" class="">Intersection</h3><p id="80bbc2e7-d30c-44bc-b251-1ce20961b219" class="">This can be done through intersection() or &amp; operator. Common Elements are selected. They are similar to iteration over the Hash lists and combining the same values on both the Table. Time Complexity of this is O(min(len(s1), len(s2)) where s1 and s2 are two sets whose union needs to be done.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="2996eebf-43d9-48e4-85d1-d131f6ad955b" class="code"><code><span class="token comment"># Python program to </span>
+<span class="token comment"># demonstrate intersection </span>
+<span class="token comment"># of two sets </span>
+
+set1 <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+set2 <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
+	set1<span class="token punctuation">.</span>add<span class="token punctuation">(</span>i<span class="token punctuation">)</span> 
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
+	set2<span class="token punctuation">.</span>add<span class="token punctuation">(</span>i<span class="token punctuation">)</span> 
+
+<span class="token comment"># Intersection using </span>
+<span class="token comment"># intersection() function </span>
+set3 <span class="token operator">=</span> set1<span class="token punctuation">.</span>intersection<span class="token punctuation">(</span>set2<span class="token punctuation">)</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Intersection using intersection() function"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>set3<span class="token punctuation">)</span> 
+
+<span class="token comment"># Intersection using </span>
+<span class="token comment"># "&amp;" operator </span>
+set3 <span class="token operator">=</span> set1 <span class="token operator">&amp;</span> set2 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nIntersection using '&amp;' operator"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>set3<span class="token punctuation">)</span></code></pre><p id="12543c98-c6e7-430a-8bea-b179534371ea" class="">
+</p><p id="1775c58e-e400-44f2-a83d-3209d627b7b8" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3ab8b1b2-12e6-4e9b-9e83-671560bdef02" class="code code-wrap"><code>Intersection using intersection() function
+{3, 4}
+
+Intersection using '&' operator
+{3, 4}</code></pre><h3 id="55a0271d-0ea6-4730-8d9c-1455cbe757fd" class="">Difference</h3><p id="6c2d74de-826d-48b0-89be-52b5ab163ec8" class="">To find difference in between sets. Similar to find difference in linked list. This is done through difference() or – operator. Time complexity of finding difference s1 – s2 is O(len(s1))</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4080f18d-555d-45f5-97ee-e157b9ce807f" class="code"><code><span class="token comment"># Python program to </span>
+<span class="token comment"># demonstrate difference </span>
+<span class="token comment"># of two sets </span>
+
+set1 <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+set2 <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
+	set1<span class="token punctuation">.</span>add<span class="token punctuation">(</span>i<span class="token punctuation">)</span> 
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
+	set2<span class="token punctuation">.</span>add<span class="token punctuation">(</span>i<span class="token punctuation">)</span> 
+
+<span class="token comment"># Difference of two sets </span>
+<span class="token comment"># using difference() function </span>
+set3 <span class="token operator">=</span> set1<span class="token punctuation">.</span>difference<span class="token punctuation">(</span>set2<span class="token punctuation">)</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">" Difference of two sets using difference() function"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>set3<span class="token punctuation">)</span> 
+
+<span class="token comment"># Difference of two sets </span>
+<span class="token comment"># using '-' operator </span>
+set3 <span class="token operator">=</span> set1 <span class="token operator">-</span> set2 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nDifference of two sets using '-' operator"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>set3<span class="token punctuation">)</span></code></pre><p id="377eeba1-1d48-40f0-8609-8d45a9368a91" class="">
+</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="62aa6825-0bec-435d-9fb4-76449d630b27" class="code"><code>Output<span class="token punctuation">:</span>
+
+Difference of two sets using difference<span class="token punctuation">(</span><span class="token punctuation">)</span> function
+<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span>
+
+Difference of two sets using <span class="token string">'-'</span> operator
+<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span></code></pre><h3 id="a9212bd1-9d46-43cc-8174-29b66221c12a" class="">Clearing sets</h3><p id="0097277c-d691-44ad-8bfe-d0a23d8cab6c" class=""><code>Clear()</code> method empties the whole set.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1e5604f3-7bba-496b-8a00-bfa7b0913217" class="code"><code><span class="token comment"># Python program to </span>
+<span class="token comment"># demonstrate clearing </span>
+<span class="token comment"># of set </span>
+
+set1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">}</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Initial set"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>set1<span class="token punctuation">)</span> 
+
+<span class="token comment"># This method will remove </span>
+<span class="token comment"># all the elements of the set </span>
+set1<span class="token punctuation">.</span>clear<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nSet after using clear() function"</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>set1<span class="token punctuation">)</span></code></pre><p id="03926e61-a784-4113-9ac3-63d225518c81" class="">
+</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="194427d0-b025-490b-a24d-07807915b78b" class="code"><code>Output<span class="token punctuation">:</span>
+
+Initial <span class="token builtin">set</span>
+<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">}</span>
+
+Set after using clear<span class="token punctuation">(</span><span class="token punctuation">)</span> function
+<span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre></div></article></body></html>

@@ -1,0 +1,746 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Collections</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="330801af-5475-4be3-88db-1727f7320956" class="page sans"><header><h1 class="page-title">Collections</h1></header><div class="page-body"><p id="d9d4c1a9-387c-467f-b3cc-c5e11bfbb11f" class=""><a href="https://stackabuse.com/introduction-to-pythons-collections-module/">https://stackabuse.com/introduction-to-pythons-collections-module/</a></p><p id="37f4f662-2a00-4a8c-8d8e-3442c212e814" class="">
+</p><h3 id="06fcc9a1-b7de-46ee-a105-01f72a70effe" class=""><strong>Introduction</strong></h3><p id="b153fbe9-990a-46fa-be1d-0e93a205a315" class="">Collections in Python are containers that are used to store collections of data, for example, <strong>list, dict, set, tuple</strong> etc. These are built-in collections. Several modules have been developed that provide additional data structures to store collections of data. One such module is the Python <a href="https://docs.python.org/2/library/collections.html">collections module</a>.</p><p id="b598fe7e-481d-4e08-9bd3-3b4de9d934d6" class="">Python <strong>collections module</strong> was introduced to improve the functionalities of the built-in collection containers. Python collections module was first introduced in its 2.4 release. This tutorial is based on its latest stable release (3.7 version).</p><h3 id="4e61924d-f703-4601-8bfc-0693ed04a62a" class=""><strong>Collections Module</strong></h3><p id="07d5c316-2057-4620-9691-3f2868a7ae10" class="">In this tutorial we will discuss 6 of the most commonly used data structures from the Python collections module. They are as follows:</p><ul id="516ba404-6a1a-46ce-8588-55ea3febc4b8" class="bulleted-list"><li><a href="https://stackabuse.com/introduction-to-pythons-collections-module/#thecounter">Counter</a></li></ul><ul id="95e32fdc-ddbf-47f6-94c4-002057e7e3a7" class="bulleted-list"><li><a href="https://stackabuse.com/introduction-to-pythons-collections-module/#thedefaultdict">defaultdict</a></li></ul><ul id="9605a461-00d7-4c6e-b9d8-cb4faa8f8a66" class="bulleted-list"><li><a href="https://stackabuse.com/introduction-to-pythons-collections-module/#theordereddict">OrderedDict</a></li></ul><ul id="de7e9709-bfde-44e8-b1e6-7fd5859e5f47" class="bulleted-list"><li><a href="https://stackabuse.com/introduction-to-pythons-collections-module/#thedeque">deque</a></li></ul><ul id="1f42e1c5-e0f2-4201-829c-e38c325d069f" class="bulleted-list"><li><a href="https://stackabuse.com/introduction-to-pythons-collections-module/#thechainmap">ChainMap</a></li></ul><ul id="9e652b1c-2b42-443b-8552-3224ac38a793" class="bulleted-list"><li><a href="https://stackabuse.com/introduction-to-pythons-collections-module/#thenamedtuple">namedtuple()</a></li></ul><h3 id="b7ffb964-cacb-4056-a52c-1ad365838976" class=""><strong>The Counter</strong></h3><p id="1dd4cd78-807d-4f21-81be-afdd799e8941" class=""><strong>Counter</strong> is a subclass of dictionary object. The <code>Counter()</code> function in collections module takes an iterable or a mapping as the argument and returns a Dictionary. In this dictionary, a key is an element in the iterable or the mapping and value is the number of times that element exists in the iterable or the mapping.</p><p id="4d56c26b-3170-4fce-bea3-29485f1390e4" class="">You have to import the <code>Counter</code> class before you can create a <code>counter</code> instance.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d5d9d8ec-ea84-49d3-9e3d-e978bbae771c" class="code code-wrap"><code><span class="token keyword">from</span> collections <span class="token keyword">import</span> Counter
+</code></pre><h3 id="38ffc243-3577-4643-a226-1075bb02d2cb" class=""><strong>Create Counter Objects</strong></h3><p id="a12c75a9-8dc4-4f15-be9a-0a05f8f98765" class="">There are multiple ways to create <code>counter</code> objects. The simplest way is to use <code>Counter()</code> function without any arguments.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="dc596cb3-9511-464c-b46b-935b694a006b" class="code code-wrap"><code>cnt = Counter()
+</code></pre><p id="8400258a-510f-4690-bd10-03a199a37466" class="">You can pass an iterable (list) to <code>Counter()</code> function to create a <code>counter</code> object.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="61ba5b58-494e-4ec3-8f54-6b0f482b72be" class="code code-wrap"><code><span class="token builtin">list</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
+Counter<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">)</span>
+</code></pre><p id="1e5529aa-b770-4537-b327-bcd2f7c92ca4" class="">Finally, the <code>Counter()</code> function can take a dictionary as an argument. In this dictionary, the value of a key should be the &#x27;count&#x27; of that key.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3228ca0d-991e-406f-b77a-fb52bc2b16fd" class="code code-wrap"><code>Counter<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><p id="4bbc9a21-d450-443c-a221-381e954b5ed8" class="">You can access any counter item with its key as shown below:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="67a3e07b-e9b1-4653-a81a-628a3c2ede00" class="code code-wrap"><code><span class="token builtin">list</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
+cnt <span class="token operator">=</span> Counter<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>cnt<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre><p id="21833cb6-a699-4ea4-b476-b6b5e6cbe9e8" class="">when you print <code>cnt[1]</code>, you will get the count of 1.</p><p id="47ffec8d-5c5c-4aed-9e43-22c6139aeae3" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="81cfe516-ef10-4e37-9df2-f2e8adabb03b" class="code code-wrap"><code>3
+</code></pre><p id="3636451a-0071-4325-bdd2-dc66bda8ea84" class="">In the above examples, <code>cnt</code> is an object of <code>Counter</code> class which is a subclass of <code>dict</code>. So it has all the methods of <code>dict</code> class.</p><p id="72790f79-a1e0-44d5-b6ba-77b785077fc5" class="">Apart from that, <code>Counter</code> has three additional functions:</p><ol id="69fb46c5-f3b7-4042-8417-a2e6abcd33ca" class="numbered-list" start="1"><li>Elements</li></ol><ol id="e5a02286-b528-49c4-a409-db6ab63f1ad5" class="numbered-list" start="2"><li>Most_common([n])</li></ol><ol id="8784ac17-07ec-46a3-a80a-5d835fc61d6f" class="numbered-list" start="3"><li>Subtract([interable-or-mapping])</li></ol><h3 id="244c6f0a-f3c7-41a5-97a9-9345c88510a0" class=""><strong>The element() Function</strong></h3><p id="2ed87725-f203-4ad1-b416-7a94396ae1a5" class="">You can get the items of a <code>Counter</code> object with <code>elements()</code> function. It returns a list containing all the elements in the <code>Counter</code> object.</p><p id="30909b72-e569-468c-a564-973a9ccf11bd" class="">Look at the following example:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="de115220-54f1-4d11-a3ab-9cf2b15786f2" class="code code-wrap"><code>cnt <span class="token operator">=</span> Counter<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">(</span>cnt<span class="token punctuation">.</span>elements<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p id="28f959d8-c8a9-41c4-9d38-db23fd8b273d" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b53062f2-8552-4931-b0b6-8ccf13285817" class="code code-wrap"><code><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span>
+</code></pre><p id="08093d7f-bf5c-434c-bcb1-a26d4079bb22" class="">Here, we create a <code>Counter</code> object with a dictionary as an argument. In this Counter object, count of 1 is 3 and count of 2 is 4. The <code>elements()</code> function is called using <code>cnt</code> object which returns an iterator which is passed as an argument to the list.</p><p id="9e7faa1b-fa4c-48a7-915d-32b9d4c501bf" class="">The iterator repeats 3 times over 1 returning three &#x27;1&#x27;s, and repeats four times over 2 returning four &#x27;2&#x27;s to the list. Finally, the list is printed using the <code>print</code> function.</p><h3 id="7184e285-8312-4d80-a0c2-2d4c4ee872a2" class=""><strong>The most_common() Function</strong></h3><p id="90a88fc9-7c01-4f86-ba84-a385baa871bd" class="">The <code>Counter()</code> function returns a dictionary which is unordered. You can sort it according to the number of counts in each element using <code>most_common()</code> function of the <code>Counter</code> object.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="744ff04e-3d3c-48c6-acbb-598c5a67c1e9" class="code code-wrap"><code><span class="token builtin">list</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
+cnt <span class="token operator">=</span> Counter<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>cnt<span class="token punctuation">.</span>most_common<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p id="790520c5-14ee-4783-bf77-a3e9bc5cb555" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="343a4094-86c0-4fa2-aca8-5fe7a0436944" class="code code-wrap"><code><span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+</code></pre><p id="700871b6-f13a-42c6-a86f-99b00dd9b101" class="">You can see that <code>most_common</code> function returns a list, which is sorted based on the count of the elements. 1 has a count of three, therefore it is the first element of the list.</p><h3 id="dd841f85-9dce-4205-bb83-2fe9999968e3" class=""><strong>The subtract() Function</strong></h3><p id="cb52a42a-ecb1-4235-ac25-892939e403aa" class="">The <code>subtract()</code> takes iterable (list) or a mapping (dictionary) as an argument and deducts elements count using that argument. Check the following example:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c6722f15-51a5-4a40-a84d-cd6b2ecd82ed" class="code code-wrap"><code>cnt = Counter({1:3,2:4})
+deduct = {1:1, 2:2}
+cnt.subtract(deduct)
+print(cnt)
+</code></pre><p id="70303d68-4e9a-4cb8-9379-5bf01391fa78" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="de478c33-c75c-4b80-ae13-6d14621c684b" class="code code-wrap"><code>Counter({1: 2, 2: 2})
+</code></pre><p id="a263b33b-0894-4bfd-b91e-75d485b7c953" class="">You can notice that <code>cnt</code> object we first created, has a count of 3 for &#x27;1&#x27; and count of 4 for &#x27;2&#x27;. The <code>deduct</code> dictionary has the value &#x27;1&#x27; for key &#x27;1&#x27; and value &#x27;2&#x27; for key &#x27;2&#x27;. The <code>subtract()</code> function deducted 1 count from key &#x27;1&#x27; and 2 counts from key &#x27;2&#x27;.</p><h3 id="d4a50066-54f9-45b3-aa20-cdab82e6d02f" class=""><strong>The defaultdict</strong></h3><p id="1e7c7fa8-4a82-4fb7-8728-7b87eefc93d0" class="">The <code>defaultdict</code> works exactly like a python dictionary, except for it does not throw <code>KeyError</code> when you try to access a non-existent key.</p><p id="fd5cb901-2310-4fd7-9dd7-6fdeb1d77fa5" class="">Instead, it initializes the key with the element of the data type that you pass as an argument at the creation of <code>defaultdict</code>. The data type is called <code>default_factory</code>.</p><h3 id="07516041-bcdf-4f6f-86b8-e00a496cb0b0" class=""><strong>Import defaultdict</strong></h3><p id="c2255be3-c4a4-4aa8-9908-0a7af47ef414" class="">First, you have to import <code>defaultdict</code> from <code>collections</code> module before using it:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="84917b41-bbe2-4a67-86a8-0c5268c3a0af" class="code code-wrap"><code>from collections import defaultdict
+</code></pre><h3 id="a55f974b-5b54-49f2-85e7-3b0b6752ab97" class=""><strong>Create a defaultdict</strong></h3><p id="6520c3a0-4f98-4420-9d70-2d73083800f0" class="">You can create a <code>defaultdict</code> with the <code>defaultdict()</code> constructor. You have to specify a data type as an argument. Check the following code:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="0e4b923a-f104-43fe-93e0-be8919699264" class="code code-wrap"><code>nums = defaultdict(int)
+nums['one'] = 1
+nums['two'] = 2
+print(nums['three'])
+</code></pre><p id="2eab93e0-3000-457c-9456-5cc6ddc6b270" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="310de70a-194f-429a-af95-2321fbf19b44" class="code code-wrap"><code>0
+</code></pre><p id="8154eed0-b6cb-4fa9-ae15-10307515d9b7" class="">In this example, <code>int</code> is passed as the <code>default_factory</code>. Notice that you only pass <code>int</code>, not <code>int()</code>. Next, the values are defined for the two keys, namely, &#x27;one&#x27; and &#x27;two&#x27;, but in the next line we try to access a key that has not been defined yet.</p><p id="cb14a422-1579-41de-9a5a-00ace5f0120d" class="">In a normal dictionary, this will force a <code>KeyError</code>. But <code>defaultdict</code> initialize the new key with <code>default_factory</code>&#x27;s default value which is 0 for <code>int</code>. Hence, when the program is executed, and 0 will be printed. This particular feature of initializing non-existent keys can be exploited in various situations.</p><p id="a8ea3dc0-7d3c-4b4e-8014-844507d3c754" class="">For example, let&#x27;s say you want the count of each name in a list of names given as &quot;Mike, John, Mike, Anna, Mike, John, John, Mike, Mike, Britney, Smith, Anna, Smith&quot;.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="57447a76-82d0-4773-bc87-7b6ba265c481" class="code code-wrap"><code>from collections import defaultdict
+
+count = defaultdict(int)
+names_list = "Mike John Mike Anna Mike John John Mike Mike Britney Smith Anna Smith".split()
+for names in names_list:
+    count[names] +=1
+print(count)
+</code></pre><p id="7b10da31-a390-4598-9e6d-ff662e96aa14" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8fc74e89-f863-44bf-aff4-9f1e5186596e" class="code code-wrap"><code>defaultdict(<class 'int'>, {'Mike': 5, 'Britney': 1, 'John': 3, 'Smith': 2, 'Anna': 2})
+</code></pre><p id="7442c3d3-8a02-48bc-9d69-5dd9bde62e59" class="">First, we create a <code>defaultdict</code> with int as <code>default_factory</code>. The <code>names_list</code> includes a set of names which repeat several times. The <code>split()</code> function returns a list from the given string. It breaks the string whenever a white-space is encountered and returns words as elements of the list. In the loop, each item in the list is added to the <code>defaultdict</code> named as <code>count</code> and initialized to 0 based on <code>default_factory</code>. If the same element is encountered again, as loop continues, count of that element will be incremented.</p><h3 id="58b8691e-9e1e-488c-acb6-eb36bc6b6d14" class=""><strong>The OrderedDict</strong></h3><p id="297dc78a-5aab-4f6e-ae16-7b0d9f6b710d" class=""><code>OrderedDict</code> is a dictionary where keys maintain the order in which they are inserted, which means if you change the value of a key later, it will not change the position of the key.</p><h3 id="e3514aec-1bd3-41ec-9cc0-64627a66dac2" class=""><strong>Import OrderedDict</strong></h3><p id="ce8437af-20f0-4072-b121-26ecb31b2f39" class="">To use <code>OrderedDict</code> you have to import it from the collections module.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a8eab981-edaa-4959-9d03-39eb0041dc91" class="code code-wrap"><code><span class="token keyword">from</span> collections <span class="token keyword">import</span> OrderedDict
+</code></pre><h3 id="c44042fd-18a4-4f67-ba9f-602901481af1" class=""><strong>Create a OrderedDict</strong></h3><p id="775c7b49-87ec-4b73-8a45-9455d5865e6e" class="">You can create an OrderedDict object with <code>OrderedDict()</code> constructor. In the following code, You create an <code>OrderedDict</code> without any arguments. After that some items are inserted into it.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a3af723c-9bd0-4fad-b86e-ff1fb0dcc6b3" class="code code-wrap"><code>od = OrderedDict()
+od['a'] = 1
+od['b'] = 2
+od['c'] = 3
+print(od)
+</code></pre><p id="07b1bb09-edb2-4e9d-b5a8-03552fb30f1f" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a5f0eb11-8405-4dc0-a33a-f24dbf16daae" class="code code-wrap"><code>OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+</code></pre><p id="5f124ca7-1300-4e71-ad1c-c295b6277fc9" class="">You can access each element using a loop as well. Take a look at the following code:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="379362a6-3787-4633-8f96-b5d8c93ee95f" class="code code-wrap"><code>for key, value in od.items():
+    print(key, value)
+</code></pre><p id="25d0ba38-fddc-4eb5-8797-4b253c0acc23" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="112eda75-12a8-4bb1-96a3-eb03e6e0e7a8" class="code code-wrap"><code>a 1
+b 2
+c 3
+</code></pre><p id="286e581e-f2fe-47b1-8865-a73ffd093f89" class="">Following example is an interesting use case of <code>OrderedDict</code> with <code>Counter</code>. Here, we create a <code>Counter</code> from a list and insert element to an <code>OrderedDict</code> based on their count.</p><p id="420ce0d1-ac95-4491-9190-100836ec653b" class="">Most frequently occurring letter will be inserted as the first key and the least frequently occurring letter will be inserted as the last key.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="cbe23bc7-ad64-40ed-8e03-b0a4eee72c00" class="code code-wrap"><code>list = ["a","c","c","a","b","a","a","b","c"]
+cnt = Counter(list)
+od = OrderedDict(cnt.most_common())
+for key, value in od.items():
+    print(key, value)
+</code></pre><p id="d6bd73a1-ea05-47b8-a5a3-090861ff1ead" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4fbe4ad4-ea1d-48db-894c-d074016049de" class="code code-wrap"><code>a 4
+c 3
+b 2
+</code></pre><h3 id="c3d9ca01-b810-4218-9ca5-fae2d1d2e612" class=""><strong>The deque</strong></h3><p id="af8bd9c4-05aa-4e0a-998a-117008f74ed3" class="">The <code>deque</code> is a list optimized for inserting and removing items.</p><h3 id="d66e84d3-0189-4fa5-9355-f3c55b6929c9" class=""><strong>Import the deque</strong></h3><p id="6b0baad9-7b31-439f-9cd1-27f767b8c37a" class="">You have to import <code>deque</code> class from <code>collections</code> module before using it.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="0754e903-c2a2-4946-9b65-71c203654bf7" class="code code-wrap"><code>from collections import deque
+</code></pre><h3 id="0e1272a9-7ce8-4405-acb9-9db7c3f039ba" class=""><strong>Creating a deque</strong></h3><p id="b51883bc-65c2-46b2-9d93-947c4166f33e" class="">You can create a deque with <code>deque()</code> constructor. You have to pass a list as an argument.</p><h3 id="899b83c3-c640-4495-9b0e-209737139749" class=""><strong>Subscribe to our Newsletter</strong></h3><p id="88dafce4-6f7b-4bf2-8aa6-4a9761dd3fd5" class="">Get occassional tutorials, guides, and jobs in your inbox. No spam ever. Unsubscribe at any time.<strong>Newsletter Signup</strong>Subscribe</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="78201de3-8b7a-420d-923a-7c1cb56c04c4" class="code code-wrap"><code>list = ["a","b","c"]
+deq = deque(list)
+print(deq)
+</code></pre><p id="c566c12d-7282-48be-86ad-28655df8f024" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3692ae75-cb45-41a1-8108-8b2961cb2372" class="code code-wrap"><code>deque(['a', 'b', 'c'])
+</code></pre><h3 id="6facbcfc-6770-443d-855a-cc2570d2d92a" class=""><strong>Inserting Elements to deque</strong></h3><p id="d8b6ca39-1040-4b08-a164-de66afe49810" class="">You can easily insert an element to the <code>deq</code> we created at either of the ends. To add an element to the right of the deque, you have to use <code>append()</code> method.</p><p id="f35e734f-917d-476d-9b8d-4f8dbb41561c" class="">If you want to add an element to the start of the deque, you have to use <code>appendleft()</code> method.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d6842bfe-5bd3-403d-b235-0135fbb3e27c" class="code code-wrap"><code>deq<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string">"d"</span><span class="token punctuation">)</span>
+deq<span class="token punctuation">.</span>appendleft<span class="token punctuation">(</span><span class="token string">"e"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>deq<span class="token punctuation">)</span>deque
+</code></pre><p id="8f787a4a-7ac8-441a-9a5f-d46ae393ac5e" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="0895a9a8-ce60-442a-bb33-c7eaef5f0aad" class="code code-wrap"><code>deque(['e', 'a', 'b', 'c', 'd'])
+</code></pre><p id="a6ca51bc-9fcd-43e1-90f8-6df60a454c9b" class="">You can notice that <code>d</code> is added at the end of deq and <code>e</code> is added to the start of the deq</p><h3 id="b32fb889-c86b-4ef0-9e6b-1aa490b120d2" class=""><strong>Removing Elements from the deque</strong></h3><p id="540f224c-bf72-4bdf-957e-5ebeafd42b71" class="">Removing elements is similar to inserting elements. You can remove an element the similar way you insert elements. To remove an element from the right end, you can use <code>pop()</code> function and to remove an element from left, you can use <code>popleft()</code>.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="65b390c4-9dfb-48a0-82c3-6c36f60ee79e" class="code code-wrap"><code>deq.pop()
+deq.popleft()
+print(deq)
+</code></pre><p id="11e07674-2173-4185-a1ef-aa22fd6e8b95" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4491060a-90e3-4109-a788-99e366f6e47f" class="code code-wrap"><code>deque(['a', 'b', 'c'])
+</code></pre><p id="1940ae90-cab3-4229-adc4-056c34debd08" class="">You can notice that both the first and last elements are removed from the <code>deq</code>.</p><h3 id="db8bcb5f-d22a-499f-aa57-605ca64568f8" class=""><strong>Clearing a deque</strong></h3><p id="ac3e272c-5fe5-4d0a-ac3e-299424f8b8ec" class="">If you want to remove all elements from a deque, you can use <code>clear()</code> function.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b841dba1-3b0c-4db8-bc59-31d681288c67" class="code code-wrap"><code>list = ["a","b","c"]
+deq = deque(list)
+print(deq)
+print(deq.clear())
+</code></pre><p id="0b576b23-7dc9-47e5-b582-31bf4d7c0058" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="2bb75ef3-bfc3-4aa5-88a1-16adcc500ea2" class="code code-wrap"><code>deque(['a', 'b', 'c'])
+None
+</code></pre><p id="7b3dc23a-38bf-4a55-a0be-32cc94aa0a65" class="">You can see in the output, at first there is a queue with three elements. Once we applied <code>clear()</code> function, the deque is cleared and you see <code>none</code> in the output.</p><h3 id="6d4aba96-620b-478b-9b83-74863857edb5" class=""><strong>Counting Elements in a deque</strong></h3><p id="f7eed181-02c2-4c4f-a315-996383ce38bc" class="">If you want to find the count of a specific element, use <code>count(x)</code> function. You have to specify the element for which you need to find the count, as the argument.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="54bc87b0-8fc8-46a9-90f2-05453ae8b849" class="code code-wrap"><code>list = ["a","b","c"]
+deq = deque(list)
+print(deq.count("a"))
+</code></pre><p id="4f9f5900-7ba3-4d95-b9b4-8bf78d274848" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a29d81ba-53e3-4843-b3e2-f33f628e580e" class="code code-wrap"><code>1
+</code></pre><p id="37dc5be5-df50-485d-9f85-6fa26a427c98" class="">In the above example, count of &#x27;a&#x27; is 1. Hence &#x27;1&#x27; printed.</p><h3 id="3b84700b-1fb8-46e5-8765-e7c79c415c3d" class=""><strong>The ChainMap</strong></h3><p id="a8a3519b-ab7c-41f4-9bd7-8ad8caf1701b" class=""><code>ChainMap</code> is used to combine several dictionaries or mappings. It returns a list of dictionaries.</p><h3 id="cf2422a7-8c16-4200-9c17-08a7b8b89d63" class=""><strong>Import chainmap</strong></h3><p id="e2025f1c-ab79-4ac0-b256-aebe64c0a6d3" class="">You have to import <code>ChainMap</code> from the <code>collections</code> module before using it.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="9ab5a096-805a-4293-97ca-ede6ba68bfcb" class="code code-wrap"><code>from collections import ChainMap
+</code></pre><h3 id="8253b953-cabd-4ace-ba7f-23b1650f487e" class=""><strong>Create a ChainMap</strong></h3><p id="234072e0-3d00-4a55-9f6d-00dc43bece92" class="">To create a chainmap we can use <code>ChainMap()</code> constructor. We have to pass the dictionaries we are going to combine as an argument set.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="9ebe84c9-3221-419a-9d80-4a6912962806" class="code code-wrap"><code>dict1 = { 'a' : 1, 'b' : 2 }
+dict2 = { 'c' : 3, 'b' : 4 }
+chain_map = ChainMap(dict1, dict2)
+print(chain_map.maps)
+</code></pre><p id="87260397-5503-4afa-b682-a97045053f61" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="29faac75-9d6e-41bb-8e14-03e72cc7879c" class="code code-wrap"><code>[{'b': 2, 'a': 1}, {'c': 3, 'b': 4}]
+</code></pre><p id="27debdbc-b778-4b1a-83df-25f4594cb4c2" class="">You can see a list of dictionary as the output. You can access chain map values by key name.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b8c1431c-6df0-4972-8852-48220420854d" class="code code-wrap"><code>print(chain_map['a'])
+</code></pre><p id="ecadb322-cd1f-43f2-815e-dae84770f62d" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8f97ea60-b713-47ce-a83a-a3b5edd8625d" class="code code-wrap"><code>1
+</code></pre><p id="4a4c4612-3d8b-4e9b-a8e0-ad354577562e" class="">&#x27;1&#x27; is printed as the value of key &#x27;a&#x27; is 1. Another important point is <code>ChainMap</code> updates its values when its associated dictionaries are updated. For example, if you change the value of &#x27;c&#x27; in <code>dict2</code> to &#x27;5&#x27;, you will notice the change in <code>ChainMap</code> as well.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="099906a0-7ca4-4cd2-99dc-f4fa39d8e7e0" class="code code-wrap"><code>dict2['c'] = 5
+print(chain_map.maps)
+</code></pre><p id="d477bd75-6052-4017-9a70-ef7820af664a" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="03c106c7-09e1-4e94-86cf-98be05568666" class="code code-wrap"><code>[{'a': 1, 'b': 2}, {'c': 5, 'b': 4}]
+</code></pre><h3 id="b357560b-b5f6-4134-b842-a860790e7526" class=""><strong>Getting Keys and Values from ChainMap</strong></h3><p id="dea5b6f0-9489-4ef6-a076-594ed83e2404" class="">You can access the keys of a <code>ChainMap</code> with <code>keys()</code> function. Similarly, you can access the values of elements with <code>values()</code> function, as shown below:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="28026985-f62f-4c36-9735-f3bb0c4c7010" class="code code-wrap"><code>dict1 = { 'a' : 1, 'b' : 2 }
+dict2 = { 'c' : 3, 'b' : 4 }
+chain_map = ChainMap(dict1, dict2)
+print (list(chain_map.keys()))
+print (list(chain_map.values()))
+</code></pre><p id="27f880e5-16ee-426e-8254-8730fb3699c4" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="585c4b7d-955d-4c81-9c69-65f463c0c243" class="code code-wrap"><code>['b', 'a', 'c']
+[2, 1, 3]
+</code></pre><p id="07d71ce9-f892-4210-bb7c-cf761122feb5" class="">Notice that the value of the key &#x27;b&#x27; in the output is the value of key &#x27;b&#x27; in <code>dict1</code>. As a rule of thumb, when one key appears in more than one associated dictionaries, <code>ChainMap</code> takes the value for that key from the first dictionary.</p><h3 id="2882bcc2-2c34-447f-a9ba-f2d924f0add7" class=""><strong>Adding a New Dictionary to ChainMap</strong></h3><p id="6d5714ee-3ff2-4726-9b43-efa938582fa8" class="">If you want to add a new dictionary to an existing <code>ChainMap</code>, use <code>new_child()</code> function. It creates a new <code>ChainMap</code> with the newly added dictionary.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a40be6a2-941d-4819-8762-03788225b9fc" class="code code-wrap"><code>dict3 = {'e' : 5, 'f' : 6}
+new_chain_map = chain_map.new_child(dict3)
+print(new_chain_map)
+</code></pre><p id="09ffdcf0-7c40-4b80-b127-3a70e3be865b" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="456671ae-f1bd-4395-8192-25b2db4de525" class="code code-wrap"><code>ChainMap({'f': 6, 'e': 5}, {'a': 1, 'b': 2}, {'b': 4, 'c': 3})
+</code></pre><p id="1eda45c4-4f70-4156-a5b8-41a02e2d6040" class="">Notice that new dictionary is added to the beginning of <code>ChainMap</code> list.</p><h3 id="72fda9ba-fc13-45dd-b7b6-0862dbe02536" class=""><strong>The namedtuple()</strong></h3><p id="79662ace-b7ff-40e8-be3c-cb76f44a40ea" class="">The <code>namedtuple()</code> returns a tuple with names for each position in the tuple. One of the biggest problems with ordinary tuples is that you have to remember the index of each field of a tuple object. This is obviously difficult. The <code>namedtuple</code> was introduced to solve this problem.</p><h3 id="f8683d7a-ec07-4ff8-8cc2-a9955a8c2ca8" class=""><strong>Import namedtuple</strong></h3><p id="3ff100ea-9f4a-4d4c-a4b0-dd7fd43b775c" class="">Before using <code>namedtuple</code>, you have to import it from the <code>collections</code> module.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="9990d8ba-6424-41f3-bc9a-fee3e1a0b25a" class="code code-wrap"><code>from collections import namedtuple
+</code></pre><h3 id="72312de5-f476-4c0c-93f5-d118c2821e3d" class=""><strong>Create a namedtuple</strong></h3><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c1e76f01-ccb6-4bcb-bf37-fe91cd4bbbfb" class="code code-wrap"><code>from collections import namedtuple
+
+Student = namedtuple('Student', 'fname, lname, age')
+s1 = Student('John', 'Clarke', '13')
+print(s1.fname)
+</code></pre><p id="36d45a95-758f-4c04-8d77-13c419e39d3d" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="74cecf3e-047d-4261-a437-e1c1440a003c" class="code code-wrap"><code>Student(fname='John', lname='Clarke', age='13')
+</code></pre><p id="242068f6-9e4a-4261-885c-a3b24e3484f6" class="">In this example, a <code>namedtuple</code> object <code>Student</code> has been declared. You can access the fields of any instance of a <code>Student</code> class by the defined field name.</p><h3 id="1255c90a-e891-47fe-9d1c-74578247e088" class=""><strong>Creating a namedtuple Using List</strong></h3><p id="bbedf747-a3c8-42db-8212-0fb4150eeac7" class="">The <code>namedtuple()</code> function requires each value to be passed to it separately. Instead, you can use <code>_make()</code> to create a <code>namedtuple</code> instance with a list. Check the following code:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b6d0600c-d1e5-41b2-b64e-1d1facfc292b" class="code code-wrap"><code>s2 = Student._make(['Adam','joe','18'])
+print(s2)
+</code></pre><p id="811c23d3-21af-4ddb-899e-9c91eb224e34" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="f9964ba7-6d58-4c3b-a3cd-711735864fe2" class="code code-wrap"><code>Student(fname='Adam', lname='joe', age='18')
+</code></pre><h3 id="dc8e678a-75ca-45d1-915b-21c2a65ca081" class=""><strong>Create a New Instance Using Existing Instance</strong></h3><p id="f9ea8bab-40e2-4d5a-b44d-c2f1e9ed955f" class="">The <code>_asdict()</code> function can be used to create an <code>OrderedDict</code> instance from an existing instance.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="bb688524-5159-4aab-97ad-557a0b0aa5bc" class="code code-wrap"><code>s2 = s1._asdict()
+print(s2)
+</code></pre><p id="07058ebb-b3e6-436b-8bf0-114c5b75cf44" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c1df0d3e-1d99-4e81-b5ec-a32c67dd0fba" class="code code-wrap"><code>OrderedDict([('fname', 'John'), ('lname', 'Clarke'), ('age', '13')])
+</code></pre><h3 id="fd47ed03-5568-4910-807c-3e634f358ff0" class=""><strong>Changing Field Values with _replace() Function</strong></h3><p id="71ae39f7-1698-43a5-898f-bdcd50631177" class="">To change the value of a field of an instance, the <code>_replace()</code> function is used. Remember that, <code>_replace()</code> function creates a new instance. It does not change the value of existing instance.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="ece08aee-255b-4fcb-953a-731f2d5fb361" class="code code-wrap"><code>s2 = s1._replace(age='14')
+print(s1)
+print(s2)
+</code></pre><p id="c61ff78a-a8c6-4827-be2c-1899e18946b3" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="df080923-b694-4778-a001-6d530d6ba69b" class="code code-wrap"><code>Student(fname='John', lname='Clarke', age='13')
+Student(fname='John', lname='Clarke', age='14')
+</code></pre><h3 id="3d52fe90-9120-4bbd-afe2-938837207adc" class=""><strong>Conclusion</strong></h3><p id="99fd20ee-651c-4fbe-b213-6f184ec66f24" class="">With that, we conclude our tutorial on Collections module. We have discussed all the important topics in the collection module. Python collection module still needs improvements if we compare it with Java&#x27;s Collection library. Therefore, we can expect a lot of changes in upcoming versions.</p></div></article></body></html>

@@ -1,0 +1,638 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Binary Tree</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ee9c6e58-d843-49ce-9859-7b1df49ddf8a" class="page sans"><header><h1 class="page-title">Binary Tree</h1></header><div class="page-body"><p id="6a8441b7-d6bf-4492-86f8-d4480402b557" class=""><a href="https://www.geeksforgeeks.org/binary-tree-data-structure/">https://www.geeksforgeeks.org/binary-tree-data-structure/</a></p><p id="1721802c-cc58-4916-b741-d08161cbb295" class="">
+</p><p id="4c182165-7ae9-4fa8-b5be-d779f110101e" class="">In computer science, various <a href="https://www.upgrad.com/blog/data-structure-project-ideas-beginners/">data structures</a> help in arranging data in different forms. Among them, trees are widely used abstract data structures that simulate a hierarchical tree structure. A tree usually has a root value and subtrees that are formed by the child nodes from its parent nodes. Trees are non-linear data structures.</p><p id="f7d04af6-026e-4333-b933-56fe0d5d6a28" class="">A general tree data structure has no limitation on the number of child nodes it can hold. Yet, this is not the case with a binary tree. This article will learn about a specific tree data structure – binary tree and <strong>types of binary tree</strong>.</p><p id="98eb1483-01c9-4efe-829e-dcc72bd22652" class=""><strong>Table of Contents</strong></p><p id="ab8bcb06-3e07-4caa-93cd-cff3bea03b8e" class="">• <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#What_is_Binary_Tree_Data_Structure">What is Binary Tree Data Structure?</a>
+• <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#Terminologies_associated_with_Binary_Trees_and_Types_of_Binary_Trees">Terminologies associated with Binary Trees and Types of Binary Trees</a>
+• <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#Binary_Tree_Components">Binary Tree Components</a>
+• <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#Types_of_Binary_Trees">Types of Binary Trees</a>
+    ◦ <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#1_Full_Binary_Tree">1. Full Binary Tree</a>
+    ◦ <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#2_Complete_Binary_Tree">2. Complete Binary Tree</a>
+    ◦ <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#3_Perfect_Binary_Tree">3. Perfect Binary Tree</a>
+    ◦ <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#4_Balanced_Binary_Tree">4. Balanced Binary Tree</a>
+    ◦ <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#5_Degenerate_Binary_Tree">5. Degenerate Binary Tree </a>
+• <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#Benefits_of_a_Binary_Tree">Benefits of a Binary Tree</a>
+• <a href="https://www.upgrad.com/blog/5-types-of-binary-tree/#Conclusion">Conclusion</a></p><h1 id="c46ac633-d51c-4612-aba6-d48150d85ea4" class=""><strong>What is Binary Tree Data Structure?</strong></h1><p id="54fc1d05-6a2a-4400-a835-ed355b82fc87" class="">A <strong>binary tree</strong> is a tree-type non-linear <a href="https://www.upgrad.com/blog/data-structures-algorithm-in-python/">data structure</a> with a maximum of two children for each parent. Every node in a <strong>binary tree</strong> has a left and right reference along with the data element. The node at the top of the hierarchy of a tree is called the root node. The nodes that hold other sub-nodes are the parent nodes.</p><p id="fd9ac6ab-366d-43be-a388-3ac925137bbc" class="">A parent node has two child nodes: the left child and right child. Hashing, routing data for network traffic, data compression, preparing binary heaps, and binary search trees are some of the applications that use a binary tree.</p><figure id="53e15aec-ca71-48b4-b61e-84d872ba6dc6" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture1-1.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture1-1.jpg"/></a></figure><h1 id="ebda0dd2-b411-4306-938a-ed354848467f" class=""><strong>Terminologies associated with Binary Trees and Types of Binary Trees</strong></h1><ul id="f20a4557-35d6-4530-b1be-ac1dd5ac991d" class="bulleted-list"><li><strong>Node:</strong> It represents a termination point in a tree.</li></ul><ul id="78cf026a-24b8-4d21-9a45-49f6a2bba39c" class="bulleted-list"><li><strong>Root: </strong>A tree’s topmost node.</li></ul><ul id="90a328c7-7715-48aa-88a7-fbd9c2618a13" class="bulleted-list"><li><strong>Parent:</strong> Each node (apart from the root) in a tree that has at least one sub-node of its own is called a parent node.</li></ul><ul id="47df4818-d20a-43ee-9d2c-17433a9151fd" class="bulleted-list"><li><strong>Child:</strong> A node that straightway came from a parent node when moving away from the root is the child node.</li></ul><ul id="8b1ebdb9-3f81-4825-be51-18ef9a25444f" class="bulleted-list"><li><strong>Leaf Node:</strong> These are external nodes. They are the nodes that have no child.</li></ul><ul id="28ea72a4-9fec-4205-903e-c267aaf04ed8" class="bulleted-list"><li><strong>Internal Node:</strong> As the name suggests, these are inner nodes with at least one child.</li></ul><ul id="1b0e2ad4-703c-4c1d-a471-905ed36e4d02" class="bulleted-list"><li><strong>Depth of a Tree:</strong> The number of edges from the tree’s node to the root is.</li></ul><ul id="00807164-1bad-40fd-be1e-0cad0454ef31" class="bulleted-list"><li><strong>Height of a Tree:</strong> It is the number of edges from the node to the deepest leaf. The tree height is also considered the root height.</li></ul><p id="d2a0ed4c-63a2-4252-a76e-3b62ab63d6ca" class="">As you are now familiar with the terminologies associated with the binary tree and types of binary tree, it is time to understand the <strong>binary tree components</strong>.</p><h1 id="711f268c-c7f4-4a11-9c7e-7c5aacefe559" class=""><strong>Binary Tree Components</strong></h1><p id="152a02fc-17be-49bd-8194-a0e7ada81a69" class="">There are three <strong>binary tree components</strong>. Every <strong>binary tree</strong> node has these three components associated with it. It becomes an essential concept for programmers to understand these three <strong>binary tree components:</strong></p><ol id="c3abbeed-3a06-476c-83af-734605bdfe55" class="numbered-list" start="1"><li>Data element</li></ol><ol id="57a26054-2017-46c6-8e77-3c5297c249ea" class="numbered-list" start="2"><li>Pointer to left subtree</li></ol><ol id="25cbb182-3ddf-4ae4-bcdb-c07e123d1f15" class="numbered-list" start="3"><li>Pointer to right subtree</li></ol><figure id="89bc63e1-849d-46dd-9afd-065eaad3ec71" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/introduction-to-binary-trees-1.png"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/introduction-to-binary-trees-1.png"/></a></figure><p id="60ac462b-0a49-4db8-9989-b8071ac49827" class=""><a href="https://www.studytonight.com/data-structures/introduction-to-binary-trees">Source</a></p><p id="b507bac0-aa07-46f7-86f2-3e503feb9479" class="">These three <strong>binary tree components</strong> represent a node. The data resides in the middle. The left pointer points to the child node, forming the left sub-tree. The right pointer points to the child node at its right, creating the right subtree.</p><p id="2d574275-7b22-4661-8df8-d22885f88b0a" class=""><strong>Read: </strong><a href="https://www.upgrad.com/blog/guesstimate-questions-informative-methods-for-data-science/">Top Guesstimate Questions &amp; Informative Methods for Data Science</a></p><h1 id="b470f29b-5d28-4b5c-8ae6-a27dff10b91d" class=""><strong>Types of Binary Trees</strong></h1><p id="2c7f36d5-00c8-48f2-84bc-6832d6c3cac5" class="">There are various <strong>types of binary trees</strong>, and each of these <strong>binary tree types</strong> has unique characteristics. Here are each of the <strong>binary tree types</strong> in detail:</p><h1 id="9f86b825-6a00-4fb9-9f51-175862d50d2c" class=""><strong>1. Full Binary Tree</strong></h1><p id="17087607-bfe0-42ff-9523-01a808f9e6d5" class="">It is a special kind of a binary tree that has either zero children or two children. It means that all the nodes in that binary tree should either have two child nodes of its parent node or the parent node is itself the leaf node or the external node.</p><p id="535059b5-e940-40cc-bf5a-ad10f7dddde8" class="">In other words, a full binary tree is a unique binary tree where every node except the external node has two children. When it holds a single child, such a binary tree will not be a full binary tree. <em>Here, the quantity of leaf nodes is equal to the number of internal nodes plus one. The equation is like</em> L=I+1, where L is the number of leaf nodes, and I is the number of internal nodes.</p><p id="b220e189-29a8-4a63-904b-416e6e7af1d3" class=""><strong>Here is the structure of a full binary tree:</strong></p><figure id="1c89a8a1-e7d2-4b9d-ba0a-f57e8b947af2" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture2-1.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture2-1.jpg"/></a></figure><h1 id="58d2d0b9-2041-4acb-964f-9b84087b474f" class=""><strong>2. Complete Binary Tree</strong></h1><p id="c8e21628-d2b3-4eb7-a373-c64e8713ef69" class="">A complete binary tree is another specific type of binary tree where all the tree levels are filled entirely with nodes, except the lowest level of the tree. Also, in the last or the lowest level of this binary tree, every node should possibly reside on the left side. Here is the structure of a complete binary tree:</p><figure id="ffa83e23-b772-4ff3-9523-edf824bbbe25" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture3.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture3.jpg"/></a></figure><figure id="41885039-8f02-490f-aadf-9cfc449cb365" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture4.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture4.jpg"/></a></figure><h1 id="6edc0f0b-0b76-4530-a584-45e110e4cc99" class=""><strong>3. Perfect Binary Tree</strong></h1><p id="0168c0cb-b265-41e4-982e-ecef0edbfaa1" class="">A binary tree is said to be ‘perfect’ if all the internal nodes have strictly two children, and every external or leaf node is at the same level or same depth within a tree. A perfect <a href="https://www.upgrad.com/blog/binary-tree-in-data-structure/">binary tree</a> having height ‘h’ has 2h – 1 node. Here is the structure of a perfect binary tree:</p><figure id="f85f7e3e-7496-4125-9519-9682f8734446" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture5.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture5.jpg"/></a></figure><figure id="41329193-e59e-4c7d-a146-7188c1972645" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture6.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture6.jpg"/></a></figure><h1 id="7086d133-c1ad-4ee8-95a9-01a521f54848" class=""><strong>4. Balanced Binary Tree</strong></h1><p id="6a48645f-eeee-4826-abb3-8e54c83ea1a6" class="">A binary tree is said to be ‘balanced’ if the tree height is O(logN), where ‘N’ is the number of nodes. In a balanced binary tree, the height of the left and the right subtrees of each node should vary by at most one. An AVL Tree and a Red-Black Tree are some common examples of data structure that can generate a balanced binary search tree. Here is an example of a balanced binary tree:</p><figure id="52a4a0fc-0c60-45c0-8970-9ac2caf5426b" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture7.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture7.jpg"/></a></figure><h1 id="894f8b44-d51b-4e0e-a932-46993ac2c334" class=""><strong>5. Degenerate Binary Tree</strong></h1><p id="93f8335f-46d1-4f98-bdae-bfbc6ea5d718" class="">A binary tree is said to be a degenerate binary tree or pathological binary tree if every internal node has only a single child. Such trees are similar to a linked list performance-wise. Here is an example of a degenerate binary tree:</p><figure id="c0f9f808-cbc2-4b6e-8565-8c4c6ed07e10" class="image"><a href="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture8.jpg"><img src="https://www.upgrad.com/blog/wp-content/uploads/2020/09/Picture8.jpg"/></a></figure><h1 id="4d5bbf3b-ff8f-4e78-9293-e7d6aee0aee7" class=""><strong>Benefits of a Binary Tree</strong></h1><ul id="53a69484-9be6-42f3-b629-24e0ef5f32f6" class="bulleted-list"><li>The search operation in a binary tree is faster as compared to other trees</li></ul><ul id="f5e11ca7-85c8-4374-ac72-a144cb067420" class="bulleted-list"><li>Only two traversals are enough to provide the elements in sorted order</li></ul><ul id="df0e4514-a5ce-4c52-bba5-a4dcad289059" class="bulleted-list"><li>It is easy to pick up the maximum and minimum elements</li></ul><ul id="258862a5-3cda-4a22-86cd-1165f810c0b3" class="bulleted-list"><li>Graph traversal also uses binary trees</li></ul><ul id="8a41dd62-5356-4506-a357-ff8abeae8d5f" class="bulleted-list"><li>Converting different postfix and prefix expressions are possible using binary trees</li></ul><p id="d06444e1-d741-46af-a865-7537b70bc516" class=""><strong>Also Read: </strong><a href="https://www.upgrad.com/blog/decision-trees-in-machine-learning/">Decision Trees in Machine Learning: Functions, Classification, Pros &amp; Cons</a></p><h1 id="f556c554-996d-4356-ad8e-8c413a1fcffb" class=""><strong>Conclusion</strong></h1><p id="1ef10c49-af19-4b18-b894-9b7f91b13369" class="">The binary tree is one of the most widely used trees in the data structure. Each of the <strong>binary tree types</strong> has its unique features. These data structures have specific requirements in applied computer science. We hope this article about types of binary trees was helpful. upGrad offers various courses in data science, machine learning, big data, and more.</p><p id="a03f25fa-abbd-4554-8279-2e67e13f79a0" class="">If you are curious to learn about data science, check out IIIT-B &amp; upGrad’s <a href="https://www.upgrad.com/data-science-pgd-iiitb/?utm_source=BLOG&amp;utm_medium=BODY&amp;utm_campaign=DV_DA_PGD_BLOG_BODY_88513">PG Diploma in Data Science</a> which is created for working professionals and offers 10+ case studies &amp; projects, practical hands-on workshops, mentorship with industry experts, 1-on-1 with industry mentors, 400+ hours of learning and job assistance with top firms.</p></div></article></body></html>

@@ -1,0 +1,723 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>List sort / sorted</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="6c2787de-55fe-4e2f-b759-a69be20b99e4" class="page sans"><header><h1 class="page-title">List sort / sorted</h1></header><div class="page-body"><p id="7b51ce17-3254-4b5c-96a9-9e47d9e74d01" class="">
+</p><p id="c3c9e2cc-9409-495c-bf3b-11c176a35e1f" class="">The primary difference between the list <code>sort()</code> function and the <code>sorted()</code> function is that the <code>sort()</code> function will modify the list it is called on. The <code>sorted()</code> function will create a new list containing a sorted version of the list it is given. The <code>sorted()</code> function will not modify the list passed as a parameter. If you want to sort a list but still have the original unsorted version, then you would use the <code>sorted()</code> function. If maintaining the original order of the list is unimportant, then you can call the <code>sort()</code> function on the list.</p><p id="f19381f3-d7af-4be8-9e8b-b76efe8d785d" class="">A second important difference is that the <code>sorted()</code> function will return a list so you must assign the returned data to a new variable. The <code>sort()</code> function modifies the list in-place and has no return value.</p><p id="aa93b86b-f690-49f6-ac31-ead94e4b62c6" class="">The example below shows the difference in behavior between <code>sort()</code> and <code>sorted()</code>. After being passed to <code>sorted()</code>, the <code>vegetables</code> list remains unchanged. Once the <code>sort()</code> function is called on it, the list is updated.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="2a5fe9c2-e1e8-4aff-a09c-f9d51ddd71f0" class="code"><code>vegetables <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'squash'</span><span class="token punctuation">,</span> <span class="token string">'pea'</span><span class="token punctuation">,</span> <span class="token string">'carrot'</span><span class="token punctuation">,</span> <span class="token string">'potato'</span><span class="token punctuation">]</span>
+
+new_list <span class="token operator">=</span> <span class="token builtin">sorted</span><span class="token punctuation">(</span>vegetables<span class="token punctuation">)</span>
+
+<span class="token comment"># new_list = ['carrot', 'pea', 'potato', 'squash']</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>new_list<span class="token punctuation">)</span>
+
+<span class="token comment"># vegetables = ['squash', 'pea', 'carrot', 'potato']</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>vegetables<span class="token punctuation">)</span>
+
+vegetables<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># vegetables = ['carrot', 'pea', 'potato', 'squash']</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>vegetables<span class="token punctuation">)</span></code></pre><h1 id="78e78af2-5776-4418-b749-c84d77f5d8fb" class="">Python List sort()</h1><p id="9e8b45e3-9510-477f-bcb2-7e7df08fa14f" class=""><strong>The sort() method sorts the elements of a given list in a specific ascending or descending order.</strong></p><p id="f8e8fbed-a564-42d3-95f7-cd7477e8905d" class="">The syntax of the <code>sort()</code> method is:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="f9926ecd-c8c4-491b-9c66-8a5362fff20a" class="code code-wrap"><code><span class="token builtin">list</span><span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span></code></pre><p id="689fc8d3-a538-4b3e-bffa-22a217b1fb86" class="">Alternatively, you can also use Python&#x27;s built-in <a href="https://www.programiz.com/python-programming/methods/built-in/sorted">sorted()</a> function for the same purpose.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="be5fc360-557f-4554-8fb0-b285c4fa854e" class="code code-wrap"><code><span class="token builtin">sorted</span><span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span></code></pre><p id="1fc489fd-4fff-4a40-886f-19f3aac6968f" class=""><strong>Note:</strong> The simplest difference between <code>sort()</code> and <code>sorted()</code> is: <code>sort()</code> changes the list directly and doesn&#x27;t return any value, while <code>sorted()</code> doesn&#x27;t change the list and returns the sorted list.</p><hr id="071572ee-f023-48ec-a279-5007557eede8"/><h1 id="c0873558-df44-4ee3-9195-a2e438db6214" class="">sort() Parameters</h1><p id="f6629791-d5be-47c9-88bc-c4eb6294d8b1" class="">By default, <code>sort()</code> doesn&#x27;t require any extra parameters. However, it has two optional parameters:</p><ul id="a01c3032-fcf3-43bb-a58a-3c5b165fbed2" class="bulleted-list"><li><strong>reverse</strong> - If <code>True</code>, the sorted list is reversed (or sorted in Descending order)</li></ul><ul id="a7463d2e-72a2-48cc-9937-885c150df8bc" class="bulleted-list"><li><strong>key</strong> - function that serves as a key for the sort comparison</li></ul><hr id="ce694939-86d7-421e-8e4d-c9cd57be29dc"/><h1 id="1ed82a9c-31f2-48a8-a2d6-1514a970767f" class="">Return value from sort()</h1><p id="7f8093c2-f0a4-4718-a6de-2a5b07c62fb4" class="">The <code>sort()</code> method doesn&#x27;t return any value. Rather, it changes the original list.</p><p id="4e2bfdda-d8df-4462-a5c8-9ca82bfd068f" class="">If you want a function to return the sorted list rather than change the original list, use <code>sorted()</code>.</p><hr id="933bc392-0e56-428f-a94a-d29bd92056f8"/><h1 id="2e2076a6-6b42-4144-8892-49c9c85cf7ab" class="">Example 1: Sort a given list</h1><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="5e4c8a25-4cd7-4bbb-bf4c-e313e5efa4b5" class="code code-wrap"><code><span class="token comment"># vowels list</span>
+vowels <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'u'</span><span class="token punctuation">,</span> <span class="token string">'o'</span><span class="token punctuation">,</span> <span class="token string">'i'</span><span class="token punctuation">]</span>
+
+<span class="token comment"># sort the vowels</span>
+vowels<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># print vowels</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Sorted list:'</span><span class="token punctuation">,</span> vowels<span class="token punctuation">)</span></code></pre><p id="a2888770-0ca9-4e62-b185-f84ddd6880e9" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="f394b3b0-41b8-4330-b4a9-899b4f3dc55a" class="code code-wrap"><code>Sorted <span class="token builtin">list</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'i'</span><span class="token punctuation">,</span> <span class="token string">'o'</span><span class="token punctuation">,</span> <span class="token string">'u'</span><span class="token punctuation">]</span></code></pre><hr id="ca78d6f4-703a-42d0-85a9-ef65f9e98831"/><h1 id="5a70fe2b-251f-48f5-8d06-92ab4db531d7" class="">Sort in Descending order</h1><p id="739f3e81-9e14-4f75-b437-77b8da917c30" class="">The <code>sort()</code> method accepts a <code>reverse</code> parameter as an optional argument.</p><p id="55529489-cc8e-406f-87d7-1ad99bc7bf03" class="">Setting <code>reverse = True</code> sorts the list in the descending order.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1fddb63d-7626-4dff-b938-e2b2bbb69173" class="code code-wrap"><code><span class="token builtin">list</span><span class="token punctuation">.</span>sort<span class="token punctuation">(</span>reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre><p id="be57a04d-8ca5-43e0-a1ae-cc4bd81d0df3" class="">Alternately for <code>sorted()</code>, you can use the following code.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a71e3aef-d36b-4296-a646-e8e55dd7ab0e" class="code code-wrap"><code><span class="token builtin">sorted</span><span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre><hr id="890b51b2-fecc-43b0-b33f-5e1488ee4dab"/><h1 id="bf59d98e-3659-4fe7-a2c2-93a8ef492855" class="">Example 2: Sort the list in Descending order</h1><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="44572bbe-e2f3-43fa-a781-6442bceaf884" class="code code-wrap"><code><span class="token comment"># vowels list</span>
+vowels <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'u'</span><span class="token punctuation">,</span> <span class="token string">'o'</span><span class="token punctuation">,</span> <span class="token string">'i'</span><span class="token punctuation">]</span>
+
+<span class="token comment"># sort the vowels</span>
+vowels<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+<span class="token comment"># print vowels</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Sorted list (in Descending):'</span><span class="token punctuation">,</span> vowels<span class="token punctuation">)</span></code></pre><p id="86540e92-05ba-49fb-aee5-f84767d97c56" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="5ecb1066-3813-4d96-bead-c34b22bf52e0" class="code code-wrap"><code>Sorted <span class="token builtin">list</span> <span class="token punctuation">(</span><span class="token keyword">in</span> Descending<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'u'</span><span class="token punctuation">,</span> <span class="token string">'o'</span><span class="token punctuation">,</span> <span class="token string">'i'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">]</span></code></pre><hr id="61257c52-caa8-4878-bc46-b44dd9cb1e81"/><h1 id="a3927cc7-9090-4c2e-9fc6-f5db596dac3f" class="">Sort with custom function using key</h1><p id="9680bad1-4f0f-442f-8523-e9c21d29afb7" class="">If you want your own implementation for sorting, the <code>sort()</code> method also accepts a <code>key</code> function as an optional parameter.</p><p id="d81f9c91-17a3-4f6c-a0d1-a00df2e1a5aa" class="">Based on the results of the key function, you can sort the given list.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4602f64c-aa56-4f69-806e-868c6884a670" class="code code-wrap"><code><span class="token builtin">list</span><span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">)</span></code></pre><p id="51f9085e-4402-4ead-b26f-433ecf8b33e3" class="">Alternatively for sorted:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8298dbef-4b53-4573-aae1-4783249c7da4" class="code code-wrap"><code><span class="token builtin">sorted</span><span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">,</span> key<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">)</span></code></pre><p id="ce8892d9-1cc9-4a5e-ad5b-6af9ed77494a" class="">Here, <code>len</code> is the Python&#x27;s in-built function to count the length of an element.</p><p id="8403ac83-aa58-4a67-81e4-d70f8822c0ea" class="">The list is sorted based on the length of each element, from lowest count to highest.</p><hr id="485ea2ce-8a22-49b8-9404-fd221815e944"/><p id="c9ab2f48-9f46-4290-bd79-ac61a9f3fa54" class="">We know that a tuple is sorted using its first parameter by default. Let&#x27;s look at how to customize the <code>sort()</code> method to sort using the second element.</p><h1 id="b47ac9b6-8f22-42e1-918b-d78c7946b94c" class="">Example 3: Sort the list using key</h1><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="63dd132c-94ea-4d66-9a89-799dc26b6745" class="code code-wrap"><code><span class="token comment"># take second element for sort</span>
+<span class="token keyword">def</span> <span class="token function">takeSecond</span><span class="token punctuation">(</span>elem<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> elem<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+
+<span class="token comment"># random list</span>
+random <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+<span class="token comment"># sort list with key</span>
+random<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span>takeSecond<span class="token punctuation">)</span>
+
+<span class="token comment"># print list</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Sorted list:'</span><span class="token punctuation">,</span> random<span class="token punctuation">)</span></code></pre><p id="c77ecfae-ac2a-4515-8108-318191f856ff" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="52ee2234-8796-492c-84f5-a1326f22c304" class="code code-wrap"><code>Sorted <span class="token builtin">list</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">]</span></code></pre><hr id="abd82376-2d97-413a-8235-62f5290c6888"/><p id="c05859b6-4633-4077-a779-799b317f52a8" class="">Let&#x27;s take another example. Suppose we have a list of information about the employees of an office where each element is a dictionary.</p><p id="84ac03eb-90fb-4f6c-84cd-c6e36bfb89d8" class="">We can sort the list in the following way:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1fc6723a-2e4a-4f63-8e0b-447625f78f1c" class="code code-wrap"><code><span class="token comment"># sorting using custom key</span>
+employees <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'Alan Turing'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">25</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">10000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'Sharon Lin'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">8000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'John Hopkins'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">1000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'Mikhail Tal'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">40</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">15000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span>
+
+<span class="token comment"># custom functions to get employee info</span>
+<span class="token keyword">def</span> <span class="token function">get_name</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> employee<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'Name'</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">get_age</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> employee<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'age'</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">get_salary</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> employee<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'salary'</span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># sort by name (Ascending order)</span>
+employees<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span>get_name<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>employees<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">'\n\n'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># sort by Age (Ascending order)</span>
+employees<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span>get_age<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>employees<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">'\n\n'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># sort by salary (Descending order)</span>
+employees<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span>get_salary<span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>employees<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">'\n\n'</span><span class="token punctuation">)</span></code></pre><p id="fcbc590f-1d6f-4153-a4f4-8f68ec8ea0ee" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="03bb8b09-1e6d-417b-9a5e-962adb81e83d" class="code code-wrap"><code>[{'Name': 'Alan Turing', 'age': 25, 'salary': 10000}, {'Name': 'John Hopkins', 'age': 18, 'salary': 1000}, {'Name': 'Mikhail Tal', 'age': 40, 'salary': 15000}, {'Name': 'Sharon Lin', 'age': 30, 'salary': 8000}]
+
+[{'Name': 'John Hopkins', 'age': 18, 'salary': 1000}, {'Name': 'Alan Turing', 'age': 25, 'salary': 10000}, {'Name': 'Sharon Lin', 'age': 30, 'salary': 8000}, {'Name': 'Mikhail Tal', 'age': 40, 'salary': 15000}]
+
+[{'Name': 'Mikhail Tal', 'age': 40, 'salary': 15000}, {'Name': 'Alan Turing', 'age': 25, 'salary': 10000}, {'Name': 'Sharon Lin', 'age': 30, 'salary': 8000}, {'Name': 'John Hopkins', 'age': 18, 'salary': 1000}]</code></pre><p id="1d87a4ae-06ed-4c03-a172-34ea55155045" class="">Here, for the first case, our custom function returns the name of each employee. Since the name is a <code>string</code>, Python by default sorts it using the alphabetical order.</p><p id="6c281ef6-c401-48aa-8912-46cf4a88b24b" class="">For the second case, age (<code>int</code>) is returned and is sorted in ascending order.</p><p id="d991028b-a73c-4672-bef5-bd05baca86ab" class="">For the third case, the function returns the salary (<code>int</code>), and is sorted in the descending order using <code>reverse = True</code>.</p><p id="d42de49d-8133-45be-a4b3-b79bde3ff2c0" class="">It is a good practice to use the lambda function when the function can be summarized in one line. So, we can also write the above program as:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4c5f438e-3479-4b69-bec5-26ca35489b58" class="code code-wrap"><code><span class="token comment"># sorting using custom key</span>
+employees <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'Alan Turing'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">25</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">10000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'Sharon Lin'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">8000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'John Hopkins'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">1000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'Name'</span><span class="token punctuation">:</span> <span class="token string">'Mikhail Tal'</span><span class="token punctuation">,</span> <span class="token string">'age'</span><span class="token punctuation">:</span> <span class="token number">40</span><span class="token punctuation">,</span> <span class="token string">'salary'</span><span class="token punctuation">:</span> <span class="token number">15000</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span>
+
+<span class="token comment"># sort by name (Ascending order)</span>
+employees<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'Name'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>employees<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">'\n\n'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># sort by Age (Ascending order)</span>
+employees<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'age'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>employees<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">'\n\n'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># sort by salary (Descending order)</span>
+employees<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>key<span class="token operator">=</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'salary'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>employees<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">'\n\n'</span><span class="token punctuation">)</span></code></pre><p id="161a3481-6720-447b-af64-3a01feaab8b8" class=""><strong>Output</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="24a2863f-5898-4b20-9797-5e16c362a155" class="code code-wrap"><code>[{'Name': 'Alan Turing', 'age': 25, 'salary': 10000}, {'Name': 'John Hopkins', 'age': 18, 'salary': 1000}, {'Name': 'Mikhail Tal', 'age': 40, 'salary': 15000}, {'Name': 'Sharon Lin', 'age': 30, 'salary': 8000}]
+
+[{'Name': 'John Hopkins', 'age': 18, 'salary': 1000}, {'Name': 'Alan Turing', 'age': 25, 'salary': 10000}, {'Name': 'Sharon Lin', 'age': 30, 'salary': 8000}, {'Name': 'Mikhail Tal', 'age': 40, 'salary': 15000}]
+
+[{'Name': 'Mikhail Tal', 'age': 40, 'salary': 15000}, {'Name': 'Alan Turing', 'age': 25, 'salary': 10000}, {'Name': 'Sharon Lin', 'age': 30, 'salary': 8000}, {'Name': 'John Hopkins', 'age': 18, 'salary': 1000}]</code></pre></div></article></body></html>

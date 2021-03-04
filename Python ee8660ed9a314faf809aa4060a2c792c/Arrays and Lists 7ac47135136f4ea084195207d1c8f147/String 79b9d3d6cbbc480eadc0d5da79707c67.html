@@ -1,0 +1,758 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>String</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="79b9d3d6-cbbc-480e-adc0-d5da79707c67" class="page sans"><header><h1 class="page-title">String</h1></header><div class="page-body"><p id="22f033c5-8709-4ce0-929f-3edfad134e7e" class=""><a href="https://www.programiz.com/python-programming/string">https://www.programiz.com/python-programming/string</a></p><p id="72822e8f-1ea0-4c46-85a7-954eacb15b9b" class=""><a href="https://www.geeksforgeeks.org/python-strings/">https://www.geeksforgeeks.org/python-strings/</a></p><h1 id="adcc4ef0-0c14-46b2-9c92-ce97c7bbe48e" class="">How to access characters in a string?</h1><p id="b6be9f9d-efe1-4463-b5ab-7fc410865759" class="">We can access individual characters using indexing and a range of characters using slicing. Index starts from 0. Trying to access a character out of index range will raise an <code>IndexError</code>. The index must be an integer. We can&#x27;t use floats or other types, this will result into <code>TypeError</code>.</p><p id="604af773-613e-4b40-9567-e95f3d931bf8" class="">Python allows negative indexing for its sequences.</p><p id="9ac3e008-90a8-48f1-bb9a-292f40f3c504" class="">The index of <code>-1</code> refers to the last item, <code>-2</code> to the second last item and so on. We can access a range of items in a string by using the slicing operator <code>:</code>(colon).</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4750eb50-281f-491b-8848-e85c09681cbd" class="code code-wrap"><code><span class="token comment">#Accessing string characters in Python</span>
+<span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">'programiz'</span>
+<span class="token comment"># p(0) r(1) o(2) g(3) r(4) a(5) m(6) i(7) z(8)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'str = '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+
+<span class="token comment">#first character</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'str[0] = '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">#last character</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'str[-1] = '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">#slicing 2nd to 5th character</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'str[1:5] = '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">#slicing 6th to 2nd last character</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'str[5:-2] = '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre><p id="2080e97d-6050-4d5b-ac62-6b824ef4e9f9" class="">When we run the above program, we get the following output:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d0c086a5-4670-47c2-ab51-f813fe186d2a" class="code code-wrap"><code><span class="token builtin">str</span> <span class="token operator">=</span>  programiz
+<span class="token builtin">str</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span>  p
+<span class="token builtin">str</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span>  z
+<span class="token builtin">str</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span>  rogr
+<span class="token builtin">str</span><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span>  am</code></pre><p id="b3491896-bee7-4449-a465-e069ab835bbb" class="">If we try to access an index out of the range or use numbers other than an integer, we will get errors.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="ee0ad36c-4505-44f4-ac3e-de5b80746d70" class="code code-wrap"><code><span class="token comment"># index must be in range</span>
+<span class="token operator">>></span><span class="token operator">></span> my_string<span class="token punctuation">[</span><span class="token number">15</span><span class="token punctuation">]</span>  
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+IndexError<span class="token punctuation">:</span> string index out of <span class="token builtin">range</span>
+
+<span class="token comment"># index must be an integer</span>
+<span class="token operator">>></span><span class="token operator">></span> my_string<span class="token punctuation">[</span><span class="token number">1.5</span><span class="token punctuation">]</span> 
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+TypeError<span class="token punctuation">:</span> string indices must be integers</code></pre><p id="a1127fcf-d765-47a6-92d6-9d5fa66a37f8" class="">Slicing can be best visualized by considering the index to be between the elements as shown below.</p><p id="c5eb2b3a-b105-49a5-94c6-2f350d2425bd" class="">If we want to access a range, we need the index that will slice the portion from the string.</p><figure id="ca332d49-ee38-462a-afa6-b5c182bb09ad" class="image"><a href="https://cdn.programiz.com/sites/tutorial2program/files/element-slicling.jpg"><img src="https://cdn.programiz.com/sites/tutorial2program/files/element-slicling.jpg"/></a></figure><p id="be3eda12-e3c8-4911-82a7-a12364f09af2" class=""><strong>String Slicing in Python</strong></p><hr id="3d7b5171-cbf9-4f68-8b03-db06e958c444"/><h1 id="46201a76-ad39-4a4f-8333-6c3da025c12b" class="">How to change or delete a string?</h1><p id="d37c80c1-4d7b-47e4-b4b4-63ef47d4b33d" class="">Strings are immutable. This means that elements of a string cannot be changed once they have been assigned. We can simply reassign different strings to the same name.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b10f8b18-0f3c-4165-bf2f-37ac2a86ac4c" class="code code-wrap"><code>>>> my_string = 'programiz'
+>>> my_string[5] = 'a'
+...
+TypeError: 'str' object does not support item assignment
+>>> my_string = 'Python'
+>>> my_string
+'Python'</code></pre><p id="f7102f85-6c94-498b-9008-4df216cd7fcd" class="">We cannot delete or remove characters from a string. But deleting the string entirely is possible using the <code>del</code> keyword.</p><p id="8df9cd48-0a2e-4dec-b542-0d660866158c" class="">
+</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="cd28adba-c236-4a6b-b98e-0e9e51fd083f" class="code"><code>txt <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>txt<span class="token punctuation">)</span>
+<span class="token comment"># Output</span>
+<span class="token comment"># Hello Worl</span></code></pre><p id="060786f5-3137-41e7-948c-14944556c2e4" class="">Change order</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="83dfc136-2112-4269-a913-761ee975d27a" class="code"><code>txt <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>txt<span class="token punctuation">)</span>
+<span class="token comment"># Output</span>
+<span class="token comment"># dlroW olleH</span></code></pre><p id="f024336c-324c-4c93-b76c-03c1a745af22" class="">
+</p><ul id="f50c059e-8601-436b-a25e-ade2cd8599ac" class="bulleted-list"><li><strong>Get the last character of the string</strong></li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="2abf685b-2977-4e8a-af3d-cf381da1f8cf" class="code code-wrap"><code>string <span class="token operator">=</span> <span class="token string">"freeCodeCamp"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre><p id="98ec9b93-e536-480c-80c4-550bcca8303b" class="">Output:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a8d65742-711b-48df-8814-eb201de74497" class="code code-wrap"><code><span class="token operator">></span> p</code></pre><ul id="dc166a0b-e464-477d-ba26-1f4e50388ef8" class="bulleted-list"><li><strong>Get the last 5 characters of a string</strong></li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="5c7689df-003e-48ca-b37e-bf45a3d6d8eb" class="code code-wrap"><code>string <span class="token operator">=</span> <span class="token string">"freeCodeCamp"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre><p id="79e53c4c-aadf-4cdc-bffe-98396e05d630" class="">Output:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="dadab907-204e-4ae3-9aed-3610bf961f2c" class="code code-wrap"><code>> eCamp</code></pre><ul id="87566c1e-c952-4783-9c47-8af7bbf29554" class="bulleted-list"><li><strong>Get a substring which contains all characters except the last 4 characters and the 1st character</strong></li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="ea7c7d4a-55eb-4e7a-8081-b4f6a883eeb4" class="code code-wrap"><code>string <span class="token operator">=</span> <span class="token string">"freeCodeCamp"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre><p id="6f3c6696-77fc-4f9d-b0e8-c1321cefc943" class="">Output:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b50bbb45-1bd3-4e3c-b666-d45b580aae43" class="code code-wrap"><code>> reeCode</code></pre><h3 id="02ed9f32-ed47-42eb-ba31-5a9e4bccbe44" class=""><strong>More examples</strong></h3><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8192b543-9399-4072-a748-87aaa8f699bd" class="code code-wrap"><code><span class="token builtin">str</span> <span class="token operator">=</span> “freeCodeCamp”
+
+<span class="token keyword">print</span> <span class="token builtin">str</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token comment"># prints ‘eCa’</span>
+<span class="token keyword">print</span> <span class="token builtin">str</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token comment"># prints ‘’ (empty string)</span></code></pre><ul id="c2ce6615-eb82-46cf-a74a-1dceaf0c6c48" class="bulleted-list"><li><strong>Get every other character from a string</strong></li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="d44446a4-f57b-4447-bc97-2cc446667179" class="code code-wrap"><code>string <span class="token operator">=</span> <span class="token string">"freeCodeCamp"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>string<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre><p id="570ddf7d-3076-430e-8304-c4554ec4b68f" class="">Output:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="27abefef-d5f8-4c20-b72d-c7df40b99141" class="code code-wrap"><code>> feCdCm</code></pre><p id="f25c4c46-3dfc-4a7b-85da-a345c609e92d" class="">
+</p><h2 id="ed1fc338-9c4b-45a8-99a1-8c666030f010" class="">Python Remove Spaces from String</h2><p id="5cb9d65c-8e4f-4983-b91b-67bd06769abd" class="">Python String is immutable, so we can’t change its value. Any function that manipulates string value returns a new string and we have to explicitly assign it to the string, otherwise, the string value won’t change.</p><p id="87813840-d467-4b67-bf16-3a8c4639559f" class="">Let’s say we have an example string defined as:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="7c00b916-5013-4e79-8cb9-1c658776fe72" class="code code-wrap"><code>s <span class="token operator">=</span> <span class="token string">'  Hello  World   From Pankaj \t\n\r\tHi There  '</span>
+</code></pre><p id="8059cce0-176d-49d8-9b4e-047cd0c1a86a" class="">This string has different types of whitespaces as well as newline characters.</p><p id="3b0eed2c-858b-4c7a-8925-9847cc97b637" class="">Let’s have a look at different functions to remove spaces.</p><h3 id="2a6939b8-7780-4b13-ba26-c92635522f28" class=""><mark class="highlight-yellow_background">strip()</mark></h3><p id="6f82f4c7-6baf-42da-85cd-8d4e48d43aa4" class="">Python String strip() function will remove leading and trailing whitespaces.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="446d69c8-e66e-4de6-b5f6-15b311c17867" class="code code-wrap"><code><span class="token operator">>></span><span class="token operator">></span> s<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token string">'Hello  World   From Pankaj \t\n\r\tHi There'</span>
+</code></pre><p id="4b4164e4-dabf-412a-8ce2-1e788b54d77c" class="">If you want to remove only leading or trailing spaces, use <a href="https://www.journaldev.com/23625/python-trim-string-rstrip-lstrip-strip">lstrip() or rstrip()</a> function instead.</p><h3 id="b88a1ce6-5e49-41ba-bae2-b088623b7f4f" class="block-color-yellow_background">replace()</h3><p id="f3c09edf-2e55-4cac-9529-383f0052470e" class="">We can use <a href="https://www.journaldev.com/23470/python-string-replace">replace()</a> to remove all the whitespaces from the string. This function will remove whitespaces between words too.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="fcd90795-99bb-4449-bf3a-2bb60331d919" class="code code-wrap"><code><span class="token operator">>></span><span class="token operator">></span> s<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span>
+<span class="token string">'HelloWorldFromPankaj\t\n\r\tHiThere'</span>
+</code></pre><h3 id="f021ce4d-9721-494e-b2a8-098ad581d52f" class=""><mark class="highlight-yellow_background">join() with split()</mark></h3><p id="5bcbda1f-3696-4117-ba6f-3230b1041f3e" class="">If you want to get rid of all the duplicate whitespaces and newline characters, then you can use <a href="https://www.journaldev.com/23571/python-string-join">join() function</a> with <a href="https://www.journaldev.com/23462/python-string-split">string split() function</a>.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="b6b36c7a-9e35-42e9-825a-7243d79f5236" class="code code-wrap"><code><span class="token operator">>></span><span class="token operator">></span> <span class="token string">" "</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>s<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token string">'Hello World From Pankaj Hi There'</span>
+</code></pre><h3 id="0a542e89-1cb7-41ec-bac1-63235632fadc" class="">translate()</h3><p id="4e21e7b7-74ed-4b57-acc3-82a89c60aeae" class="">If you want to get rid of all the whitespaces as well as newline characters, you can use <a href="https://www.journaldev.com/23697/python-string-translate">string translate() function</a>.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="1f4906b2-9e01-401f-a71d-39e3480831e0" class="code code-wrap"><code><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">import</span> string
+<span class="token operator">>></span><span class="token operator">></span> s<span class="token punctuation">.</span>translate<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token builtin">ord</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token boolean">None</span> <span class="token keyword">for</span> c <span class="token keyword">in</span> string<span class="token punctuation">.</span>whitespace<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token string">'HelloWorldFromPankajHiThere'</span>
+</code></pre><figure id="7d313a58-ed52-4263-ac77-dfbda1797410" class="image"><a href="https://cdn.journaldev.com/wp-content/uploads/2018/10/python-remove-spaces-from-string.png"><img src="https://cdn.journaldev.com/wp-content/uploads/2018/10/python-remove-spaces-from-string.png"/></a></figure><h2 id="0c4e3678-7529-4233-b292-fbf0ce30ce76" class="">Python Remove Whitespaces from String using Regex</h2><p id="46b67c92-5d27-4d00-8486-8df69e04b9d1" class="">We can also use a regular expression to match whitespace and remove them using <code>re.sub()</code> function.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3e45906c-bd81-4d89-a527-0a5a2685a6ee" class="code code-wrap"><code>import re
+
+s = '  Hello  World   From Pankaj \t\n\r\tHi There  '
+
+print('Remove all spaces using RegEx:\n', re.sub(r"\s+", "", s), sep='')  # \s matches all white spaces
+print('Remove leading spaces using RegEx:\n', re.sub(r"^\s+", "", s), sep='')  # ^ matches start
+print('Remove trailing spaces using RegEx:\n', re.sub(r"\s+$", "", s), sep='')  # $ matches end
+print('Remove leading and trailing spaces using RegEx:\n', re.sub(r"^\s+|\s+$", "", s), sep='')  # | for OR condition
+</code></pre><p id="f7e39455-ffc2-460f-8b31-1837d3113750" class="">Output:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="7e70b4c6-aabb-47d9-8157-4659e7a9c24e" class="code code-wrap"><code>Remove all spaces using RegEx:
+HelloWorldFromPankajHiThere
+Remove leading spaces using RegEx:
+Hello  World   From Pankaj 	
+	Hi There  
+Remove trailing spaces using RegEx:
+  Hello  World   From Pankaj 	
+	Hi There
+Remove leading and trailing spaces using RegEx:
+Hello  World   From Pankaj 	
+	Hi There
+</code></pre><h3 id="c426dd69-26b5-48d9-8824-1a0c03de96b4" class="">convert string into other type</h3><p id="6b03b5b6-d008-48b5-ab94-4fc2362f6413" class=""><a href="https://www.geeksforgeeks.org/convert-string-to-integer-in-python/#:~:text=In%20Python%20an%20strings%20can,converts%20it%20into%20a%20integer">https://www.geeksforgeeks.org/convert-string-to-integer-in-python/#:~:text=In Python an strings can,converts it into a integer</a>.</p><p id="eef01ca7-c3a7-4391-ba72-505acf157ac6" class="">
+</p><p id="4d880aca-e094-46fd-8255-bbd4d41a8681" class="">n Python an strings can be converted into a integer using the built-in<strong> </strong><code><strong>int()</strong></code> function. The int() function takes in any <a href="https://www.geeksforgeeks.org/python-data-types/"><strong>python data type</strong></a> and converts it into a integer.But use of the <code>int()</code> function is not the only way to do so. This type of conversion can also be done using the<code><strong>float()</strong></code> keyword, as a float value can be used to compute with integers.</p><p id="2ab059be-bb73-4fa2-b3c0-e7f5cbfefaf6" class="">Below is the list of possible ways to convert an integer to string in python:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="5f96e43e-02c7-4696-bd37-7d685e6087d5" class="code"><code>num <span class="token operator">=</span> <span class="token string">'10'</span>
+
+<span class="token comment"># check and print type num variable </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># convert the num into string </span>
+converted_num <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> 
+
+<span class="token comment"># print type of converted_num </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>converted_num<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># We can check by doing some mathematical operations </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>converted_num <span class="token operator">+</span> <span class="token number">20</span><span class="token punctuation">)</span>
+
+num <span class="token operator">=</span> <span class="token string">'10.5'</span>
+
+<span class="token comment"># check and print type num variable </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># convert the num into string </span>
+converted_num <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> 
+
+<span class="token comment"># print type of converted_num </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>converted_num<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># We can check by doing some mathematical operations </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>converted_num <span class="token operator">+</span> <span class="token number">20.5</span><span class="token punctuation">)</span></code></pre><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="3874e6a1-58ed-4089-979a-bf9b68480c9a" class="code"><code>a <span class="token operator">=</span> <span class="token string">'2'</span>
+b <span class="token operator">=</span> <span class="token string">'3'</span>
+
+<span class="token comment"># print the data type of a and b </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># convert a using float </span>
+a <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> 
+
+<span class="token comment"># convert b using int </span>
+b <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> 
+
+<span class="token comment"># sum both integers </span>
+<span class="token builtin">sum</span> <span class="token operator">=</span> a <span class="token operator">+</span> b 
+
+<span class="token comment"># as strings and integers can't be added </span>
+<span class="token comment"># try testing the sum </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">sum</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">'''
+Output
+class 'str'
+class 'str'
+5.0
+'''</span></code></pre></div></article></body></html>

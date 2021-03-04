@@ -1,0 +1,768 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Deque</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b36b1ab4-a7ab-4b9f-bc9a-5cba0597e78d" class="page sans"><header><h1 class="page-title">Deque</h1></header><div class="page-body"><p id="72c216f2-0834-43e4-911c-e7c6e9f14981" class="">
+</p><h1 id="cc20fa12-1b00-486f-b298-d08bdfdc56ee" class="">Deque in Python</h1><ul id="372a6ac4-db5b-4fa0-b75a-d77254acaff1" class="bulleted-list"><li>Difficulty Level : <a href="https://www.geeksforgeeks.org/medium"><strong>Medium</strong></a></li></ul><ul id="8c99ced6-b532-4da6-bbb0-c1f1f0c747ae" class="bulleted-list"><li>Last Updated : 22 Jan, 2021</li></ul><p id="e9c7c0ef-7ccd-43ad-8807-6bfc4deaf9ed" class="">Deque (Doubly Ended Queue) in Python is implemented using the module “<strong>collections</strong>“. Deque is preferred over <a href="http://quiz.geeksforgeeks.org/python-set-3-strings-lists-tuples-iterations/"><strong>list</strong></a> in the cases where we need quicker append and pop operations from both the ends of container, as deque provides an <strong>O(1)</strong> time complexity for append and pop operations as compared to list which provides O(n) time complexity.</p><p id="f0f291ee-9cbe-4739-bb36-0cc503496d71" class=""><strong>Example:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="e5ae7b6a-3ab0-4779-ac33-ff13db8ec6fa" class="code"><code><span class="token comment"># Python code to demonstrate deque </span>
+	
+
+<span class="token keyword">from</span> collections <span class="token keyword">import</span> deque 
+	
+<span class="token comment"># Declaring deque </span>
+queue <span class="token operator">=</span> deque<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">,</span><span class="token string">'age'</span><span class="token punctuation">,</span><span class="token string">'DOB'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+	
+<span class="token keyword">print</span><span class="token punctuation">(</span>queue<span class="token punctuation">)</span></code></pre><p id="26a73313-e254-44bb-a5df-72693fd742d6" class="">
+</p><p id="131f2c66-c0e4-4a7a-b0df-ec66ebacb7e7" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="a152b6c9-f00b-4175-b461-66128feea076" class="code code-wrap"><code>deque(['name', 'age', 'DOB'])</code></pre><p id="8f3126a3-a84a-4117-aa83-69096ccfc60d" class=""><strong>Let’s see various Operations on deque :</strong></p><ul id="8399b03f-a397-4f65-b401-f3cb0a69cdbd" class="bulleted-list"><li><strong>append()</strong> :- This function is used to <strong>insert </strong>the value in its argument to the <strong>right end</strong> of deque.</li></ul><ul id="8ce5bb75-7514-4967-89ec-ff3f8426e6d4" class="bulleted-list"><li><strong>appendleft()</strong> :- This function is used to<strong> insert</strong> the value in its argument to the <strong>left end</strong> of deque.</li></ul><ul id="46996bc5-e9ac-40dd-aab7-93bb5fab60e4" class="bulleted-list"><li><strong>pop()</strong> :- This function is used to<strong> delete</strong> an argument from the<strong> right end</strong> of deque.</li></ul><ul id="c20a74fd-2164-41d3-8ff4-aa6924e85dcb" class="bulleted-list"><li><strong>popleft()</strong> :- This function is used to<strong> delete</strong> an argument from the<strong> left end</strong> of deque. </li></ul><ul id="39af5f74-2e08-44d7-8a13-98bd1357e0b9" class="bulleted-list"><li>Python3</li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="9ed049a3-ae1a-40fe-8158-6c9ff83318c1" class="code"><code><span class="token comment"># Python code to demonstrate working of </span>
+<span class="token comment"># append(), appendleft(), pop(), and popleft()</span>
+
+<span class="token comment"># importing "collections" for deque operations</span>
+<span class="token keyword">import</span> collections
+
+<span class="token comment"># initializing deque</span>
+de <span class="token operator">=</span> collections<span class="token punctuation">.</span>deque<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment"># using append() to insert element at right end </span>
+<span class="token comment"># inserts 4 at the end of deque</span>
+de<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after appending at right is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span>
+
+<span class="token comment"># using appendleft() to insert element at left end </span>
+<span class="token comment"># inserts 6 at the beginning of deque</span>
+de<span class="token punctuation">.</span>appendleft<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after appending at left is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span>
+
+<span class="token comment"># using pop() to delete element from right end </span>
+<span class="token comment"># deletes 4 from the right end of deque</span>
+de<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after deleting from right is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span>
+
+<span class="token comment"># using popleft() to delete element from left end </span>
+<span class="token comment"># deletes 6 from the left end of deque</span>
+de<span class="token punctuation">.</span>popleft<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after deleting from left is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span></code></pre><p id="f6699895-6051-444a-9cd6-9a5f35cee432" class="">
+</p><p id="f514de0a-319f-49cd-b345-094bf45cf904" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="58697ea4-952d-4f9f-a668-c7503776a88c" class="code code-wrap"><code>The deque after appending at right is : 
+deque([1, 2, 3, 4])
+The deque after appending at left is : 
+deque([6, 1, 2, 3, 4])
+The deque after deleting from right is : 
+deque([6, 1, 2, 3])
+The deque after deleting from left is : 
+deque([1, 2, 3])</code></pre><ul id="a0f11053-516a-4d0f-8edb-57d01ae00247" class="bulleted-list"><li><strong>index(ele, beg, end)</strong> :- This function <strong>returns the first index of the value</strong> mentioned in arguments, <strong>starting searching from beg till end</strong> index.</li></ul><ul id="fd814bf6-1561-4dfb-9999-ee1366374a5c" class="bulleted-list"><li><strong>insert(i, a)</strong> :- This function <strong>inserts the value</strong> mentioned in arguments(a) <strong>at index(i)</strong> specified in arguments.</li></ul><ul id="387ea611-878c-402c-8152-5c0daa94dc24" class="bulleted-list"><li><strong>remove()</strong> :- This function<strong> removes the first occurrence</strong> of value mentioned in arguments.</li></ul><ul id="dee246d4-12e5-4255-bb23-e834c52ba235" class="bulleted-list"><li><strong>count()</strong> :- This function <strong>counts the number of occurrences</strong> of value mentioned in arguments.</li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4d96d9bc-cffd-4824-88f1-3e13248efe49" class="code"><code><span class="token comment"># Python code to demonstrate working of </span>
+<span class="token comment"># insert(), index(), remove(), count()</span>
+
+<span class="token comment"># importing "collections" for deque operations</span>
+<span class="token keyword">import</span> collections
+
+<span class="token comment"># initializing deque</span>
+de <span class="token operator">=</span> collections<span class="token punctuation">.</span>deque<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment"># using index() to print the first occurrence of 4</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The number 4 first occurs at a position : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">.</span>index<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># using insert() to insert the value 3 at 5th position</span>
+de<span class="token punctuation">.</span>insert<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after inserting 3 at 5th position is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span>
+
+<span class="token comment"># using count() to count the occurrences of 3</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The count of 3 in deque is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">.</span>count<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># using remove() to remove the first occurrence of 3</span>
+de<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after deleting first occurrence of 3 is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span></code></pre><p id="d750fae7-2d88-490d-918d-31855430f621" class="">
+</p><p id="e3cdf620-9b36-4439-bf02-2623ee524b93" class=""><strong>Output:</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="47d2785f-db69-463f-8129-27bef4669a5e" class="code code-wrap"><code>The number 4 first occurs at a position : 
+4
+The deque after inserting 3 at 5th position is : 
+deque([1, 2, 3, 3, 3, 4, 2, 4])
+The count of 3 in deque is : 
+3
+The deque after deleting first occurrence of 3 is : 
+deque([1, 2, 3, 3, 4, 2, 4])</code></pre><p id="13564057-dc92-4d55-ae5a-9d4d833819ac" class="">
+</p><ul id="526af67b-4b54-4a8b-a142-a82248af902f" class="bulleted-list"><li><strong>extend(iterable) </strong>:- This function is used to <strong>add multiple values at the right end </strong>of deque. The argument passed is an iterable.</li></ul><ul id="f4ddc00d-7872-4c58-86e7-c1d29c9bc4f2" class="bulleted-list"><li><strong>extendleft(iterable) </strong>:- This function is used to <strong>add multiple values at the left end </strong>of deque. The argument passed is an iterable. <strong>Order is reversed</strong> as a result of left appends.</li></ul><ul id="6cb47ca3-0631-4f27-afea-cb84fdfb75b9" class="bulleted-list"><li><strong>reverse() </strong>:- This function is used to<strong> reverse order</strong> of deque elements.</li></ul><ul id="0aa7918a-63db-41b8-8c71-da4e2f9661e4" class="bulleted-list"><li><strong>rotate() </strong>:- This function<strong> rotates the deque</strong> by the number specified in arguments.<strong> If the number specified is negative, rotation occurs to left. Else rotation is to right.</strong></li></ul><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="8f7a7813-b965-4194-9a15-cb542eb5216e" class="code"><code><span class="token comment"># Python code to demonstrate working of </span>
+<span class="token comment"># extend(), extendleft(), rotate(), reverse()</span>
+
+<span class="token comment"># importing "collections" for deque operations</span>
+<span class="token keyword">import</span> collections
+
+<span class="token comment"># initializing deque</span>
+de <span class="token operator">=</span> collections<span class="token punctuation">.</span>deque<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment"># using extend() to add numbers to right end </span>
+<span class="token comment"># adds 4,5,6 to right end</span>
+de<span class="token punctuation">.</span>extend<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after extending deque at end is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span>
+
+<span class="token comment"># using extendleft() to add numbers to left end </span>
+<span class="token comment"># adds 7,8,9 to right end</span>
+de<span class="token punctuation">.</span>extendleft<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after extending deque at beginning is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span>
+
+<span class="token comment"># using rotate() to rotate the deque</span>
+<span class="token comment"># rotates by 3 to left</span>
+de<span class="token punctuation">.</span>rotate<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after rotating deque is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span>
+
+<span class="token comment"># using reverse() to reverse the deque</span>
+de<span class="token punctuation">.</span>reverse<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># printing modified deque</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">"The deque after reversing deque is : "</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>de<span class="token punctuation">)</span></code></pre><p id="af70b1b1-d9b9-447d-bd91-b29940a997d1" class="">
+</p><p id="eac08878-2566-4908-bc4b-37e89053b6cc" class=""><strong>Output :</strong></p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="c965dda9-5c38-480b-bdb1-fc46b36940f3" class="code code-wrap"><code>The deque after extending deque at end is : 
+deque([1, 2, 3, 4, 5, 6])
+The deque after extending deque at beginning is : 
+deque([9, 8, 7, 1, 2, 3, 4, 5, 6])
+The deque after rotating deque is : 
+deque([1, 2, 3, 4, 5, 6, 9, 8, 7])
+The deque after reversing deque is : 
+deque([7, 8, 9, 6, 5, 4, 3, 2, 1]) </code></pre></div></article></body></html>
